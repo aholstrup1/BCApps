@@ -7,7 +7,7 @@
 		{
 			"name": "Assert",
 			"path": "Tools\\Test Framework\\Test Libraries\\Assert"
-		},
+		}, 
 		{
 			"name": "Permissions Mock",
 			"path": "Tools\\Test Framework\\Test Libraries\\Permissions Mock"
