@@ -7,7 +7,7 @@
         The name of the AL-Go project
     .Parameter AutoFill
         If specified, the script will generate a random password and use that for the credential
-    .Example
+    .Example 
         .\build.ps1 -ALGoProject "System Application"
         .\build.ps1 -ALGoProject "Test Stability Tools" -AutoFill
 #>
