@@ -24,12 +24,57 @@ class GitHubPullRequest {
         $this.PullRequest = $pr
     }
 
+    static [GitHubPullRequest] NewPullRequest([string] $Repository, [string] $BranchName, [string] $TargetBranch, [string] $label, [string] $PullRequestDescription, [bool] $AutoMerge) {
+        $params = @(
+            "--head $BranchName"
+            "--base $TargetBranch"
+            "--fill"
+        )
+        
+        if ($label) {
+            $availableLabels = gh label list --json name | ConvertFrom-Json
+            if ($label -in $availableLabels.name) { $params += "--label $label" }
+        }
+        
+        if ($PullRequestDescription) { 
+            $params += "--body '$PullRequestDescription'" 
+        }
+
+        $parameters = ($params -join " ")
+        Invoke-Expression "gh pr create $parameters"
+
+        if ($AutoMerge) {
+            gh pr merge --auto --squash --delete-branch
+        }
+
+        $pr = [GitHubPullRequest]::GetPRFromBranch($Repository, $BranchName)
+        return $pr
+    }
+
     <#
         Gets the pull request from GitHub.
     #>
     static [GitHubPullRequest] Get([int] $PRNumber, [string] $Repository) {
         $pr = [GitHubPullRequest]::new($PRNumber, $Repository)
 
+        return $pr
+    }
+
+    <#
+        Gets the pull request from GitHub.
+    #>
+    static [GitHubPullRequest] GetPRFromBranch([string] $Repository, [string] $BranchName) {
+
+        $pullRequests = gh api "/repos/$Repository/pulls" --method GET -f state='Open' -H ([GitHubAPI]::AcceptJsonHeader) -H ([GitHubAPI]::GitHubAPIHeader) | ConvertFrom-Json
+        $pullRequests = $pullRequests | Where-Object {$_.head.ref -eq $BranchName}
+
+        $foundPullRequest = $pullRequests | Select-Object -First 1
+
+        if (-not $foundPullRequest) {
+            return $null
+        }
+
+        $pr = [GitHubPullRequest]::new($foundPullRequest.number, $Repository)
         return $pr
     }
 
