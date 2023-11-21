@@ -62,9 +62,9 @@ class GitHubPullRequest {
     <#
         Gets the pull request from GitHub.
     #>
-    static [GitHubPullRequest] Get([string] $Repository, [string] $BranchName, [string] $State = "open") {
+    static [GitHubPullRequest] Get([string] $Repository, [string] $BranchName) {
 
-        $pullRequests = gh api "/repos/$Repository/pulls" --method GET -f state=$State -H ([GitHubAPI]::AcceptJsonHeader) -H ([GitHubAPI]::GitHubAPIHeader) | ConvertFrom-Json
+        $pullRequests = gh api "/repos/$Repository/pulls" --method GET -f state='Open' -H ([GitHubAPI]::AcceptJsonHeader) -H ([GitHubAPI]::GitHubAPIHeader) | ConvertFrom-Json
         $pullRequests = $pullRequests | Where-Object {$_.head.ref -eq $BranchName}
 
         $foundPullRequest = $pullRequests | Select-Object -First 1
