@@ -130,7 +130,8 @@ function New-GitHubPullRequest
     }
 
     $pullRequest = [GitHubPullRequest]::NewPullRequest($Repository, $BranchName, $TargetBranch, $label, $PullRequestDescription, $AutoMerge)
-    Write-Host "Pull request $($pullRequest.Number) created for branch $BranchName"
+    Write-Host $pullRequest
+    Write-Host "Pull request with title '$($pullRequest.Title)' created for branch $BranchName"
 }
 
 Export-ModuleMember -Function *-*

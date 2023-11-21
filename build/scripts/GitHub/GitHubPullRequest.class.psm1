@@ -70,7 +70,7 @@ class GitHubPullRequest {
         $foundPullRequest = $pullRequests | Select-Object -First 1
 
         if (-not $foundPullRequest) {
-            Write-Host "::Warning:: Could not find pull request for branch $BranchName in repository $Repository"
+            Write-Host "Could not find pull request for branch $BranchName in repository $Repository"
             return $null
         }
 
