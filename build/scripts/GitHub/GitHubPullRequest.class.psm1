@@ -47,7 +47,8 @@ class GitHubPullRequest {
             gh pr merge --auto --squash --delete-branch
         }
 
-        return [GitHubPullRequest]::Get($Repository, $BranchName)
+        $pr = [GitHubPullRequest]::Get($Repository, $BranchName)
+        return $pr
     }
 
     <#
