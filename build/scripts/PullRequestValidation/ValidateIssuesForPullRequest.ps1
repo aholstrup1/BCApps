@@ -19,30 +19,46 @@ $ErrorActionPreference = "Stop"
     If the pull request is from a fork it must link to an issue.
     If the pull request is not from a fork it must link to an issue or an ADO workitem.
 #>
-function Test-WorkitemIsLinked() {
+function Test-IssueIsLinked() {
     param(
         [Parameter(Mandatory = $false)]
         [string[]] $IssueIds,
-        [Parameter(Mandatory = $false)]
-        [string[]] $ADOWorkItems,
         [Parameter(Mandatory = $false)]
         [object] $PullRequest
     )
 
     $Comment = "Could not find linked issues in the pull request description. Please make sure the pull request description contains a line that contains 'Fixes #' followed by the issue number being fixed. Use that pattern for every issue you want to link."
 
-    if (-not $PullRequest.IsFromFork()) {
-        $Comment += " You can also link ADO workitems by using the pattern 'Fixes AB#' followed by the workitem number being fixed."
-    }
-
     if (-not $IssueIds) {
         # If the pull request is from a fork, add a comment to the pull request and throw an error
-        # If the pull request is not from a fork only throw an error if there are no linked ADO workitems
-        if ($PullRequest.IsFromFork() -or (-not $ADOWorkItems)) {
-            $PullRequest.AddComment($Comment)
-            throw $Comment
-        }
+        $PullRequest.AddComment($Comment)
+        throw $Comment
     }
+
+    $PullRequest.RemoveComment($Comment)
+}
+
+function Test-ADOWorkitemIsLinked() {
+    param(
+        [Parameter(Mandatory = $false)]
+        [string[]] $ADOWorkItems,
+        [Parameter(Mandatory = $false)]
+        [object] $PullRequest
+    )
+
+    if ($PullRequest.IsFromFork()) {
+        $Comment = "Thank you for your contribution! This comment is a reminder to the Microsoft team that this pull request needs to be assigned an internal workitem before it can be merged. A member of the Microsoft team will be in touch once the pull request is ready to be merged. No further action is needed from the contributor."
+    } else {
+        $Comment += "Could not find a linked ADO workitem. Please link one by using the pattern 'Fixes AB#' followed by the workitem number being fixed."
+
+    }
+
+    if (-not $ADOWorkItems) {
+        # If the pull request is not from a fork, add a comment to the pull request and throw an error
+        $PullRequest.AddComment($Comment)
+        throw $Comment
+    }
+
     $PullRequest.RemoveComment($Comment)
 }
 
@@ -90,7 +106,15 @@ $pullRequest = [GitHubPullRequest]::Get($PullRequestNumber, $Repository)
 $issueIds = $pullRequest.GetLinkedIssueIDs()
 $adoWorkitems = $pullRequest.GetLinkedADOWorkitems()
 
-Test-WorkitemIsLinked -IssueIds $issueIds -ADOWorkItems $adoWorkitems -PullRequest $PullRequest
+# If the pull request is from a fork, validate that it links to an issue
+if ($pullRequest.IsFromFork()) {
+    Test-IssueIsLinked -IssueIds $issueIds -PullRequest $PullRequest
+}
+
+# Validate that all issues linked to the pull request are open and approved
 Test-GitHubIssue -Repository $Repository -IssueIds $issueIds -PullRequest $PullRequest
+
+# Validate that all pull requests links to an ADO workitem
+Test-ADOWorkitemIsLinked -ADOWorkItems $adoWorkitems -PullRequest $PullRequest
 
 Write-Host "PR $PullRequestNumber validated successfully" -ForegroundColor Green
