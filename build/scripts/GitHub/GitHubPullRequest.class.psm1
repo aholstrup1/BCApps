@@ -1,5 +1,6 @@
 using module .\GitHubAPI.class.psm1
 using module .\GitHubIssue.class.psm1
+using module .\GitHubWorkitemLink.class.psm1
 
 <#
     Class that represents a GitHub pull request.
@@ -33,7 +34,10 @@ class GitHubPullRequest {
         return $pr
     }
 
-    Update() {
+    <#
+        Updates the pull request description.
+    #>
+    UpdateDescription() {
         $TempFile = New-TemporaryFile
         Set-Content -Path $TempFile -Value $this.PullRequest.body
 
@@ -53,12 +57,7 @@ class GitHubPullRequest {
             An array of linked issue IDs.
     #>
     [int[]] GetLinkedIssueIDs() {
-        if(-not $this.PullRequest.body) {
-            return @()
-        }
-
-        $workitemPattern = "(^|\s)(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved) #(?<ID>\d+)" # e.g. "Fixes #1234"
-        return $this.GetLinkedWorkItemIDs($workitemPattern)
+        return [GitHubWorkitemLink]::GetLinkedIssueIDs($this.PullRequest.body)
     }
 
     <#
@@ -67,8 +66,11 @@ class GitHubPullRequest {
             An array of linked issue IDs.
     #>
     [int[]] GetLinkedADOWorkitems() {
-        $workitemPattern = "(^|\s)(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved) AB#(?<ID>\d+)" # e.g. "Fixes AB#1234"
-        return $this.GetLinkedWorkItemIDs($workitemPattern)
+        return [GitHubWorkitemLink]::GetLinkedADOWorkitems($this.PullRequest.body)
+    }
+
+    LinkToWorkItem($WorkItem) {
+        $this.PullRequest.body = [GitHubWorkitemLink]::LinkToWorkItem($this.PullRequest.body, $WorkItem)
     }
 
     <#
@@ -78,25 +80,6 @@ class GitHubPullRequest {
         return $this.PullRequest.head.repo.fork
     }
 
-    hidden [int[]] GetLinkedWorkItemIDs($Pattern) {
-        if(-not $this.PullRequest.body) {
-            return @()
-        }
-
-        $workitemMatches = Select-String $Pattern -InputObject $this.PullRequest.body -AllMatches
-
-        if(-not $workitemMatches) {
-            return @()
-        }
-
-        $workitemIds = @()
-        $groups = $workitemMatches.Matches.Groups | Where-Object { $_.Name -eq "ID" }
-        foreach($group in $groups) {
-            $workitemIds += $group.Value
-        }
-        return $workitemIds
-    }
-    
     <#
         Removes a comment from the pull request if it exists.
     #>
