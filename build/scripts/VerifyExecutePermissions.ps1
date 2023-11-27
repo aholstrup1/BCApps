@@ -2,15 +2,17 @@ param(
     $ModulesDirectory = ""
 )
 
+Set-StrictMode -Version Latest
 Write-Host "Verifying execute permissions on all objects in $ModulesDirectory"
 
 $includefilter = @('*.Table.al', '*.Report.al', '*.Codeunit.al', '*.Page.al', '*.XMlPort.al', '*.Query.al')
+$AlObjects = @{}
 
 foreach ($folder in (Get-ChildItem -path $ModulesDirectory -Directory)) {
     Write-Host "Verifying execute permissions on all objects in $folder"
     $AlObjects = @{}
 
-    $files = (Get-ChildItem -path $folder.Fullname -Recurse -File -Filter *.al -Include $includefilter)
+    $files = @(Get-ChildItem -path $folder.Fullname -Recurse -File -Filter *.al -Include $includefilter)
     if ($files -and ($files.Count -ne 0)) {
         # find all objects
         foreach ($file in (Get-ChildItem -path $folder.Fullname -Recurse -File -Filter *.al -Include $includefilter)) {
@@ -86,6 +88,6 @@ foreach ($folder in (Get-ChildItem -path $ModulesDirectory -Directory)) {
     }
 }
 
-if ($AlObjects.Count -ne 0) {   
+if ($AlObjects -and $AlObjects.Count -ne 0) {   
     Write-Error "Error: missing execute permissions for: `n$($AlObjects.GetEnumerator() | foreach-Object {foreach($v in $_.Value) {"$($_.Key) $($v)`n"}})"
 }
