@@ -51,8 +51,8 @@ body:
   - type: checkboxes
     id: terms
     attributes:
-      label: I intend on providing a fix myself 1
-      description: I intend on providing a fix myself 2
+      label: I intend on providing a fix for this issue myself
+      description: Please note that this is not the right place to report product defects. This repository is meant as a please for the Business Central community to collaborate
       options:
-        - label: I intend on providing a fix myself 3
+        - label: I intend on providing a fix for this issue myself
           required: true
