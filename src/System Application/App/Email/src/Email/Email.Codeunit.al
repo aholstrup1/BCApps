@@ -10,7 +10,7 @@ namespace System.Email;
 /// </summary>
 codeunit 8901 Email
 {
-    Access = Public;
+    Access = Public; 
 
     #region SaveAsDraft
 
