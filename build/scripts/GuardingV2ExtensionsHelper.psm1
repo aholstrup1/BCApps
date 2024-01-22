@@ -48,16 +48,16 @@ function Enable-BreakingChangesCheck {
             Import-Module -Name $PSScriptRoot\EnlistmentHelperFunctions.psm1
 
             $majorMinor = Get-ConfigValue -Key "repoVersion" -ConfigType "AL-GO"
-            $baselineVersion = ((Get-BCArtifactUrl -type Sandbox -country W1 -version $majorMinor -select Latest) -split "/")[-2]
-            if (-not $baselineVersion) {
-                $baselineVersion = ((Get-BCArtifactUrl -type Sandbox -country W1 -version $majorMinor -select Latest -storageAccount bcinsider -accept_insiderEula) -split "/")[-2]
+            $strictModeVersion = ((Get-BCArtifactUrl -type Sandbox -country W1 -version $majorMinor -select Latest) -split "/")[-2]
+            if (-not $strictModeVersion) {
+                $strictModeVersion = ((Get-BCArtifactUrl -type Sandbox -country W1 -version $majorMinor -select Latest -storageAccount bcinsider -accept_insiderEula) -split "/")[-2]
             }
 
-            if (-not $baselineVersion) {
+            if (-not $strictModeVersion) {
                 throw "Unable to find baseline version for StrictMode"
             }
 
-            Restore-BaselinesFromArtifacts -TargetFolder $AppSymbolsFolder -AppName $appName -BaselineVersion $baselineVersion
+            $baselineVersion = Restore-BaselinesFromArtifacts -TargetFolder $AppSymbolsFolder -AppName $appName -BaselineVersion $strictModeVersion
         }
         Default {
             $baselineVersion = Restore-BaselinesFromArtifacts -TargetFolder $AppSymbolsFolder -AppName $appName
