@@ -52,7 +52,7 @@ body:
     id: terms
     attributes:
       label: I intend on providing a fix for this issue myself
-      description: Please note that this is not the right place to report product defects. This repository is meant as a please for the Business Central community to collaborate. If you are experiencing a bug with immediate customer impact please see aka.ms/BCSupport. If you questions please go to https://aka.ms/BCFAQ#where-do-i-go-if-i-have-questions-
+      description: Please note that this is not the right place to report product defects. This repository is meant as a please for the Business Central community to collaborate. If you are experiencing a bug with immediate customer impact please see https://aka.ms/BCSupport. If you questions please go to https://aka.ms/BCFAQ#where-do-i-go-if-i-have-questions-
       options:
         - label: I intend on providing a fix for this issue myself
           required: true
