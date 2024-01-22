@@ -231,11 +231,13 @@ function Get-StrictModeBranchStatus()
     Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
     $StrictModeString = "/StrictMode"
     $BranchName = Get-PullRequestTargetBranch
+    Write-Host "::Warning:: 1 - Branch name: $BranchName"
     if (!$BranchName)
     {
         $BranchName = Get-CurrentBranch
+        Write-Host "::Warning:: 2 - Branch name: $BranchName"
     }
-    
+    Write-Host "::Warning:: 3 - Branch name: $BranchName"
     
     if ($BranchName -NotMatch "^releases\/\d+\.\d+$")
     {
