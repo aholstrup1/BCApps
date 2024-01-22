@@ -19,6 +19,7 @@ if($appType -eq 'app')
     # Setup compiler features to generate LCGs for the default build mode
     if($appBuildMode -eq 'Default') {
         $parameters.Value["Features"] += @("lcgtranslationfile")
+        $appBuildMode = "StrictMode"
     }
 
     if($appBuildMode -eq 'Translated') {
@@ -53,6 +54,10 @@ if($appType -eq 'app')
                 else {
                     Compile-AppInBcContainer @tempParameters | Out-Null
                 }
+            }
+
+            if($appBuildMode -eq 'Default') {
+                $appBuildMode = "StrictMode"
             }
 
             Enable-BreakingChangesCheck -AppSymbolsFolder $parameters.Value["appSymbolsFolder"] -AppProjectFolder $parameters.Value["appProjectFolder"] -BuildMode $appBuildMode | Out-Null
