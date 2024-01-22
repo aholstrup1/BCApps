@@ -228,12 +228,14 @@ function Update-AppSourceCopVersion
 
 function Get-StrictModeBranchStatus()
 {
-    Param(
-        [Parameter(Mandatory = $true)]
-        [string] $BranchName
-        
-    )
-    [string] $StrictModeString = "/StrictMode"
+    Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
+    $StrictModeString = "/StrictMode"
+    $BranchName = Get-PullRequestTargetBranch
+    if (!$BranchName)
+    {
+        $BranchName = Get-CurrentBranch
+    }
+    
     
     if ($BranchName -NotMatch "^releases\/\d+\.\d+$")
     {

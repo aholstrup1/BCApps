@@ -19,6 +19,13 @@ function Get-CurrentBranch() {
     return git rev-parse --abbrev-ref HEAD
 }
 
+function Get-PullRequestTargetBranch() {
+    if ($ENV:GITHUB_BASE_REF) {
+        return $ENV:GITHUB_BASE_REF
+    }
+    return $null
+}
+
 <#
 .Synopsis
     Creates a new directory if it does not exist. If the directory exists, it will be emptied.

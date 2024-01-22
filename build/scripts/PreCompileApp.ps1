@@ -56,7 +56,7 @@ if($appType -eq 'app')
                 }
             }
 
-            if($appBuildMode -eq 'Default' -and (Get-StrictModeBranchStatus -BranchName (Get-CurrentBranch))) {
+            if($appBuildMode -eq 'Default' -and (Get-StrictModeBranchStatus)) {
                 $appBuildMode = "StrictMode"
             }
 
