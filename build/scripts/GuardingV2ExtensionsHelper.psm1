@@ -226,4 +226,28 @@ function Update-AppSourceCopVersion
     return $appSourceCopJsonPath
 }
 
+function Get-StrictModeBranchStatus()
+{
+    Param(
+        [Parameter(Mandatory = $true)]
+        [string] $BranchName
+        
+    )
+    [string] $StrictModeString = "/StrictMode"
+    
+    if ($BranchName -NotMatch "^releases\/\d+\.\d+$")
+    {
+        return $false
+    }
+    
+    [string] $GitStrictModeTag = git tag -l "$($BranchName+$StrictModeString)"
+
+    if ($GitStrictModeTag -eq ($BranchName + $StrictModeString))
+    {
+        return $true
+    }
+
+    return $false
+}
+
 Export-ModuleMember -Function *-*

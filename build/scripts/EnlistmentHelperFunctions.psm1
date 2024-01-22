@@ -12,6 +12,13 @@ function Get-BuildMode() {
     return 'Default'
 }
 
+function Get-CurrentBranch() {
+    if ($ENV:GITHUB_REF) {
+        return $ENV:GITHUB_REF.Replace("refs/heads/", "")
+    }
+    return git rev-parse --abbrev-ref HEAD
+}
+
 <#
 .Synopsis
     Creates a new directory if it does not exist. If the directory exists, it will be emptied.
