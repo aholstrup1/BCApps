@@ -47,4 +47,12 @@ body:
       description: If needed add any other context about the problem here or include screenshots
       placeholder: Additional context, screenshots, log output, etc.
     validations:
-      required: true
+      required: false
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: I intend on providing a fix myself 1
+      description: I intend on providing a fix myself 2
+      options:
+        - label: I intend on providing a fix myself 3
+          required: true
