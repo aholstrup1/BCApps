@@ -38,8 +38,7 @@
   ],
   "buildModes": [
     "Default",
-    "Clean",
-    "StrictMode"
+    "Clean"
   ],
   "CICDPushBranches": [
     "main",
