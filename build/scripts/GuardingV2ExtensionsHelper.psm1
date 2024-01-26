@@ -241,7 +241,7 @@ function Test-IsStrictModeEnabled
         return $false
     }
 
-    git fetch origin tag "$($BranchName+$StrictModeString)"
+    git fetch --tags
     [string] $GitStrictModeTag = git tag -l "$($BranchName+$StrictModeString)"
 
     if ($GitStrictModeTag -eq ($BranchName + $StrictModeString))
