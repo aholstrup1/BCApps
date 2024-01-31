@@ -28,7 +28,7 @@ function Get-PullRequestTargetBranch() {
 
 <#
 .Synopsis
-    Creates a new directory if it does not exist. If the directory exists, it will be emptied.
+    Creates a new directory if it does not exist. If the directory exists, it will be emptied. dp??akedp??
 .Parameter Path
     The path of the directory to create
 .Parameter ForceEmpty
