@@ -10,7 +10,7 @@ using System.Integration;
 
 /// <summary>
 /// Provides functionality for working with the business chart control add-in.
-/// </summary>
+/// </summary> Test
 codeunit 479 "Business Chart"
 {
     Access = Public;

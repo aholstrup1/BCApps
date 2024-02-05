@@ -12,7 +12,7 @@ interface "Barcode Font Provider"
 {
     /// <summary>
     /// Gets a list of the barcode symbologies that the provider supports.
-    /// </summary>
+    /// </summary> ss
     /// <param name="Result">A list of barcode symbologies.</param>
     procedure GetSupportedBarcodeSymbologies(var Result: List of [Enum "Barcode Symbology"])
 

@@ -8,6 +8,7 @@ namespace System.Text;
 /// <summary>
 /// The available barcode font providers.
 /// </summary>
+/// Note: This 
 enum 9203 "Barcode Font Provider" implements "Barcode Font Provider"
 {
     Access = Public;
@@ -18,7 +19,7 @@ enum 9203 "Barcode Font Provider" implements "Barcode Font Provider"
     /// </summary>
     value(0; IDAutomation1D)
     {
-        Caption = 'IDAutomation 1D Barcode Provider';
+        Caption = 'IDAutomation 1D Provider';
         Implementation = "Barcode Font Provider" = "IDAutomation 1D Provider";
     }
 }
