@@ -22,6 +22,7 @@ interface "Data Archive Provider"
     /// Opens an existing archive entry.
     /// </summary>
     /// <param name="ID">The ID of the archive entry.</param>
+    /// <returns>The entry no. of the opened archive entry - if any.</returns>
     procedure Open(ID: Integer);
 
     /// <summary>
