@@ -6,8 +6,7 @@
 namespace System.Email;
 
 /// <summary>
-/// Provides functionality to create and send emails - Test breaking
-/// </summary>
+/// Provides functionality to create and send emails - Something that breaks/// </summary>
 codeunit 8901 Email
 {
     Access = Private;
