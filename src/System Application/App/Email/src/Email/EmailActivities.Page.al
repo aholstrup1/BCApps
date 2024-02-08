@@ -6,7 +6,7 @@
 namespace System.Email;
 
 /// <summary>
-/// Provides information about the status of the emails.
+/// Provides information about the status of the emails. IUOJOIAJSOI
 /// </summary>
 page 8885 "Email Activities"
 {
