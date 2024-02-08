@@ -5,7 +5,7 @@
 namespace System.Apps.AppSource;
 
 /// <summary>
-/// Represents an except of a product definition in AppSource.
+/// Represents an except of a product definition in AppSource. TEST 1
 /// </summary>
 table 2515 "AppSource Product"
 {
@@ -21,7 +21,7 @@ table 2515 "AppSource Product"
         field(1; UniqueProductID; Text[200])
         {
             Caption = 'Unique Product ID';
-        }
+        } 
         field(2; DisplayName; Text[250])
         {
             Caption = 'Name';

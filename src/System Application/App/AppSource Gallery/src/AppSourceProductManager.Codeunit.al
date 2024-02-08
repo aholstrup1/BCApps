@@ -13,7 +13,7 @@ using System.Azure.KeyVault;
 using System.RestClient;
 
 /// <summary>
-/// Library for managing AppSource product retrival and usage.
+/// Library for managing AppSource product retrival and usage. /// 
 /// </summary>
 codeunit 2515 "AppSource Product Manager" implements "IAppSource Product Manager Dependencies"
 {
