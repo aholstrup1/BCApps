@@ -154,7 +154,7 @@ function Get-PackageLatestVersion() {
 
             return $latestVersion
         }
-        'BCArtifacts' {
+        'BCArtifacts|BCInsider' {
             # BC artifacts works with minimum version
             $minimumVersion = $majorMinorVersion
 
@@ -167,7 +167,7 @@ function Get-PackageLatestVersion() {
                 }
             }
 
-            return Get-LatestBCArtifactVersion -minimumVersion $minimumVersion
+            return Get-LatestBCArtifactVersion -minimumVersion $minimumVersion -source $package.Source
         }
         default {
             throw "Unknown package source: $($package.Source)"
@@ -185,14 +185,11 @@ function Get-LatestBCArtifactVersion
 (
     [Parameter(Mandatory=$true)]
     $minimumVersion
+    [Parameter(Mandatory=$true)]
+    $source
 )
 {
-    $artifactUrl = Get-BCArtifactUrl -type Sandbox -country base -version $minimumVersion -select Latest
-
-    if(-not $artifactUrl) {
-        #Fallback to bcinsider
-        $artifactUrl = Get-BCArtifactUrl -type Sandbox -country base -version $minimumVersion -select Latest -storageAccount bcinsider -accept_insiderEula
-    }
+    $artifactUrl = Get-BCArtifactUrl -type Sandbox -country base -version $minimumVersion -select Latest -storageAccount $source -accept_insiderEula -accept_eula
 
     if ($artifactUrl -and ($artifactUrl -match "\d+\.\d+\.\d+\.\d+")) {
         $latestVersion = $Matches[0]
