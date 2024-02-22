@@ -10,7 +10,6 @@
     "buildModes": [
         "Translated"
     ],
-    "installOnlyReferencedApps": false,
     "ConditionalSettings": [
         {
             "branches": [

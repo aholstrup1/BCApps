@@ -6,7 +6,6 @@
     "testFolders":  [
         "..\\..\\..\\src\\Tools\\Performance Toolkit\\Test"
     ],
-    "installOnlyReferencedApps": false,
     "ConditionalSettings": [
         {
             "branches": [
