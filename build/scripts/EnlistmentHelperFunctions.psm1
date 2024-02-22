@@ -184,7 +184,7 @@ function Get-PackageLatestVersion() {
 function Get-LatestBCArtifactVersion
 (
     [Parameter(Mandatory=$true)]
-    $minimumVersion
+    $minimumVersion,
     [Parameter(Mandatory=$true)]
     $source
 )
