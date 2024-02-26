@@ -8,7 +8,7 @@
         "..\\..\\..\\src\\Business Foundation\\Test Library"
     ],
     "buildModes": [
-        "Translated"
+        "Translated", "Strict"
     ],
     "installOnlyReferencedApps": false,
     "ConditionalSettings": [
