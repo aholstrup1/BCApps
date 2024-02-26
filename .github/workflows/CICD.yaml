@@ -72,7 +72,7 @@ jobs:
 
       - name: Determine Projects To Build
         id: determineProjectsToBuild
-        uses: microsoft/AL-Go/Actions/DetermineProjectsToBuild@e9f4cc63d149d341172cebfc8112e825123683d8
+        uses: aholstrup1/AL-Go/Actions/DetermineProjectsToBuild@main
         with:
           shell: powershell
           maxBuildDepth: ${{ env.workflowDepth }}
