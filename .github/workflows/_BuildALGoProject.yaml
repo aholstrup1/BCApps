@@ -151,11 +151,11 @@ jobs:
       - name: Sign
         if: inputs.signArtifacts && env.doNotSignApps == 'False' && env.keyVaultCodesignCertificateName != ''
         id: sign
-        uses: microsoft/AL-Go/Actions/Sign@e9f4cc63d149d341172cebfc8112e825123683d8
+        uses: aholstrup1/AL-Go/Actions/Sign@dotnetsign
         with:
           shell: ${{ needs.Initialization.outputs.githubRunnerShell }}
           azureCredentialsJson: ${{ secrets.AZURE_CREDENTIALS }}
-          pathToFiles: '${{ inputs.project }}/.buildartifacts/Apps/*.app'
+          pathToFiles: '${{ inputs.project }}/.buildartifacts/Apps'
           parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
 
       - name: Calculate Artifact names
