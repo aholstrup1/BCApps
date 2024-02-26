@@ -7,4 +7,4 @@ permissionset 4 "Bus. Found. - Edit"
     Caption = 'Business Foundation - Edit';
 
     IncludedPermissionSets = "Bus. Found. - View";
-}
+} 
