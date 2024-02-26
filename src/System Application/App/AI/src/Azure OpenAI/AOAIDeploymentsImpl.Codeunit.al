@@ -10,7 +10,7 @@ codeunit 7769 "AOAI Deployments Impl"
 {
     Access = Internal;
     InherentEntitlements = X;
-    InherentPermissions = X;
+    InherentPermissions = X;  
 
     var
         EnviromentInformation: Codeunit "Environment Information";

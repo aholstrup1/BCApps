@@ -92,7 +92,7 @@ jobs:
           lfs: true
 
       - name: Read settings
-        uses: microsoft/AL-Go/Actions/ReadSettings@e9f4cc63d149d341172cebfc8112e825123683d8
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
         with:
           shell: ${{ inputs.shell }}
           project: ${{ inputs.project }}
