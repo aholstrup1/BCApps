@@ -1,5 +1,6 @@
 namespace System.Test.AI;
 
+
 using System.AI;
 
 enumextension 132683 "Azure OpenAI Capability" extends "Copilot Capability"
