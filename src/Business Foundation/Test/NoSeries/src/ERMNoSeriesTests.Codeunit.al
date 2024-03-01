@@ -8,7 +8,7 @@ namespace Microsoft.Test.Foundation.NoSeries;
 using System.TestLibraries.Utilities;
 using System.TestLibraries.Security.AccessControl;
 using Microsoft.Foundation.NoSeries;
-
+ 
 codeunit 134370 "ERM No. Series Tests"
 {
     Subtype = Test;
