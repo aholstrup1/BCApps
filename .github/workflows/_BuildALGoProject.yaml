@@ -255,6 +255,8 @@ jobs:
         id: analyzeTestResults
         if: (success() || failure()) && env.doNotRunTests == 'False'
         uses: microsoft/AL-Go/Actions/AnalyzeTests@testresultspublish
+        env:
+          GH_TOKEN: ${{ secrets.GHTOKENWORKFLOW }}
         with:
           shell: ${{ inputs.shell }}
           parentTelemetryScopeJson: ${{ inputs.parentTelemetryScopeJson }}
