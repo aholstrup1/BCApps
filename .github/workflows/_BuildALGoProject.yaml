@@ -254,7 +254,7 @@ jobs:
       - name: Analyze Test Results
         id: analyzeTestResults
         if: (success() || failure()) && env.doNotRunTests == 'False'
-        uses: microsoft/AL-Go/Actions/AnalyzeTests@e9f4cc63d149d341172cebfc8112e825123683d8
+        uses: microsoft/AL-Go/Actions/AnalyzeTests@testresultspublish
         with:
           shell: ${{ inputs.shell }}
           parentTelemetryScopeJson: ${{ inputs.parentTelemetryScopeJson }}
