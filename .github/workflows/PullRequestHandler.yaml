@@ -155,7 +155,9 @@ jobs:
 
       - name: Analyze Test Results
         id: analyzeTestResults
-        if: (success() || failure()) && env.doNotRunTests == 'False'
+        if: (success() || failure())
         uses: aholstrup1/AL-Go/Actions/AnalyzeTests@testresultspublish2
+        env:
+          GH_TOKEN: ${{ secrets.GHTOKENWORKFLOW }}
         with:
           shell: powershell
