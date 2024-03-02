@@ -100,7 +100,7 @@ codeunit 134699 "Email Address Lookup Tests"
         Assert.AreEqual('test@test.com', Recipient2, '');
 
         Message.GetRecipients(Enum::"Email Recipient Type"::"Cc", Recipients);
-        Assert.AreEqual(1, Recipients.Count(), '');
+        Assert.AreEqual(2, Recipients.Count(), '');
 
         Recipients.Get(1, Recipient1);
         Assert.AreEqual('johndoe@test.com', Recipient1, '');
