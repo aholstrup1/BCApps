@@ -133,7 +133,7 @@ codeunit 135212 "Azure Key Vault Test"
         AzureKeyVault.GetAzureKeyVaultSecret('somesecret', Secret);
 
         // [THEN] The right secret is retreived
-        Assert.AreEqual('SecretFromKeyVault', Secret, 'The returned secret does not match.');
+        Assert.AreEqual('SecretFromKeyVault', Secret, 'The returned secret does match.');
 
         // [WHEN] The key vault secrets are cleared and the same secret is retrieved
         AzureKeyVaultTestLibrary.ClearSecrets();
