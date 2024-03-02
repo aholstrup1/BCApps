@@ -8,7 +8,7 @@ namespace System.Test.Environment.Configuration;
 using System.Environment;
 using System.Environment.Configuration;
 using System.TestLibraries.Security.AccessControl;
-
+ 
 codeunit 132589 "Advanced Settings Test"
 {
     EventSubscriberInstance = Manual;
