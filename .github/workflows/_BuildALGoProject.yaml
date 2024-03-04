@@ -240,7 +240,7 @@ jobs:
         if: (success() || failure()) && (hashFiles(format('{0}/TestResults.xml',inputs.project)) != '')
         with:
           name: ${{ steps.calculateArtifactsNames.outputs.TestResultsArtifactsName }}
-          path: '${{ inputs.project }}/TestResults.xml'
+          path: '${{ inputs.project }}/TestResults.*'
           if-no-files-found: ignore
 
       - name: Publish artifacts - bcpt test results
