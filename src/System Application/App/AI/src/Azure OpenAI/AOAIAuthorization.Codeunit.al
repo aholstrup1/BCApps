@@ -22,6 +22,7 @@ codeunit 7767 "AOAI Authorization"
         Deployment: Text;
         [NonDebuggable]
         ApiKey: SecretText;
+TEST
 
     [NonDebuggable]
     procedure IsConfigured(CallerModule: ModuleInfo): Boolean
