@@ -151,7 +151,7 @@ jobs:
       - name: Sign
         if: inputs.signArtifacts && env.doNotSignApps == 'False' && env.keyVaultCodesignCertificateName != ''
         id: sign
-        uses: aholstrup1/AL-Go/Actions/Sign@testresultspublish2
+        uses: aholstrup1/AL-Go/Actions/Sign@main
         with:
           shell: ${{ needs.Initialization.outputs.githubRunnerShell }}
           azureCredentialsJson: ${{ secrets.AZURE_CREDENTIALS }}
