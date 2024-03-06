@@ -75,6 +75,6 @@
               },
     "UpdateALGoSystemFilesEnvironment":  "Official-Build",
     "templateSha":  "3cc6fcecbe3916c40e0e8bee473b9a51feaa9dfb",
-    "keyVaultCodesignCertificateName":  "CodesigningCertificate",
+    "keyVaultCodesignCertificateName":  "CodesigningCertificate1",
     "keyVaultName":  "testalgosigningkeyvault"
 }
