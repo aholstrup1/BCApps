@@ -6,10 +6,15 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report! 
+        Thanks for taking the time to fill out this bug report!
 
-        ⚠️⚠️ BEFORE WE GET STARTED ⚠️⚠️
-        This bug report is for reporting issues with the contribution process, not for reporting product defects. 
+        This bug report is intended for reporting issues in the contribution process such as: 
+        ✅ Documentation defects
+        ✅ Tooling defects (e.g. Creating development environments, building apps, etc.)
+        ✅ Other defects in the contribution process
+
+        This bug report is **not** intended for
+        🛑 Product defects of any kind
 
         Before you create a new issue, please check the following:
         🔎 Search existing issues to avoid creating duplicates.
