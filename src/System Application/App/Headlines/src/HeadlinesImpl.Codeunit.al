@@ -95,10 +95,10 @@ codeunit 1470 "Headlines Impl."
         User: Record User;
     begin
         if User.GET(UserSecurityId()) then;
-        exit(GetUserGreetingTextInternal(User."Full Name", Time()));
+        exit(GetUserGreetingTextInternal(User."Full Name", Time(), LogInManagement.IsFirstLogin()));
     end;
 
-    procedure GetUserGreetingTextInternal(UserName: Text[80]; CurrentTimeOfDay: Time): Text;
+    procedure GetUserGreetingTextInternal(UserName: Text[80]; CurrentTimeOfDay: Time; FirstLogin: Boolean): Text;
     var
         GreetingTextWithUsername: Text;
         GreetingTextWithoutUsername: Text;
@@ -131,6 +131,9 @@ codeunit 1470 "Headlines Impl."
             exit(GreetingTextWithoutUsername);
 
         GreetingTextWithUsername := StrSubstNo(GreetingTextWithUsername, UserName);
+        if FirstLogin then
+            exit(GreetingTextWithUsername + ' ' + Emphasize('Welcome to Business Central!'));
+
         exit(GreetingTextWithUsername);
     end;
 
