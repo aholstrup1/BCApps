@@ -91,6 +91,7 @@ codeunit 1470 "Headlines Impl."
 
     procedure GetUserGreetingText(): Text
     var
+        LogInManagement: Codeunit "User Login Time Tracker";
         User: Record User;
     begin
         if User.GET(UserSecurityId()) then;
