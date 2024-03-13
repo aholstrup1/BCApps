@@ -147,17 +147,17 @@ codeunit 139481 "Headlines Test"
 
         NoonTime := 120000T;
         // [WHEN] The username contains only whitespace characters
-        GreetingText := HeadlinesImpl.GetUserGreetingTextInternal(' ', NoonTime);
+        GreetingText := HeadlinesImpl.GetUserGreetingTextInternal(' ', NoonTime, false);
         // [THEN] The simple greeting is displayed
         Assert.AreEqual(SimpleNoonGreetingTxt, GreetingText, 'Expected whitespace username to return simple greeting.');
 
         // [WHEN] The username is empty
-        GreetingText := HeadlinesImpl.GetUserGreetingTextInternal('', NoonTime);
+        GreetingText := HeadlinesImpl.GetUserGreetingTextInternal('', NoonTime, false);
         // [THEN] The simple greeting is displayed
         Assert.AreEqual(SimpleNoonGreetingTxt, GreetingText, 'Expected empty username to return simple greeting.');
 
         // [WHEN] The username contains text
-        GreetingText := HeadlinesImpl.GetUserGreetingTextInternal('John Doe', NoonTime);
+        GreetingText := HeadlinesImpl.GetUserGreetingTextInternal('John Doe', NoonTime, true);
         // [THEN] The complex greeting is displayed
         Assert.AreEqual(StrSubstNo(NoonGreetingTxt, 'John Doe'), GreetingText, 'Expected normal username to return more complex greeting.');
     end;
