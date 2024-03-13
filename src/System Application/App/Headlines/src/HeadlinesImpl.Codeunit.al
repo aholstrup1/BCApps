@@ -93,11 +93,11 @@ codeunit 1470 "Headlines Impl."
     var
         User: Record User;
         LogInManagement: Codeunit "User Login Time Tracker";
-        IsFistLogin: Boolean;
+        IsFirstLogin: Boolean;
     begin
-        IsFistLogin := LogInManagement.IsFirstLogin(UserSecurityId());
+        IsFirstLogin := LogInManagement.IsFirstLogin();
         if User.GET(UserSecurityId()) then;
-        exit(GetUserGreetingTextInternal(User."Full Name", Time(), IsFistLogin));
+        exit(GetUserGreetingTextInternal(User."Full Name", Time(), IsFirstLogin));
     end;
 
     procedure GetUserGreetingTextInternal(UserName: Text[80]; CurrentTimeOfDay: Time; FirstLogin: Boolean): Text;
