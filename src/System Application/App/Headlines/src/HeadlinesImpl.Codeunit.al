@@ -95,7 +95,7 @@ codeunit 1470 "Headlines Impl."
         LogInManagement: Codeunit "User Login Time Tracker";
         IsFirstLogin: Boolean;
     begin
-        IsFirstLogin := LogInManagement.IsFirstLogin();
+        IsFirstLogin := LogInManagement.IsFirstLogin(UserSecurityId());
         if User.GET(UserSecurityId()) then;
         exit(GetUserGreetingTextInternal(User."Full Name", Time(), IsFirstLogin));
     end;
