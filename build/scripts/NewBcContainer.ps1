@@ -10,12 +10,17 @@ if ("$env:GITHUB_RUN_ID" -eq "") {
     $parameters.shortcuts = "none"
 }
 
+Import-Module "$PSScriptRoot\DevEnv\NewDevContainer.psm1" -DisableNameChecking
+Import-Module "$PSScriptRoot\EnlistmentHelperFunctions.psm1" -DisableNameChecking
+
 New-BcContainer @parameters
 
-$installedApps = Get-BcContainerAppInfo -containerName $containerName -tenantSpecificProperties -sort DependenciesLast
+<#$installedApps = Get-BcContainerAppInfo -containerName $containerName -tenantSpecificProperties -sort DependenciesLast
 $installedApps | ForEach-Object {
     Write-Host "Removing $($_.Name)"
     Unpublish-BcContainerApp -containerName $parameters.ContainerName -name $_.Name -unInstall -doNotSaveData -doNotSaveSchema -force
-}
+}#>
+
+Setup-ContainerForDevelopment -ContainerName $ContainerName -RepoVersion (Get-ConfigValue -Key "repoVersion" -ConfigType AL-Go)
 
 Invoke-ScriptInBcContainer -containerName $parameters.ContainerName -scriptblock { $progressPreference = 'SilentlyContinue' }
