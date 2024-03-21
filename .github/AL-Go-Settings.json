@@ -1,6 +1,6 @@
 {
     "type":  "PTE",
-    "templateUrl":  "https://github.com/microsoft/AL-Go-PTE@preview",
+    "templateUrl":  "https://github.com/microsoft/AL-Go/Actions@private/aholstrup/createreleasename",
     "bcContainerHelperVersion":  "preview",
     "runs-on":  "windows-latest",
     "cacheImageName":  "",
@@ -25,7 +25,6 @@
                                   "CreateApp.yaml",
                                   "CreateOnlineDevelopmentEnvironment.yaml",
                                   "CreatePerformanceTestApp.yaml",
-                                  "CreateRelease.yaml",
                                   "CreateTestApp.yaml",
                                   "Current.yaml",
                                   "IncrementVersionNumber.yaml",
