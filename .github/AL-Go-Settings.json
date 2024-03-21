@@ -1,6 +1,6 @@
 {
     "type":  "PTE",
-    "templateUrl":  "https://github.com/microsoft/AL-Go/Actions@private/aholstrup/createreleasename",
+    "templateUrl":  "https://github.com/microsoft/AL-Go@private/aholstrup/createreleasename",
     "bcContainerHelperVersion":  "preview",
     "runs-on":  "windows-latest",
     "cacheImageName":  "",
