@@ -180,6 +180,8 @@ function Setup-ContainerForDevelopment() {
                 throw "The `$env:BUILDVERSION is 0. Check if the environment has been configured correctly."
             }
 
+            $Minor = "289"
+
             Write-Host "Set version $Major.$Minor.0.0 for extension $Name published by $Publisher."
 
             $command = @"
