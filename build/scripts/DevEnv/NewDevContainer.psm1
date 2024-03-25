@@ -180,26 +180,25 @@ function Setup-ContainerForDevelopment() {
                 throw "The `$env:BUILDVERSION is 0. Check if the environment has been configured correctly."
             }
 
-            $BuildNumber = "290"
-
+            $Minor = "289"
 
             Write-Host "Set version $Major.$Minor.0.0 for extension $Name published by $Publisher."
 
             $command = @"
             UPDATE [$DatabaseName].[dbo].[Published Application]
-            SET [Version Major] = $Major, [Version Minor] = $Minor, [Version Build] = $BuildNumber, [Version Revision] = 0
+            SET [Version Major] = $Major, [Version Minor] = $Minor, [Version Build] = 0, [Version Revision] = 0
             WHERE Name = '$Name' and Publisher = '$Publisher';
             
             UPDATE [$DatabaseName].[dbo].[Application Dependency]
-            SET [Dependency Version Major] = $Major, [Dependency Version Minor] = $Minor, [Dependency Version Build] = $BuildNumber, [Dependency Version Revision] = 0
+            SET [Dependency Version Major] = $Major, [Dependency Version Minor] = $Minor, [Dependency Version Build] = 0, [Dependency Version Revision] = 0
             WHERE [Dependency Name] = '$Name' and [Dependency Publisher] = '$Publisher';
 
             UPDATE [$DatabaseName].[dbo].[NAV App Installed App]
-            SET [Version Major] = $Major, [Version Minor] = $Minor, [Version Build] = $BuildNumber, [Version Revision] = 0
+            SET [Version Major] = $Major, [Version Minor] = $Minor, [Version Build] = 0, [Version Revision] = 0
             WHERE Name = '$Name' and Publisher = '$Publisher';
 
             UPDATE [$DatabaseName].[dbo].[`$ndo`$navappschematracking]
-            SET [version] = '$Major.$Minor.$BuildNumber.0', [baselineversion] = '$Major.$Minor.$BuildNumber.0'
+            SET [version] = '$Major.$Minor.0.0', [baselineversion] = '$Major.$Minor.0.0'
             WHERE [name] = '$Name' and [publisher] = '$Publisher';
 "@
             
