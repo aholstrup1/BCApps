@@ -2,7 +2,7 @@ Param(
     [Hashtable]$parameters
 )
 
-Invoke-ScriptInBcContainer -containerName "BC-20240325" -scriptblock { 
+Invoke-ScriptInBcContainer -containerName $parameters.containerName -scriptblock { 
     $appfile = "C:\Applications\BaseApp\test\Microsoft_Tests-TestLibraries.app"
     if (Test-Path $appfile) {
         Write-Host "Importing test libraries..."
