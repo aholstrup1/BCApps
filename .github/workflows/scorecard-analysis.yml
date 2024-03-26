@@ -1,9 +1,9 @@
-name: Scorecard analysis workflow
+name: Scorecard analysis
 on:
   workflow_dispatch:
   schedule:
-    # Weekly on Saturdays.
-    - cron:  '30 1 * * 6'
+    # Weekly on Monday at 08:00 UTC
+    - cron: "0 8 * * 1"
 
 permissions: read-all
 
@@ -12,10 +12,8 @@ jobs:
     name: Scorecard analysis
     runs-on: ubuntu-latest
     permissions:
-      # Needed for Code scanning upload
-      security-events: write
-      # Needed for GitHub OIDC token if publish_results is true
-      id-token: write
+      security-events: write # Needed for Code scanning upload
+      id-token: write # Needed for GitHub OIDC token if publish_results is true
 
     steps:
       - name: "Checkout code"
@@ -28,25 +26,7 @@ jobs:
         with:
           results_file: results.sarif
           results_format: sarif
-          # Scorecard team runs a weekly scan of public GitHub repos,
-          # see https://github.com/ossf/scorecard#public-data.
-          # Setting `publish_results: true` helps us scale by leveraging your workflow to
-          # extract the results instead of relying on our own infrastructure to run scans.
-          # And it's free for you!
-          publish_results: true
 
-      # Upload the results as artifacts (optional). Commenting out will disable
-      # uploads of run results in SARIF format to the repository Actions tab.
-      # https://docs.github.com/en/actions/advanced-guides/storing-workflow-data-as-artifacts
-      - name: "Upload artifact"
-        uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
-        with:
-          name: SARIF file
-          path: results.sarif
-          retention-days: 5
-
-      # Upload the results to GitHub's code scanning dashboard (optional).
-      # Commenting out will disable upload of results to your repo's Code Scanning dashboard
       - name: "Upload to code-scanning"
         uses: github/codeql-action/upload-sarif@83a02f7883b12e0e4e1a146174f5e2292a01e601 # v2.16.4
         with:
