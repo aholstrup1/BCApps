@@ -72,6 +72,8 @@ on:
         required: false
         type: string
 
+permissions: read-all
+
 env:
   ALGoOrgSettings: ${{ vars.ALGoOrgSettings }}
   ALGoRepoSettings: ${{ vars.ALGoRepoSettings }}
