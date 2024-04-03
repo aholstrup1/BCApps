@@ -72,7 +72,9 @@ on:
         required: false
         type: string
 
-permissions: read-all
+permissions:
+  contents: read
+  actions: read
 
 env:
   ALGoOrgSettings: ${{ vars.ALGoOrgSettings }}
