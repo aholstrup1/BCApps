@@ -2,7 +2,7 @@ Param(
     [ValidateSet('app', 'testApp', 'bcptApp')]
     [string] $appType = 'app',
     [ref] $parameters
-)
+) 
 
 Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1 
 
