@@ -6,7 +6,7 @@ Param(
 
 Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
 
-$appBuildMode = Get-BuildMode
+$appBuildMode = Get-BuildMode 
 
 if($appType -eq 'app')
 {
