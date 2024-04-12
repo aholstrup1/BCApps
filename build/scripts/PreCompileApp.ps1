@@ -4,7 +4,7 @@ Param(
     [ref] $parameters
 )
 
-Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
+Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1 
 
 $appBuildMode = Get-BuildMode 
 
