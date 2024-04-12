@@ -46,6 +46,7 @@ if($appType -eq 'app')
                 $appJson = Join-Path $tempParameters["appProjectFolder"] "app.json"
                 $appName = (Get-Content -Path $appJson | ConvertFrom-Json).Name
                 $tempParameters["appName"] = "$($appName)_clean.app"
+                throw "Something went wrong"
 
                 if($useCompilerFolder) {
                     Compile-AppWithBcCompilerFolder @tempParameters | Out-Null
@@ -60,7 +61,7 @@ if($appType -eq 'app')
                 return
             }
 
-            Enable-BreakingChangesCheck -AppSymbolsFolder $parameters.Value["appSymbolsFolder"] -AppProjectFolder $parameters.Value["appProjectFolder"] -BuildMode $appBuildMode | Out-Null
+            Enable-BreakingChangesCheck -AppSymbolsFolder $parameters.Value["appSymbolsFolder"] -AppProjectFolder $parameters.Value["appProjectFolder"] -BuildMode $appBuildMode -Test $true | Out-Null
         }
     }
 }
