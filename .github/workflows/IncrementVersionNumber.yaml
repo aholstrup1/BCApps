@@ -51,7 +51,6 @@ jobs:
         uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@main
         with:
           shell: powershell
-          eventId: "DO0096"
 
       - name: Read settings
         uses: aholstrup1/AL-Go/Actions/ReadSettings@main
@@ -81,4 +80,3 @@ jobs:
         uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@main
         with:
           shell: powershell
-          eventId: "DO0096"

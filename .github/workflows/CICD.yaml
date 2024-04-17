@@ -56,7 +56,6 @@ jobs:
         uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@main
         with:
           shell: powershell
-          eventId: "DO0091"
 
       - name: Read settings
         id: ReadSettings
@@ -185,7 +184,7 @@ jobs:
     runs-on: windows-latest
     name: Deploy Reference Documentation
     permissions:
-      contents: write
+      contents: read
       actions: read
       pages: write
       id-token: write
@@ -232,6 +231,9 @@ jobs:
     strategy: ${{ fromJson(needs.Initialization.outputs.environmentsMatrixJson) }}
     runs-on: ${{ fromJson(matrix.os) }}
     name: Deploy to ${{ matrix.environment }}
+    defaults:
+      run:
+        shell: ${{ matrix.shell }}
     environment:
       name: ${{ matrix.environment }}
       url: ${{ steps.Deploy.outputs.environmentUrl }}
@@ -247,7 +249,7 @@ jobs:
       - name: Read settings
         uses: aholstrup1/AL-Go/Actions/ReadSettings@main
         with:
-          shell: powershell
+          shell: ${{ matrix.shell }}
 
       - name: EnvName
         id: envName
@@ -260,7 +262,7 @@ jobs:
         id: ReadSecrets
         uses: aholstrup1/AL-Go/Actions/ReadSecrets@main
         with:
-          shell: powershell
+          shell: ${{ matrix.shell }}
           gitHubSecrets: ${{ toJson(secrets) }}
           getSecrets: '${{ steps.envName.outputs.envName }}-AuthContext,${{ steps.envName.outputs.envName }}_AuthContext,AuthContext,${{ steps.envName.outputs.envName }}-EnvironmentName,${{ steps.envName.outputs.envName }}_EnvironmentName,EnvironmentName,projects'
 
@@ -270,7 +272,7 @@ jobs:
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
-          shell: powershell
+          shell: ${{ matrix.shell }}
           environmentName: ${{ matrix.environment }}
           artifacts: '.artifacts'
           type: 'CD'
@@ -330,4 +332,3 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           shell: powershell
-          eventId: "DO0091"
