@@ -80,3 +80,4 @@ jobs:
         uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@aholstrup/telemetry
         with:
           shell: powershell
+          telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
