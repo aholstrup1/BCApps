@@ -41,6 +41,7 @@ jobs:
       buildOrderJson: ${{ steps.determineProjectsToBuild.outputs.BuildOrderJson }}
       baselineWorkflowRunId: ${{ steps.determineProjectsToBuild.outputs.BaselineWorkflowRunId }}
       workflowDepth: ${{ steps.DetermineWorkflowDepth.outputs.WorkflowDepth }}
+      telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
       - name: Dump Workflow Information
         uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@aholstrup/telemetry
@@ -136,3 +137,10 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           shell: powershell
+
+      - name: Finalize the workflow
+        id: PostProcess
+        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@aholstrup/telemetry
+        with:
+          shell: powershell
+          telemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
