@@ -80,7 +80,7 @@ jobs:
         uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@aholstrup/telemetry2
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          workflowFailed: ${{ tojson(failure()) }}
+          STEPS_CONTEXT: ${{ toJson(steps) }}
         with:
           shell: powershell
           telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
