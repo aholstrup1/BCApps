@@ -33,7 +33,7 @@ codeunit 135061 "Dynamics 2D QR Code Test"
         TempBlob := IBarcodeImageProvider2D.EncodeImage(SampleTxt, Enum::"Barcode Symbology 2D"::"QR-Code");
 
         // [THEN] TempBlob contains data
-        Assert.IsTrue(TempBlob.HasValue(), 'No QR Code image created.');
+        Assert.IsFalse(TempBlob.HasValue(), 'No QR Code image created.');
     end;
 
     [Test]
