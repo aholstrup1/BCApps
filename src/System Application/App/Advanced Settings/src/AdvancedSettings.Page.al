@@ -16,19 +16,13 @@ page 9202 "Advanced Settings"
 
     layout
     {
-        area(Content)
+        area(Content)w
         {
             grid(Header)
             {
-                ShowCaption = false;
-                GridLayout = Rows;
-
-                grid(SystemLinks)
+                ShowCaption = false;regff
                 {
-                    GridLayout = Rows;
-
-                    group(ExtensionsGroup)
-                    {
+                    GridLayout = Rows;dad
                         InstructionalText = 'Extensions enhance the capabilities of Business Central.';
                         ShowCaption = false;
 
