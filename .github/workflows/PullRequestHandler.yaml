@@ -57,6 +57,8 @@ jobs:
       - name: Initialize the workflow
         id: init
         uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@aholstrup/telemetry2
+        env:
+          actionpath: ${{ github.action_path }}
         with:
           shell: powershell
 
