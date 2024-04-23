@@ -82,6 +82,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
           STEPS_CONTEXT: ${{ toJson(steps) }}
+          JOB_CONTEXT: ${{ toJson(job) }}
         with:
           shell: powershell
           telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
