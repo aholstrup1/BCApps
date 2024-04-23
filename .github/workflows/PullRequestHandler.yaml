@@ -146,3 +146,4 @@ jobs:
         with:
           shell: powershell
           telemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
+          currentJobContext: ${{ toJson(job) }}
