@@ -27,7 +27,7 @@ jobs:
     if: (github.event.pull_request.base.repo.full_name != github.event.pull_request.head.repo.full_name) && (github.event_name != 'pull_request')
     runs-on: windows-latest
     steps:
-      - uses: aholstrup1/AL-Go/Actions/VerifyPRChanges@main
+      - uses: aholstrup1/AL-Go/Actions/VerifyPRChanges@aholstrup/telemetrymodule
 
   Initialization:
     needs: [ PregateCheck ]
@@ -44,7 +44,7 @@ jobs:
       telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
       - name: Dump Workflow Information
-        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@main
+        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@aholstrup/telemetrymodule
         with:
           shell: powershell
 
@@ -56,13 +56,13 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@main
+        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@aholstrup/telemetrymodule
         with:
           shell: powershell
 
       - name: Read settings
         id: ReadSettings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule
         with:
           shell: powershell
 
@@ -73,7 +73,7 @@ jobs:
 
       - name: Determine Projects To Build
         id: determineProjectsToBuild
-        uses: aholstrup1/AL-Go/Actions/DetermineProjectsToBuild@main
+        uses: aholstrup1/AL-Go/Actions/DetermineProjectsToBuild@aholstrup/telemetrymodule
         with:
           shell: powershell
           maxBuildDepth: ${{ env.workflowDepth }}
@@ -132,7 +132,7 @@ jobs:
     steps:
       - name: Pull Request Status Check
         id: PullRequestStatusCheck
-        uses: aholstrup1/AL-Go/Actions/PullRequestStatusCheck@main
+        uses: aholstrup1/AL-Go/Actions/PullRequestStatusCheck@aholstrup/telemetrymodule
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -140,7 +140,7 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@main
+        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@aholstrup/telemetrymodule
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:

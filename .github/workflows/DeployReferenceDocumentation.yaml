@@ -30,18 +30,18 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@main
+        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@aholstrup/telemetrymodule
         with:
           shell: powershell
         
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule
         with:
           shell: powershell
 
       - name: Determine Deployment Environments
         id: DetermineDeploymentEnvironments
-        uses: aholstrup1/AL-Go/Actions/DetermineDeploymentEnvironments@main
+        uses: aholstrup1/AL-Go/Actions/DetermineDeploymentEnvironments@aholstrup/telemetrymodule
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -54,7 +54,7 @@ jobs:
         uses: actions/configure-pages@v5
         
       - name: Build Reference Documentation
-        uses: aholstrup1/AL-Go/Actions/BuildReferenceDocumentation@main
+        uses: aholstrup1/AL-Go/Actions/BuildReferenceDocumentation@aholstrup/telemetrymodule
         with:
           shell: powershell
           artifacts: 'latest'
@@ -71,7 +71,7 @@ jobs:
 
       - name: Finalize the workflow
         if: always()
-        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@main
+        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@aholstrup/telemetrymodule
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
