@@ -1,6 +1,6 @@
 {
   "type": "PTE",
-  "templateUrl": "https://github.com/aholstrup1/AL-Go@aholstrup/telemetrymodule",
+  "templateUrl": "https://github.com/aholstrup1/AL-Go@main",
   "bcContainerHelperVersion": "preview",
   "runs-on": "windows-latest",
   "cacheImageName": "",
