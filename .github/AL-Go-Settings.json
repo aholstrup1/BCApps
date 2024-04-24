@@ -40,10 +40,6 @@
     "Default",
     "Clean"
   ],
-  "CICDPushBranches": [
-    "main",
-    "releases/*"
-  ],
   "CICDSchedule": "5 4 * * *",
   "CICDPullRequestBranches": [
     "main",
