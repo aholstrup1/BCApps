@@ -7,9 +7,9 @@ on:
       - '**.md'
       - '.github/workflows/*.yaml'
       - '!.github/workflows/CICD.yaml'
-    branches: [ 'main', 'releases/*' ]
+    branches: [ 'main', 'release/*', 'feature/*' ]
   schedule:
-    - cron: '5 4 * * *'
+    - cron: '5 4 1 * *'
 
 defaults:
   run:
@@ -45,7 +45,7 @@ jobs:
       workflowDepth: ${{ steps.DetermineWorkflowDepth.outputs.WorkflowDepth }}
     steps:
       - name: Dump Workflow Information
-        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@main
+        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@aholstrup/issue/1048
         with:
           shell: powershell
 
@@ -56,13 +56,14 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@main
+        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@aholstrup/issue/1048
         with:
           shell: powershell
+          eventId: "DO0091"
 
       - name: Read settings
         id: ReadSettings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/issue/1048
         with:
           shell: powershell
           get: type
@@ -74,14 +75,14 @@ jobs:
 
       - name: Determine Projects To Build
         id: determineProjectsToBuild
-        uses: aholstrup1/AL-Go/Actions/DetermineProjectsToBuild@main
+        uses: aholstrup1/AL-Go/Actions/DetermineProjectsToBuild@aholstrup/issue/1048
         with:
           shell: powershell
           maxBuildDepth: ${{ env.workflowDepth }}
 
       - name: Determine Delivery Target Secrets
         id: DetermineDeliveryTargetSecrets
-        uses: aholstrup1/AL-Go/Actions/DetermineDeliveryTargets@main
+        uses: aholstrup1/AL-Go/Actions/DetermineDeliveryTargets@aholstrup/issue/1048
         with:
           shell: powershell
           projectsJson: '${{ steps.determineProjectsToBuild.outputs.ProjectsJson }}'
@@ -89,7 +90,7 @@ jobs:
 
       - name: Read secrets
         id: ReadSecrets
-        uses: aholstrup1/AL-Go/Actions/ReadSecrets@main
+        uses: aholstrup1/AL-Go/Actions/ReadSecrets@aholstrup/issue/1048
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -97,7 +98,7 @@ jobs:
 
       - name: Determine Delivery Targets
         id: DetermineDeliveryTargets
-        uses: aholstrup1/AL-Go/Actions/DetermineDeliveryTargets@main
+        uses: aholstrup1/AL-Go/Actions/DetermineDeliveryTargets@aholstrup/issue/1048
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -107,7 +108,7 @@ jobs:
 
       - name: Determine Deployment Environments
         id: DetermineDeploymentEnvironments
-        uses: aholstrup1/AL-Go/Actions/DetermineDeploymentEnvironments@main
+        uses: aholstrup1/AL-Go/Actions/DetermineDeploymentEnvironments@aholstrup/issue/1048
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -123,13 +124,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/issue/1048
         with:
           shell: powershell
           get: templateUrl
 
       - name: Check for updates to AL-Go system files
-        uses: aholstrup1/AL-Go/Actions/CheckForUpdates@main
+        uses: aholstrup1/AL-Go/Actions/CheckForUpdates@aholstrup/issue/1048
         with:
           shell: powershell
           templateUrl: ${{ env.templateUrl }}
@@ -148,6 +149,7 @@ jobs:
     with:
       shell: ${{ needs.Initialization.outputs.githubRunnerShell }}
       runsOn: ${{ needs.Initialization.outputs.githubRunner }}
+      parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
       project: ${{ matrix.project }}
       projectName: ${{ matrix.projectName }}
       buildMode: ${{ matrix.buildMode }}
@@ -171,6 +173,7 @@ jobs:
     with:
       shell: ${{ needs.Initialization.outputs.githubRunnerShell }}
       runsOn: ${{ needs.Initialization.outputs.githubRunner }}
+      parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
       project: ${{ matrix.project }}
       projectName: ${{ matrix.projectName }}
       buildMode: ${{ matrix.buildMode }}
@@ -204,7 +207,7 @@ jobs:
           path: '.artifacts'
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/issue/1048
         with:
           shell: powershell
 
@@ -213,7 +216,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build Reference Documentation
-        uses: aholstrup1/AL-Go/Actions/BuildReferenceDocumentation@main
+        uses: aholstrup1/AL-Go/Actions/BuildReferenceDocumentation@aholstrup/issue/1048
         with:
           shell: powershell
           artifacts: '.artifacts'
@@ -250,7 +253,7 @@ jobs:
           path: '.artifacts'
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/issue/1048
         with:
           shell: ${{ matrix.shell }}
 
@@ -263,7 +266,7 @@ jobs:
 
       - name: Read secrets
         id: ReadSecrets
-        uses: aholstrup1/AL-Go/Actions/ReadSecrets@main
+        uses: aholstrup1/AL-Go/Actions/ReadSecrets@aholstrup/issue/1048
         with:
           shell: ${{ matrix.shell }}
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -271,7 +274,7 @@ jobs:
 
       - name: Deploy
         id: Deploy
-        uses: aholstrup1/AL-Go/Actions/Deploy@main
+        uses: aholstrup1/AL-Go/Actions/Deploy@aholstrup/issue/1048
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -300,20 +303,20 @@ jobs:
           path: '.artifacts'
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/issue/1048
         with:
           shell: powershell
 
       - name: Read secrets
         id: ReadSecrets
-        uses: aholstrup1/AL-Go/Actions/ReadSecrets@main
+        uses: aholstrup1/AL-Go/Actions/ReadSecrets@aholstrup/issue/1048
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
           getSecrets: '${{ matrix.deliveryTarget }}Context'
 
       - name: Deliver
-        uses: aholstrup1/AL-Go/Actions/Deliver@main
+        uses: aholstrup1/AL-Go/Actions/Deliver@aholstrup/issue/1048
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -333,10 +336,8 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@main
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@aholstrup/issue/1048
         with:
           shell: powershell
+          eventId: "DO0091"
           telemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
-          currentJobContext: ${{ toJson(job) }}
