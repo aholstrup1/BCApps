@@ -30,18 +30,19 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@main
+        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@aholstrup/issue/1048
         with:
           shell: powershell
+          eventId: "DO0097"
         
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/issue/1048
         with:
           shell: powershell
 
       - name: Determine Deployment Environments
         id: DetermineDeploymentEnvironments
-        uses: aholstrup1/AL-Go/Actions/DetermineDeploymentEnvironments@main
+        uses: aholstrup1/AL-Go/Actions/DetermineDeploymentEnvironments@aholstrup/issue/1048
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -54,7 +55,7 @@ jobs:
         uses: actions/configure-pages@v5
         
       - name: Build Reference Documentation
-        uses: aholstrup1/AL-Go/Actions/BuildReferenceDocumentation@main
+        uses: aholstrup1/AL-Go/Actions/BuildReferenceDocumentation@aholstrup/issue/1048
         with:
           shell: powershell
           artifacts: 'latest'
@@ -68,13 +69,3 @@ jobs:
         if: steps.DetermineDeploymentEnvironments.outputs.deployALDocArtifact == 1
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Finalize the workflow
-        if: always()
-        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@main
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          shell: powershell
-          telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
-          currentJobContext: ${{ toJson(job) }}

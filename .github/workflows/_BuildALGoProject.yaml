@@ -67,6 +67,10 @@ on:
         description: Flag determining whether to use the Artifacts Cache
         type: boolean
         default: false
+      parentTelemetryScopeJson:
+        description: Specifies the telemetry scope for the telemetry signal
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -92,7 +96,7 @@ jobs:
           lfs: true
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/issue/1048
         with:
           shell: ${{ inputs.shell }}
           project: ${{ inputs.project }}
@@ -101,17 +105,18 @@ jobs:
       - name: Read secrets
         id: ReadSecrets
         if: github.event_name != 'pull_request'
-        uses: aholstrup1/AL-Go/Actions/ReadSecrets@main
+        uses: aholstrup1/AL-Go/Actions/ReadSecrets@aholstrup/issue/1048
         with:
           shell: ${{ inputs.shell }}
           gitHubSecrets: ${{ toJson(secrets) }}
           getSecrets: '${{ inputs.secrets }},appDependencyProbingPathsSecrets'
 
       - name: Determine ArtifactUrl
-        uses: aholstrup1/AL-Go/Actions/DetermineArtifactUrl@main
+        uses: aholstrup1/AL-Go/Actions/DetermineArtifactUrl@aholstrup/issue/1048
         id: determineArtifactUrl
         with:
           shell: ${{ inputs.shell }}
+          parentTelemetryScopeJson: ${{ inputs.parentTelemetryScopeJson }}
           project: ${{ inputs.project }}
 
       - name: Cache Business Central Artifacts
@@ -123,7 +128,7 @@ jobs:
 
       - name: Download Project Dependencies
         id: DownloadProjectDependencies
-        uses: aholstrup1/AL-Go/Actions/DownloadProjectDependencies@main
+        uses: aholstrup1/AL-Go/Actions/DownloadProjectDependencies@aholstrup/issue/1048
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -134,12 +139,13 @@ jobs:
           baselineWorkflowRunId: ${{ inputs.baselineWorkflowRunId }}
 
       - name: Build
-        uses: aholstrup1/AL-Go/Actions/RunPipeline@main
+        uses: aholstrup1/AL-Go/Actions/RunPipeline@aholstrup/issue/1048
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
           BuildMode: ${{ inputs.buildMode }}
         with:
           shell: ${{ inputs.shell }}
+          parentTelemetryScopeJson: ${{ inputs.parentTelemetryScopeJson }}
           artifact: ${{ env.artifact }}
           project: ${{ inputs.project }}
           buildMode: ${{ inputs.buildMode }}
@@ -149,15 +155,16 @@ jobs:
       - name: Sign
         if: inputs.signArtifacts && env.doNotSignApps == 'False' && env.keyVaultCodesignCertificateName != ''
         id: sign
-        uses: aholstrup1/AL-Go/Actions/Sign@main
+        uses: aholstrup1/AL-Go/Actions/Sign@aholstrup/issue/1048
         with:
           shell: ${{ needs.Initialization.outputs.githubRunnerShell }}
           azureCredentialsJson: ${{ secrets.AZURE_CREDENTIALS }}
           pathToFiles: '${{ inputs.project }}/.buildartifacts/Apps/*.app'
+          parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
 
       - name: Calculate Artifact names
         id: calculateArtifactsNames
-        uses: aholstrup1/AL-Go/Actions/CalculateArtifactNames@main
+        uses: aholstrup1/AL-Go/Actions/CalculateArtifactNames@aholstrup/issue/1048
         if: success() || failure()
         with:
           shell: ${{ inputs.shell }}
@@ -251,14 +258,16 @@ jobs:
       - name: Analyze Test Results
         id: analyzeTestResults
         if: (success() || failure()) && env.doNotRunTests == 'False'
-        uses: aholstrup1/AL-Go/Actions/AnalyzeTests@main
+        uses: aholstrup1/AL-Go/Actions/AnalyzeTests@aholstrup/issue/1048
         with:
           shell: ${{ inputs.shell }}
+          parentTelemetryScopeJson: ${{ inputs.parentTelemetryScopeJson }}
           project: ${{ inputs.project }}
 
       - name: Cleanup
         if: always()
-        uses: aholstrup1/AL-Go/Actions/PipelineCleanup@main
+        uses: aholstrup1/AL-Go/Actions/PipelineCleanup@aholstrup/issue/1048
         with:
           shell: ${{ inputs.shell }}
+          parentTelemetryScopeJson: ${{ inputs.parentTelemetryScopeJson }}
           project: ${{ inputs.project }}
