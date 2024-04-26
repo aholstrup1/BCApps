@@ -1,6 +1,6 @@
 {
     "type":  "PTE",
-    "templateUrl":  "https://github.com/aholstrup1/AL-Go@main",
+    "templateUrl":  "https://github.com/aholstrup1/AL-Go@aholstrup/issue/1048",
     "bcContainerHelperVersion":  "preview",
     "runs-on":  "windows-latest",
     "cacheImageName":  "",
@@ -40,7 +40,7 @@
                        "Default",
                        "Clean"
                    ],
-    "CICDSchedule":  "5 4 * * *",
+    "CICDSchedule":  "5 4 1 * *",
     "CICDPullRequestBranches":  [
                                     "main",
                                     "releases/*",
