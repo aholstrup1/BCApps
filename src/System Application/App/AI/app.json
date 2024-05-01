@@ -1,7 +1,7 @@
 {
     "id":  "d3433b68-4901-445f-9547-fdfeca57575a",
     "name":  "AI SDK",
-    "publisher":  "Microsoft",
+    "publisher":  "Microsoft", 
     "brief":  "AI SDK to build AI-powered experiences",
     "description":  "AI SDK to build AI-powered experiences",
     "version":  "25.0.0.0",
