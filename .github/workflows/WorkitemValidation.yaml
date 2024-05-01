@@ -15,7 +15,6 @@ defaults:
 
 jobs:
   GitHubIssueValidation:
-    if: github.repository_owner == 'microsoft' && github.event.pull_request.state == 'open'
     name: 'Validate link to issues'
     runs-on: ubuntu-latest
     steps:
