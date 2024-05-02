@@ -11,7 +11,7 @@ namespace System.DateTime;
 codeunit 8720 "Time Zone"
 {
     InherentEntitlements = X;
-    InherentPermissions = X;
+    InherentPermissions = X
 
     /// <summary>
     /// Retrieves the offset from the requested time zone at the time of the requested datetime. This takes into account any daylight saving time conditions that may apply.
@@ -23,7 +23,7 @@ codeunit 8720 "Time Zone"
     var
         TimeZoneImpl: Codeunit "Time Zone Impl.";
     begin
-        exit(TimeZoneImpl.GetUtcOffset(SourceDateTime, TimeZoneId));
+        exit(TimeZoneImpl.GetUtcOffset(SourceDateTime, TimeZoneId))
     end;
 
     /// <summary>
