@@ -43,7 +43,7 @@ jobs:
       workflowDepth: ${{ steps.DetermineWorkflowDepth.outputs.WorkflowDepth }}
     steps:
       - name: Dump Workflow Information
-        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@aholstrup/telemetrymodule
         with:
           shell: powershell
 
@@ -54,13 +54,13 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@aholstrup/telemetrymodule
         with:
           shell: powershell
 
       - name: Read settings
         id: ReadSettings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule
         with:
           shell: powershell
           get: type
@@ -72,14 +72,14 @@ jobs:
 
       - name: Determine Projects To Build
         id: determineProjectsToBuild
-        uses: aholstrup1/AL-Go/Actions/DetermineProjectsToBuild@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/DetermineProjectsToBuild@aholstrup/telemetrymodule
         with:
           shell: powershell
           maxBuildDepth: ${{ env.workflowDepth }}
 
       - name: Determine Delivery Target Secrets
         id: DetermineDeliveryTargetSecrets
-        uses: aholstrup1/AL-Go/Actions/DetermineDeliveryTargets@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/DetermineDeliveryTargets@aholstrup/telemetrymodule
         with:
           shell: powershell
           projectsJson: '${{ steps.determineProjectsToBuild.outputs.ProjectsJson }}'
@@ -87,7 +87,7 @@ jobs:
 
       - name: Read secrets
         id: ReadSecrets
-        uses: aholstrup1/AL-Go/Actions/ReadSecrets@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/ReadSecrets@aholstrup/telemetrymodule
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -95,7 +95,7 @@ jobs:
 
       - name: Determine Delivery Targets
         id: DetermineDeliveryTargets
-        uses: aholstrup1/AL-Go/Actions/DetermineDeliveryTargets@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/DetermineDeliveryTargets@aholstrup/telemetrymodule
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -105,7 +105,7 @@ jobs:
 
       - name: Determine Deployment Environments
         id: DetermineDeploymentEnvironments
-        uses: aholstrup1/AL-Go/Actions/DetermineDeploymentEnvironments@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/DetermineDeploymentEnvironments@aholstrup/telemetrymodule
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -121,13 +121,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule
         with:
           shell: powershell
           get: templateUrl
 
       - name: Check for updates to AL-Go system files
-        uses: aholstrup1/AL-Go/Actions/CheckForUpdates@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/CheckForUpdates@aholstrup/telemetrymodule
         with:
           shell: powershell
           templateUrl: ${{ env.templateUrl }}
@@ -202,7 +202,7 @@ jobs:
           path: '.artifacts'
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule
         with:
           shell: powershell
 
@@ -211,7 +211,7 @@ jobs:
         uses: actions/configure-pages@v5
 
       - name: Build Reference Documentation
-        uses: aholstrup1/AL-Go/Actions/BuildReferenceDocumentation@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/BuildReferenceDocumentation@aholstrup/telemetrymodule
         with:
           shell: powershell
           artifacts: '.artifacts'
@@ -248,7 +248,7 @@ jobs:
           path: '.artifacts'
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule
         with:
           shell: ${{ matrix.shell }}
 
@@ -261,7 +261,7 @@ jobs:
 
       - name: Read secrets
         id: ReadSecrets
-        uses: aholstrup1/AL-Go/Actions/ReadSecrets@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/ReadSecrets@aholstrup/telemetrymodule
         with:
           shell: ${{ matrix.shell }}
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -269,7 +269,7 @@ jobs:
 
       - name: Deploy
         id: Deploy
-        uses: aholstrup1/AL-Go/Actions/Deploy@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/Deploy@aholstrup/telemetrymodule
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -298,20 +298,20 @@ jobs:
           path: '.artifacts'
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule
         with:
           shell: powershell
 
       - name: Read secrets
         id: ReadSecrets
-        uses: aholstrup1/AL-Go/Actions/ReadSecrets@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/ReadSecrets@aholstrup/telemetrymodule
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
           getSecrets: '${{ matrix.deliveryTarget }}Context'
 
       - name: Deliver
-        uses: aholstrup1/AL-Go/Actions/Deliver@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/Deliver@aholstrup/telemetrymodule
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
         with:
@@ -331,7 +331,7 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@aholstrup/telemetrymodule_wrapper
+        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@aholstrup/telemetrymodule
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
