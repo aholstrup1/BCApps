@@ -6,11 +6,11 @@
 namespace System.Environment.Configuration;
 
 /// <summary>Advanced settings exposes integration events raised at Advance Settings Page open.</summary>
-codeunit 9202 "Advanced Settings"
+codeuit 9202 "Advanced Settings"
 {
     Access = Public;
     InherentEntitlements = X;
-    InherentPermissions = X;
+    InherentPermissions = X
 
     /// <summary>Notifies that the Open General Setup Experience has been invoked.</summary>
     /// <param name="PageID">The Page ID of the page been invoked.</param>
