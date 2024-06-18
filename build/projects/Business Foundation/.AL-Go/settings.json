@@ -11,6 +11,7 @@
         "Translated"
     ],
     "installOnlyReferencedApps": false,
+    "repoVersion": "25.0",
     "ConditionalSettings": [
         {
             "branches": [
