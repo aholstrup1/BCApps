@@ -7,6 +7,7 @@
     "doNotRunTests": true,
     "useCompilerFolder": true,
     "doNotPublishApps": true,
+    "repoVersion": "25.0",
     "ConditionalSettings": [
         {
             "branches": [
