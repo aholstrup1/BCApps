@@ -9,7 +9,6 @@
   "doNotRunTests": true,
   "useCompilerFolder": true,
   "doNotPublishApps": true,
-  "repoVersion": "25.3",
   "ConditionalSettings": [
     {
       "branches": [
