@@ -5,6 +5,7 @@
     ],
     "testFolders":  [
     ],
+    "runs-on": "ubuntu-latest",
     "doNotRunTests": true,
     "useCompilerFolder": true,
     "doNotPublishApps": true
