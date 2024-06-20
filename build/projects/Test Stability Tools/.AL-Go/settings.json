@@ -5,7 +5,7 @@
     ],
     "testFolders":  [
     ],
-    "runs-on": "ubuntu-latest",
+    "githubRunner": "ubuntu-latest",
     "doNotRunTests": true,
     "useCompilerFolder": true,
     "doNotPublishApps": true

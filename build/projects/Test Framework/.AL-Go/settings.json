@@ -5,7 +5,7 @@
         "../../../src/Tools/Test Framework/Test Runner"
     ],
     "buildModes": [ "Translated" ],
-    "runs-on": "ubuntu-latest",
+    "githubRunner": "ubuntu-latest",
     "doNotRunTests": true,
     "useCompilerFolder": true,
     "doNotPublishApps": true,
