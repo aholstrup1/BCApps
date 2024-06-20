@@ -4,6 +4,7 @@
   "bcContainerHelperVersion": "preview",
   "runs-on": "windows-latest",
   "githubRunner": "ubuntu-latest",
+  "githubRunnerShell": "pwsh",
   "cacheImageName": "",
   "UsePsSession": false,
   "artifact": "https://bcinsider-fvh2ekdjecfjd6gk.b02.azurefd.net/sandbox/25.0.21002.0/base",
