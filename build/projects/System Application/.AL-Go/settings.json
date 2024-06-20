@@ -4,7 +4,6 @@
         "../../../src/System Application/App"
     ],
     "buildModes": [ "Translated" ],
-    "githubRunner": "ubuntu-latest",
     "doNotRunTests": true,
     "useCompilerFolder": true,
     "doNotPublishApps": true,
