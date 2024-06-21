@@ -3,6 +3,7 @@
     "appFolders":  [
         "../../../src/System Application/App"
     ],
+    "repoVersion": "25.0",
     "buildModes": [ "Translated" ],
     "doNotRunTests": true,
     "useCompilerFolder": true,
