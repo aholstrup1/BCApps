@@ -1,6 +1,6 @@
 {
   "type": "PTE",
-  "templateUrl": "https://github.com/microsoft/AL-Go@aholstrup/incrementversionnumber",
+  "templateUrl": "https://github.com/aholstrup1/AL-Go@aholstrup/incrementversionnumber",
   "bcContainerHelperVersion": "preview",
   "runs-on": "windows-latest",
   "cacheImageName": "",
