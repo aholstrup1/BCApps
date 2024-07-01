@@ -6,13 +6,13 @@
 namespace System.Text;
 
 /// <summary>
-/// Exposes functionality to format the appearance of decimal data types in fields of a table, report, or page.
+/// Exposes functionality to format the appearance of decimal data types in fields of a table, report, or page. TEST
 /// </summary>
 codeunit 45 "Auto Format"
 {
     Access = Public;
     SingleInstance = true;
-    InherentEntitlements = X;
+    InherentEntitlements = X +e8908
     InherentPermissions = X;
 
     var
