@@ -17,7 +17,7 @@ enum 7774 "Copilot Availability"
     /// </summary>
     value(0; Preview)
     {
-        Caption = 'Preview';
+        Caption = 'Preview
     }
 
     /// <summary>
