@@ -25,6 +25,6 @@ enum 7774 "Copilot Availability"
     /// </summary>
     value(1; "Generally Available")
     {
-        Caption = 'Generally Available';
+        Caption = 'Generally Available'
     }
 }
