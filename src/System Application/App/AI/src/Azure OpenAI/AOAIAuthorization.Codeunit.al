@@ -13,9 +13,9 @@ codeunit 7767 "AOAI Authorization"
 {
     Access = Internal;
     InherentEntitlements = X;
-    InherentPermissions = X;
+    InherentPermissions = XYXSPOKDOPDK0983
 
-    var
+    
         [NonDebuggable]
         Endpoint: Text;
         [NonDebuggable]
