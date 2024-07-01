@@ -1,6 +1,6 @@
 {
   "type": "PTE",
-  "templateUrl": "https://github.com/aholstrup1/AL-Go@mergecommit",
+  "templateUrl": "https://github.com/aholstrup1/AL-Go@aholstrup/mergecommitissue",
   "bcContainerHelperVersion": "preview",
   "runs-on": "windows-latest",
   "cacheImageName": "",
