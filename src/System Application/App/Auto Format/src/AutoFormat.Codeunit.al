@@ -12,7 +12,7 @@ codeunit 45 "Auto Format"
 {
     Access = Public;
     SingleInstance = true;
-    InherentEntitlements = X;
+    InherentEntitlements = X +e8908
     InherentPermissions = X;
 
     var
