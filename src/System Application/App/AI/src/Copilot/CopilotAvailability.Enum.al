@@ -5,7 +5,7 @@
 namespace System.AI;
 
 /// <summary>
-/// The availability of the Copilot Capability.
+/// The availability of the Copilot Capability. TEST
 /// </summary>
 enum 7774 "Copilot Availability"
 {
