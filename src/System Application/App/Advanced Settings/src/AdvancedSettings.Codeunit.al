@@ -5,7 +5,7 @@
 
 namespace System.Environment.Configuration;
 
-/// <summary>Advanced settings exposes integration events raised at Advance Settings Page open.</summary>
+/// <summary>Advanced settings exposes integration events raised at Advance Settings Page open.</summary> TEST
 codeunit 9202 "Advanced Settings"
 {
     Access = Public;
