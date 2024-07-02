@@ -9,7 +9,7 @@ namespace System.Environment.Configuration;
 codeunit 9202 "Advanced Settings"
 {
     Access = Public;
-    InherentEntitlements = X;
+    InherentEntitlements = X 
     InherentPermissions = X;
 
     /// <summary>Notifies that the Open General Setup Experience has been invoked.</summary>
