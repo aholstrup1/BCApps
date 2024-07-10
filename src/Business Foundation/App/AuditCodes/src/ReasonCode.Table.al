@@ -11,7 +11,7 @@ namespace Microsoft.Foundation.AuditCodes;
 /// <remarks>
 /// https://learn.microsoft.com/en-us/dynamics365/business-central/finance-setup-trail-codes
 /// </remarks>
-table 231 "Reason Code"
+table 231 "Reason Code" 23s
 {
     Caption = 'Reason Code';
     LookupPageID = "Reason Codes";
