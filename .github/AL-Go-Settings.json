@@ -1,6 +1,6 @@
 {
   "type": "PTE",
-  "templateUrl": "https://github.com/aholstrup1/AL-Go@deprecation",
+  "templateUrl": "https://github.com/aholstrup1/AL-Go@aholstrup/telemetrymodule",
   "bcContainerHelperVersion": "preview",
   "runs-on": "windows-latest",
   "cacheImageName": "",
@@ -73,5 +73,5 @@
     ]
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
-  "templateSha": "ea3834cd61c4fc1c667339a8b8c1ef19157603b7"
+  "templateSha": "dc8caca59c4910ac2c294c53f886b2b334288348"
 }

@@ -28,14 +28,13 @@ jobs:
     if: (github.event.pull_request.base.repo.full_name != github.event.pull_request.head.repo.full_name) && (github.event_name != 'pull_request')
     runs-on: windows-latest
     steps:
-      - uses: aholstrup1/AL-Go/Actions/VerifyPRChanges@deprecation
+      - uses: aholstrup1/AL-Go/Actions/VerifyPRChanges@aholstrup/telemetrymodule
 
   Initialization:
     needs: [ PregateCheck ]
     if: (!failure() && !cancelled())
     runs-on: [ windows-latest ]
     outputs:
-      telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
       githubRunner: ${{ steps.ReadSettings.outputs.GitHubRunnerJson }}
       githubRunnerShell: ${{ steps.ReadSettings.outputs.GitHubRunnerShell }}
       projects: ${{ steps.determineProjectsToBuild.outputs.ProjectsJson }}
@@ -43,9 +42,10 @@ jobs:
       buildOrderJson: ${{ steps.determineProjectsToBuild.outputs.BuildOrderJson }}
       baselineWorkflowRunId: ${{ steps.determineProjectsToBuild.outputs.BaselineWorkflowRunId }}
       workflowDepth: ${{ steps.DetermineWorkflowDepth.outputs.WorkflowDepth }}
+      telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
       - name: Dump Workflow Information
-        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@deprecation
+        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@aholstrup/telemetrymodule
         with:
           shell: powershell
 
@@ -57,14 +57,13 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@deprecation
+        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@aholstrup/telemetrymodule
         with:
           shell: powershell
-          eventId: "DO0104"
 
       - name: Read settings
         id: ReadSettings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@deprecation
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule
         with:
           shell: powershell
 
@@ -75,7 +74,7 @@ jobs:
 
       - name: Determine Projects To Build
         id: determineProjectsToBuild
-        uses: aholstrup1/AL-Go/Actions/DetermineProjectsToBuild@deprecation
+        uses: aholstrup1/AL-Go/Actions/DetermineProjectsToBuild@aholstrup/telemetrymodule
         with:
           shell: powershell
           maxBuildDepth: ${{ env.workflowDepth }}
@@ -94,7 +93,6 @@ jobs:
       shell: ${{ needs.Initialization.outputs.githubRunnerShell }}
       runsOn: ${{ needs.Initialization.outputs.githubRunner }}
       checkoutRef: ${{ github.event_name == 'pull_request' && github.sha || format('refs/pull/${0}/merge', github.event.pull_request.number) }}
-      parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
       project: ${{ matrix.project }}
       projectName: ${{ matrix.projectName }}
       buildMode: ${{ matrix.buildMode }}
@@ -118,7 +116,6 @@ jobs:
       shell: ${{ needs.Initialization.outputs.githubRunnerShell }}
       runsOn: ${{ needs.Initialization.outputs.githubRunner }}
       checkoutRef: ${{ github.event_name == 'pull_request' && github.sha || format('refs/pull/${0}/merge', github.event.pull_request.number) }}
-      parentTelemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
       project: ${{ matrix.project }}
       projectName: ${{ matrix.projectName }}
       buildMode: ${{ matrix.buildMode }}
@@ -136,8 +133,18 @@ jobs:
     steps:
       - name: Pull Request Status Check
         id: PullRequestStatusCheck
-        uses: aholstrup1/AL-Go/Actions/PullRequestStatusCheck@deprecation
+        uses: aholstrup1/AL-Go/Actions/PullRequestStatusCheck@aholstrup/telemetrymodule
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
           shell: powershell
+
+      - name: Finalize the workflow
+        id: PostProcess
+        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@aholstrup/telemetrymodule
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          shell: powershell
+          telemetryScopeJson: ${{ needs.Initialization.outputs.telemetryScopeJson }}
+          currentJobContext: ${{ toJson(job) }}

@@ -30,7 +30,7 @@ jobs:
           lfs: true
 
       - name: Troubleshooting
-        uses: aholstrup1/AL-Go/Actions/Troubleshooting@deprecation
+        uses: aholstrup1/AL-Go/Actions/Troubleshooting@aholstrup/telemetrymodule
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
