@@ -1,6 +1,6 @@
 {
   "type": "PTE",
-  "templateUrl": "https://github.com/microsoft/AL-Go-PTE@preview",
+  "templateUrl": "https://github.com/aholstrup1/AL-Go@deprecation",
   "bcContainerHelperVersion": "preview",
   "runs-on": "windows-latest",
   "cacheImageName": "",
@@ -73,5 +73,5 @@
     ]
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
-  "templateSha": "0aab342a0ddd80612fafbc5149c8e95b3476b12a"
+  "templateSha": "ea3834cd61c4fc1c667339a8b8c1ef19157603b7"
 }
