@@ -40,7 +40,7 @@ jobs:
     runs-on: [ windows-latest ]
     steps:
       - name: Dump Workflow Information
-        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@deprecation
+        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@aholstrup/telemetrymodule
         with:
           shell: powershell
 
@@ -49,19 +49,18 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@deprecation
+        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@aholstrup/telemetrymodule
         with:
           shell: powershell
-          eventId: "DO0096"
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@deprecation
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/telemetrymodule
         with:
           shell: powershell
 
       - name: Read secrets
         id: ReadSecrets
-        uses: aholstrup1/AL-Go/Actions/ReadSecrets@deprecation
+        uses: aholstrup1/AL-Go/Actions/ReadSecrets@aholstrup/telemetrymodule
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -69,19 +68,20 @@ jobs:
           useGhTokenWorkflowForPush: '${{ github.event.inputs.useGhTokenWorkflow }}'
 
       - name: Increment Version Number
-        uses: aholstrup1/AL-Go/Actions/IncrementVersionNumber@deprecation
+        uses: aholstrup1/AL-Go/Actions/IncrementVersionNumber@aholstrup/telemetrymodule
         with:
           shell: powershell
           token: ${{ steps.ReadSecrets.outputs.TokenForPush }}
-          parentTelemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
           projects: ${{ github.event.inputs.projects }}
           versionNumber: ${{ github.event.inputs.versionNumber }}
           directCommit: ${{ github.event.inputs.directCommit }}
 
       - name: Finalize the workflow
         if: always()
-        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@deprecation
+        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@aholstrup/telemetrymodule
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           shell: powershell
-          eventId: "DO0096"
           telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
+          currentJobContext: ${{ toJson(job) }}
