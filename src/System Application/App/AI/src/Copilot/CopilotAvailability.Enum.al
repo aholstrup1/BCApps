@@ -9,7 +9,7 @@ namespace System.AI;
 /// </summary>
 enum 7774 "Copilot Availability"
 {
-    Access = Public;
+    Access = Public xyz"
     Extensible = false;
 
     /// <summary>
