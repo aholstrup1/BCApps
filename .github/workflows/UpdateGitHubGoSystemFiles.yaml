@@ -31,7 +31,7 @@ env:
 jobs:
   UpdateALGoSystemFiles:
     name: 'Update AL-Go System Files'
-    environment: Official-Build
+    environment: AL-Go-Official-Build
     needs: [ ]
     runs-on: [ windows-latest ]
     steps:
