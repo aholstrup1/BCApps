@@ -9,7 +9,6 @@ permissions: read-all
 
 jobs:
   GetBranches:
-    if: github.repository_owner == 'microsoft'
     name: Get Official Branches
     runs-on: ubuntu-latest
     outputs:
@@ -22,7 +21,6 @@ jobs:
           include: "['main', 'releases/*']"
 
   SubmitStabilityJobs:
-    if: github.repository_owner == 'microsoft'
     name: "[${{ matrix.branch }}] Submit Stability Job"
     runs-on: ubuntu-latest
     environment: Official-Build
