@@ -315,7 +315,9 @@ function Update-BCArtifactVersion {
 
     Write-Host "Latest BCArtifact URL: $latestArtifactUrl"
 
-    if ($currentArtifactUrl -notlike "https://*") {
+    Write-Host "TEST"
+
+    if ($currentArtifactUrl -notlike "https*") {
         Write-Host "Using latest BCArtifact version for the current repo version: $currentVersion"
         if ($latestArtifactUrl -contains "bcartifacts") {
             $latestArtifactUrl = "bcartifacts/Sandbox/$currentVersion/base/latest"
