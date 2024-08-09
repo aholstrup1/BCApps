@@ -14,21 +14,19 @@ permissions: read-all
 jobs:
   GetBranches:
     name: Get Official Branches
-    if: github.repository_owner == 'microsoft'
     runs-on: ubuntu-latest
     outputs:
       updateBranches: ${{ steps.getOfficialBranches.outputs.branchesJson }}
     steps:
       - name: Get Official Branches
         id: getOfficialBranches
-        uses: microsoft/BCApps/.github/actions/GetGitBranches@main
+        uses: aholstrup1/BCApps/.github/actions/GetGitBranches@main
 
         with:
           include: "['main', 'releases/*']"
 
   UpdateBCArtifactVersion:
     name: "[${{ matrix.branch }}] Update BC Artifact Version"
-    if: github.repository_owner == 'microsoft'
     permissions:
       contents: write
     environment: Official-Build
@@ -40,14 +38,14 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        uses: aholstrup1/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           ref: ${{ matrix.branch }}
 
       - name: Update BC Artifact Version
         env:
           GH_TOKEN: ${{ secrets.GHTOKENWORKFLOW }}
-        uses: microsoft/BCApps/.github/actions/RunAutomation@main
+        uses: aholstrup1/BCApps/.github/actions/RunAutomation@main
 
         with:
           automations: UpdateBCArtifact
