@@ -1,0 +1,20 @@
+{
+    "projectName": "Extensions (W1)",
+    "appFolders":  [
+        "../../../src/Extensions/W1/*/app"
+    ],
+    "buildModes": [ "Translated" ],
+    "doNotRunTests": true,
+    "useCompilerFolder": true,
+    "doNotPublishApps": true,
+    "ConditionalSettings": [
+        {
+            "branches": [
+                "releases/*.[0-5]"
+            ],
+            "settings": {
+                "buildModes": [ "Translated", "Strict"]
+            }
+        }
+    ]
+}
