@@ -28,6 +28,11 @@
       "id": "AS0052",
       "action": "None",
       "justification": "The property 'url' must be set to a valid URL"
+    },
+    {
+      "id": "AA0247",
+      "action": "None",
+      "justification": "Elevate when the all apps are namespaced."
     }
   ]
 }
