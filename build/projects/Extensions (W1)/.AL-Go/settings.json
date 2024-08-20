@@ -3,6 +3,9 @@
     "appFolders":  [
         "../../../src/Extensions/W1/*/app"
     ],
+    "testFolders":  [
+        "../../../src/Extensions/W1/*/test"
+    ],
     "buildModes": [ "Translated" ],
     "doNotRunTests": true,
     "useCompilerFolder": true,
