@@ -8,8 +8,8 @@
     ],
     "buildModes": [ "Translated" ],
     "doNotRunTests": true,
-    "useCompilerFolder": true,
-    "doNotPublishApps": true,
+    "useCompilerFolder": false,
+    "doNotPublishApps": false,
     "ConditionalSettings": [
         {
             "branches": [
