@@ -19,5 +19,6 @@
                 "buildModes": [ "Translated", "Strict"]
             }
         }
-    ]
+    ],
+    "rulesetFile": "../../../src/rulesets/internal.module.ruleset.json"
 }
