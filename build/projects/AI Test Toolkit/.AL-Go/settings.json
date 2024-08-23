@@ -1,9 +1,9 @@
 {
-    "projectName": "System Application",
+    "projectName": "AI Test Toolkit",
     "appFolders":  [
-        "../../../src/System Application/App"
+        "../../../src/Tools/AI Test Toolkit"
     ],
-    "buildModes": [ "Translated" ],
+    "installOnlyReferencedApps": false,
     "doNotRunTests": true,
     "useCompilerFolder": true,
     "doNotPublishApps": true,
@@ -13,7 +13,7 @@
                 "releases/*.[0-5]"
             ],
             "settings": {
-                "buildModes": [ "Translated", "Strict"]
+                "buildModes": [ "Strict" ]
             }
         }
     ]
