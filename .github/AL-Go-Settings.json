@@ -31,7 +31,6 @@
     "Current.yaml",
     "NextMajor.yaml",
     "NextMinor.yaml",
-    "PublishToEnvironment.yaml",
     "Test Current.settings.json"
   ],
   "excludeEnvironments": [
