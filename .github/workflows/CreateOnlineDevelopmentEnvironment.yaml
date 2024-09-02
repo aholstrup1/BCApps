@@ -72,7 +72,7 @@ jobs:
       - name: Test
         id: TEST
         run: |
-          Write-Host "github.env.Settings=${{ env.Settings }}"
+          Write-Host "github.env.Settings=${{ fromjson(env.Settings).githubRunnerShell }}"
 
       - name: Read secrets
         id: ReadSecrets
