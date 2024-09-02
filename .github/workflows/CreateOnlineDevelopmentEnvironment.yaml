@@ -46,7 +46,7 @@ jobs:
     outputs:
       deviceCode: ${{ steps.authenticate.outputs.deviceCode }}
       githubRunner: ${{ steps.ReadSettings.outputs.GitHubRunnerJson }}
-      githubRunnerShell:  ${{ fromjson(github.env.Settings).githubRunnerShell }}
+      githubRunnerShell:  ${{ fromjson(env.Settings).githubRunnerShell }}
       telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
       - name: Dump Workflow Information
@@ -72,7 +72,7 @@ jobs:
       - name: Test
         id: TEST
         run: |
-          Write-Host "github.env.Settings=${{ github.env.Settings }}"
+          Write-Host "github.env.Settings=${{ env.Settings }}"
 
       - name: Read secrets
         id: ReadSecrets
