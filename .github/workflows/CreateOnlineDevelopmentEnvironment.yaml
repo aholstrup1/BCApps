@@ -69,6 +69,11 @@ jobs:
         with:
           shell: powershell
 
+      - name: Test
+        id: TEST
+        run: |
+          Write-Host "github.env.Settings=${{ github.env.Settings }}"
+
       - name: Read secrets
         id: ReadSecrets
         uses: microsoft/AL-Go-Actions/ReadSecrets@main
