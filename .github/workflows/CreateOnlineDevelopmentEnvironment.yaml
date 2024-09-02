@@ -45,8 +45,8 @@ jobs:
     runs-on: [ windows-latest ]
     outputs:
       deviceCode: ${{ steps.authenticate.outputs.deviceCode }}
-      githubRunner: ${{ steps.ReadSettings.outputs.GitHubRunnerJson }}
-      githubRunnerShell:  ${{ fromjson(env.Settings).githubRunnerShell }}
+      githubRunner: ${{ fromjson(env.Settings).githubRunner }}
+      githubRunnerShell: ${{ fromjson(env.Settings).githubRunnerShell }}
       telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
       - name: Dump Workflow Information
@@ -68,11 +68,6 @@ jobs:
         uses: microsoft/AL-Go-Actions/ReadSettings@main
         with:
           shell: powershell
-
-      - name: Test
-        id: TEST
-        run: |
-          Write-Host "github.env.Settings=${{ fromjson(env.Settings).githubRunnerShell }}"
 
       - name: Read secrets
         id: ReadSecrets
