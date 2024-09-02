@@ -45,7 +45,7 @@ jobs:
     runs-on: [ windows-latest ]
     outputs:
       deviceCode: ${{ steps.authenticate.outputs.deviceCode }}
-      githubRunner: ${{ steps.getRunner.outputs.githubRunner }}
+      githubRunner: ${{ steps.getRunner.outputs.gitHubRunnerJson }}
       telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
       - name: Dump Workflow Information
