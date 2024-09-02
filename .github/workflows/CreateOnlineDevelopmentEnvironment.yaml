@@ -67,7 +67,6 @@ jobs:
         uses: microsoft/AL-Go-Actions/ReadSettings@main
         with:
           shell: powershell
-          get: githubRunner
 
       - name: Read secrets
         id: ReadSecrets
@@ -80,6 +79,7 @@ jobs:
       - name: Write GitHubRunner to output
         id: getRunner
         run: |
+          $gitHubRunner = ($env:Settings | ConvertFrom-Json).githubRunner.Split(',').Trim() | ConvertTo-Json -compress
           Add-Content -Encoding UTF8 -Path $env:GITHUB_OUTPUT -Value "githubRunner=$($env:githubRunner)"
 
       - name: Check AdminCenterApiCredentials / Initiate Device Login (open to see code)
