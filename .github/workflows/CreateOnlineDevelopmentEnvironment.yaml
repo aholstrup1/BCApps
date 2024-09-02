@@ -45,8 +45,7 @@ jobs:
     runs-on: [ windows-latest ]
     outputs:
       deviceCode: ${{ steps.authenticate.outputs.deviceCode }}
-      githubRunner: ${{ fromjson(env.Settings).githubRunner }}
-      githubRunnerShell: ${{ fromjson(env.Settings).githubRunnerShell }}
+      githubRunner: ${{ steps.getRunner.outputs.githubRunner }}
       telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
       - name: Dump Workflow Information
@@ -68,6 +67,7 @@ jobs:
         uses: microsoft/AL-Go-Actions/ReadSettings@main
         with:
           shell: powershell
+          get: githubRunner
 
       - name: Read secrets
         id: ReadSecrets
@@ -76,6 +76,11 @@ jobs:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
           getSecrets: 'adminCenterApiCredentials'
+
+      - name: Write GitHubRunner to output
+        id: getRunner
+        run: |
+          Add-Content -Encoding UTF8 -Path $env:GITHUB_OUTPUT -Value "githubRunner=$($env:githubRunner)"
 
       - name: Check AdminCenterApiCredentials / Initiate Device Login (open to see code)
         id: authenticate
@@ -101,9 +106,6 @@ jobs:
   CreateDevelopmentEnvironment:
     needs: [ Initialization ]
     runs-on: ${{ fromJson(needs.Initialization.outputs.githubRunner) }}
-    defaults:
-      run:
-        shell: ${{ needs.Initialization.outputs.githubRunnerShell }}
     name: Create Development Environment
     env:
       deviceCode: ${{ needs.Initialization.outputs.deviceCode }}
