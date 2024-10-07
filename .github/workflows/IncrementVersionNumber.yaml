@@ -69,7 +69,7 @@ jobs:
           useGhTokenWorkflowForPush: '${{ github.event.inputs.useGhTokenWorkflow }}'
 
       - name: Increment Version Number
-        uses: microsoft/AL-Go-Actions/IncrementVersionNumber@v6.0
+        uses: aholstrup1/AL-Go/Actions/IncrementVersionNumber@aholstrup/incrementversion
         with:
           shell: powershell
           token: ${{ steps.ReadSecrets.outputs.TokenForPush }}
