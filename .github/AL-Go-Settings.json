@@ -74,4 +74,6 @@
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
   "templateSha": "bd7e376155144be447ea1dcf807f3219e553fdc7"
+  "useSubModules": "recursive",
+  "subModulesTokenSecretName": "ghTokenWorkflow"
 }
