@@ -73,6 +73,6 @@
     ]
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
-  "templateSha": "02495d7c9ebca2c1665345be63544441295c2944",
+  "templateSha": "deeec915ba39a1a9a0e973da390372e0f77e3796",
   "commitMessagePrefix": "Test 123"
 }
