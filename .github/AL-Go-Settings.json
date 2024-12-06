@@ -73,8 +73,10 @@
     ]
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
-  "templateSha": "02495d7c9ebca2c1665345be63544441295c2944",
+  "templateSha": "ddc52c45ac330a732ca48fe0d4c144eaa85a3367",
   "commitMessageSuffix": "Test 123",
   "commitAutoMerge": true,
-  "PRLabels": ["bug"]
+  "PRLabels": [
+    "bug"
+  ]
 }
