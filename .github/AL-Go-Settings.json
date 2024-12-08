@@ -73,10 +73,12 @@
     ]
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
-  "templateSha": "02495d7c9ebca2c1665345be63544441295c2944",
+  "templateSha": "f3c7fad13fbd9c0df99397403991db586ae69379",
   "commitOptions": {
     "commitMessageSuffix": "Fixes AB#123456",
     "commitAutoMerge": true,
-    "commitPullRequestLabels": ["Approved"]
+    "commitPullRequestLabels": [
+      "Approved"
+    ]
   }
 }
