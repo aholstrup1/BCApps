@@ -38,6 +38,7 @@ jobs:
     name: 'Update AL-Go System Files'
     needs: [ ]
     runs-on: [ windows-latest ]
+    environment: Official-Build
     steps:
       - name: Dump Workflow Information
         uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@inputs_settings
