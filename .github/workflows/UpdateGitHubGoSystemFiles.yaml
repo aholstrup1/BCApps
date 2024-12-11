@@ -51,7 +51,7 @@ jobs:
           shell: powershell
 
       - name: Read settings
-        uses: microsoft/AL-Go/Actions/ReadSettings@006019b87cab11f6234d05f2c34372daf3c7075d
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@inputs_settings
         with:
           shell: powershell
           get: templateUrl
