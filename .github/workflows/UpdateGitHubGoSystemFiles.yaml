@@ -51,7 +51,7 @@ jobs:
           shell: powershell
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@inputs_settings
+        uses: microsoft/AL-Go/Actions/ReadSettings@006019b87cab11f6234d05f2c34372daf3c7075d
         with:
           shell: powershell
           get: templateUrl
@@ -82,10 +82,6 @@ jobs:
           eventName: ${{ github.event_name }}
         run: |
           $errorActionPreference = "Stop"; $ProgressPreference = "SilentlyContinue"; Set-StrictMode -Version 2.0
-          $settings = $env:settings | ConvertFrom-Json 
-          Write-Host "Settings: $($env:settings)"
-
-          Write-Host "Commitoptions: $($settings.alwaysBuildAllProjects)"
           $directCommit = $ENV:directCommit
           $downloadLatest = $ENV:downloadLatest
           Write-Host $ENV:eventName
@@ -105,7 +101,7 @@ jobs:
           downloadLatest: ${{ env.downloadLatest }}
           update: 'Y'
           templateUrl: ${{ env.templateUrl }}
-          directCommit: ${{ fromJson(env.settings).inputs.directCommit || fromJson(env.settings).commitOptions.directCommit }}
+          directCommit: ${{ env.directCommit }}
 
       - name: Finalize the workflow
         if: always()
