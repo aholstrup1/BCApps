@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       templateUrl:
-        description: Template Repository URL (current is {TEMPLATEURL})
+        description: Template Repository URL (current is https://github.com/microsoft/AL-Go-PTE@preview)
         required: false
         default: ''
       downloadLatest:
@@ -15,10 +15,6 @@ on:
         description: Direct Commit?
         type: boolean
         default: false
-      commitMessageSuffix:
-        description: Commit Message Suffix
-        required: false
-        default: ''
 
 permissions:
   actions: read
@@ -36,12 +32,12 @@ env:
 jobs:
   UpdateALGoSystemFiles:
     name: 'Update AL-Go System Files'
+    environment: Official-Build
     needs: [ ]
     runs-on: [ windows-latest ]
-    environment: Official-Build
     steps:
       - name: Dump Workflow Information
-        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@inputs_settings
+        uses: microsoft/AL-Go/Actions/DumpWorkflowInfo@006019b87cab11f6234d05f2c34372daf3c7075d
         with:
           shell: powershell
 
@@ -50,39 +46,66 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@inputs_settings
+        uses: microsoft/AL-Go/Actions/WorkflowInitialize@006019b87cab11f6234d05f2c34372daf3c7075d
         with:
           shell: powershell
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@inputs_settings
+        uses: microsoft/AL-Go/Actions/ReadSettings@006019b87cab11f6234d05f2c34372daf3c7075d
         with:
           shell: powershell
           get: templateUrl
 
       - name: Read secrets
         id: ReadSecrets
-        uses: aholstrup1/AL-Go/Actions/ReadSecrets@inputs_settings
+        uses: microsoft/AL-Go/Actions/ReadSecrets@006019b87cab11f6234d05f2c34372daf3c7075d
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
           getSecrets: 'ghTokenWorkflow'
 
+      - name: Override templateUrl
+        env:
+          templateUrl: ${{ github.event.inputs.templateUrl }}
+        run: |
+          $errorActionPreference = "Stop"; $ProgressPreference = "SilentlyContinue"; Set-StrictMode -Version 2.0
+          $templateUrl = $ENV:templateUrl
+          if ($templateUrl) {
+            Write-Host "Using Template Url: $templateUrl"
+            Add-Content -Encoding UTF8 -Path $env:GITHUB_ENV -Value "templateUrl=$templateUrl"
+          }
+
+      - name: Calculate Input
+        env:
+          directCommit: '${{ github.event.inputs.directCommit }}'
+          downloadLatest: ${{ github.event.inputs.downloadLatest }}
+          eventName: ${{ github.event_name }}
+        run: |
+          $errorActionPreference = "Stop"; $ProgressPreference = "SilentlyContinue"; Set-StrictMode -Version 2.0
+          $directCommit = $ENV:directCommit
+          $downloadLatest = $ENV:downloadLatest
+          Write-Host $ENV:eventName
+          if ($ENV:eventName -eq 'schedule') {
+            Write-Host "Running Update AL-Go System Files on a schedule. Setting DirectCommit and DownloadLatest to true"
+            $directCommit = 'true'
+            $downloadLatest = 'true'
+          }
+          Add-Content -Encoding UTF8 -Path $env:GITHUB_ENV -Value "directCommit=$directCommit"
+          Add-Content -Encoding UTF8 -Path $env:GITHUB_ENV -Value "downloadLatest=$downloadLatest"
+
       - name: Update AL-Go system files
-        uses: aholstrup1/AL-Go/Actions/CheckForUpdates@inputs_settings
+        uses: microsoft/AL-Go/Actions/CheckForUpdates@006019b87cab11f6234d05f2c34372daf3c7075d
         with:
           shell: powershell
           token: ${{ fromJson(steps.ReadSecrets.outputs.Secrets).ghTokenWorkflow }}
-          downloadLatest: ${{ env.downloadLatest }} ${{ fromJson(env.settings).inputs.downloadLatest || 'true' }}
+          downloadLatest: ${{ env.downloadLatest }}
           update: 'Y'
-          templateUrl: ${{ fromJson(env.settings).inputs.templateUrl || fromJson(env.settings).templateUrl }}
-          directCommit: ${{ fromJson(env.settings).inputs.directCommit || fromJson(env.settings).commitOptions.directCommit }}
-          commitMessageSuffix: ${{ fromJson(env.settings).inputs.commitMessageSuffix || fromJson(env.settings).commitOptions.messageSuffix }}
-
+          templateUrl: ${{ env.templateUrl }}
+          directCommit: ${{ env.directCommit }}
 
       - name: Finalize the workflow
         if: always()
-        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@inputs_settings
+        uses: microsoft/AL-Go/Actions/WorkflowPostProcess@006019b87cab11f6234d05f2c34372daf3c7075d
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
