@@ -105,7 +105,7 @@ jobs:
           downloadLatest: ${{ env.downloadLatest }}
           update: 'Y'
           templateUrl: ${{ env.templateUrl }}
-          directCommit: ${{ fromJson(env.settings).inputs.directCommit || "Didn't find anything!" }}
+          directCommit: ${{ fromJson(env.settings).inputs.directCommit }}
 
       - name: Finalize the workflow
         if: always()
