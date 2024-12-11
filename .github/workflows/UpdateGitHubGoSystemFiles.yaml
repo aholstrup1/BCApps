@@ -82,8 +82,8 @@ jobs:
           eventName: ${{ github.event_name }}
         run: |
           $errorActionPreference = "Stop"; $ProgressPreference = "SilentlyContinue"; Set-StrictMode -Version 2.0
-          $settings = $env:settings
-          Write-Host "Settings: $settings"
+          $settings = $env:settings | ConvertFrom-Json 
+          Write-Host "Settings: $($env:settings)"
 
           Write-Host "Commitoptions: $($settings.alwaysBuildAllProjects)"
           $directCommit = $ENV:directCommit
