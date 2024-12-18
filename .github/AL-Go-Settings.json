@@ -78,7 +78,8 @@
     "messageSuffix": "Related to AB#539394",
     "pullRequestAutoMerge": true,
     "pullRequestLabels": [
-      "Automation"
+      "Automation",
+      "Test Label"
     ]
   }
 }
