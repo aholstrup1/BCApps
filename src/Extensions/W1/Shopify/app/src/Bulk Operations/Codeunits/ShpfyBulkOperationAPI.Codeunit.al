@@ -3,7 +3,7 @@ namespace Microsoft.Integration.Shopify;
 codeunit 30278 "Shpfy Bulk Operation API"
 {
     var
-        Shop: Record "Shpfy Shop";
+        Shop: Record "Shpfy Shop"; 
         CommunicationMgt: Codeunit "Shpfy Communication Mgt.";
         BulkOperationMutationResourceLbl: Label 'BULK_MUTATION_VARIABLES', Locked = true;
         CategoryTok: Label 'Shopify Integration', Locked = true;
