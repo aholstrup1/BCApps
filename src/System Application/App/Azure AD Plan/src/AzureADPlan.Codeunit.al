@@ -7,6 +7,7 @@ namespace System.Azure.Identity;
 
 using System;
 
+
 /// <summary>
 /// Retrieve plans in Microsoft Entra and manage plans
 /// </summary>
