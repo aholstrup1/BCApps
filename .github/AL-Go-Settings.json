@@ -1,6 +1,6 @@
 {
   "type": "PTE",
-  "templateUrl": "https://github.com/aholstrup1/AL-Go@aholstrup/prefix",
+  "templateUrl": "https://github.com/aholstrup1/AL-Go@private/aholstrup/bcapps_extensions_spike",
   "bcContainerHelperVersion": "preview",
   "runs-on": "windows-latest",
   "cacheImageName": "",
@@ -73,10 +73,13 @@
     ]
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
-  "templateSha": "02495d7c9ebca2c1665345be63544441295c2944",
+  "templateSha": "6aaab1e583cac08e8d025a4cb428aa4d53ad4a90",
   "commitOptions": {
     "messageSuffix": "Fixes AB#123456",
     "pullRequestAutoMerge": true,
-    "pullRequestLabels": ["automation", "dependencies"]
+    "pullRequestLabels": [
+      "automation",
+      "dependencies"
+    ]
   }
 }

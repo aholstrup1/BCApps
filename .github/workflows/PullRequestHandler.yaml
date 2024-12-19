@@ -28,7 +28,7 @@ jobs:
     if: (github.event.pull_request.base.repo.full_name != github.event.pull_request.head.repo.full_name) && (github.event_name != 'pull_request')
     runs-on: windows-latest
     steps:
-      - uses: aholstrup1/AL-Go/Actions/VerifyPRChanges@aholstrup/prefix
+      - uses: aholstrup1/AL-Go/Actions/VerifyPRChanges@private/aholstrup/bcapps_extensions_spike
 
   Initialization:
     needs: [ PregateCheck ]
@@ -43,7 +43,7 @@ jobs:
       telemetryScopeJson: ${{ steps.init.outputs.telemetryScopeJson }}
     steps:
       - name: Dump Workflow Information
-        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@aholstrup/prefix
+        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@private/aholstrup/bcapps_extensions_spike
         with:
           shell: powershell
 
@@ -55,13 +55,13 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@aholstrup/prefix
+        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@private/aholstrup/bcapps_extensions_spike
         with:
           shell: powershell
 
       - name: Read settings
         id: ReadSettings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@aholstrup/prefix
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@private/aholstrup/bcapps_extensions_spike
         with:
           shell: powershell
 
@@ -72,7 +72,7 @@ jobs:
 
       - name: Determine Projects To Build
         id: determineProjectsToBuild
-        uses: aholstrup1/AL-Go/Actions/DetermineProjectsToBuild@aholstrup/prefix
+        uses: aholstrup1/AL-Go/Actions/DetermineProjectsToBuild@private/aholstrup/bcapps_extensions_spike
         with:
           shell: powershell
           maxBuildDepth: ${{ env.workflowDepth }}
@@ -154,7 +154,7 @@ jobs:
     steps:
       - name: Pull Request Status Check
         id: PullRequestStatusCheck
-        uses: aholstrup1/AL-Go/Actions/PullRequestStatusCheck@aholstrup/prefix
+        uses: aholstrup1/AL-Go/Actions/PullRequestStatusCheck@private/aholstrup/bcapps_extensions_spike
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -162,7 +162,7 @@ jobs:
 
       - name: Finalize the workflow
         id: PostProcess
-        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@aholstrup/prefix
+        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@private/aholstrup/bcapps_extensions_spike
         if: success() || failure()
         env:
           GITHUB_TOKEN: ${{ github.token }}
