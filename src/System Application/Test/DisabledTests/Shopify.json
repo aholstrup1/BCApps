@@ -1,0 +1,14 @@
+[
+    {
+        "bug":  "488813",
+        "codeunitId":  139580,
+        "codeunitName":  "Shpfy Checklist Init. Test",
+        "method": "*"
+    },
+    {
+        "bug":  "488813",
+        "codeunitId":  139588,
+        "codeunitName":  "Shpfy Connector Guide Test",
+        "method": "*"
+    }
+]
