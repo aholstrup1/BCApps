@@ -16,7 +16,7 @@ param
 (
     [Parameter(Mandatory=$true)]
     [string] $ALGoProject,
-    [switch] $AutoFill
+    [switch] $AutoFill 
 )
 
 $ErrorActionPreference = "Stop"
