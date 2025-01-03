@@ -8,6 +8,6 @@ codeunit 30203 "Company Details Checklist Item"
 
     trigger OnRun()
     begin
-        Page.Run(Page::"Assisted Company Setup Wizard");
+        Page.Run(Page::"Assisted Company Setup Wizard"); // Test
     end;
 }
