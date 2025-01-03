@@ -5,7 +5,7 @@
   },
   "AppBaselines-BCArtifacts": {
     "Version": "25.3.28327.0",
-    "Source": "BCArtifacts",
+    "Source": "BCArtifacts", 
     "_comment": "Used to fetch app baselines from BC artifacts"
   }
 }
