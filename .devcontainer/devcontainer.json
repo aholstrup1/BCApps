@@ -5,6 +5,9 @@
     "test": "Write-Host 'Not Supported'",
     "run": "Write-Host 'Not Supported'"
   },
+  "settings": {
+		"terminal.integrated.defaultProfile.linux": "pwsh"
+	},
   "features": {
     "ghcr.io/devcontainers/features/powershell:1": {
       "modules": "BcContainerHelper"
