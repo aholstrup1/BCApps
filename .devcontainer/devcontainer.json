@@ -12,5 +12,6 @@
     "ghcr.io/devcontainers/features/powershell:1": {
       "modules": "BcContainerHelper"
     }
-  }
+  },
+  "postCreateCommand": "Import-Module BCContainerHelper"
 }
