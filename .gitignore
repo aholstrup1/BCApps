@@ -292,7 +292,8 @@ __pycache__/
 ### AL ###
 #Template for AL projects for Dynamics 365 Business Central
 #launch.json folder
-.vscode/
+!.vscode/tasks.json
+#.vscode/
 #Cache folder
 .alcache/
 #Symbols folder
