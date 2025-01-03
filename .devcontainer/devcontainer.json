@@ -1,5 +1,10 @@
 {
   "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "tasks": {
+    "build": "Write-Host 'Supported'",
+    "test": "Write-Host 'Not Supported'",
+    "run": "Write-Host 'Not Supported'"
+  },
   "features": {
     "ghcr.io/devcontainers/features/powershell:1": {
       "modules": "BcContainerHelper"
