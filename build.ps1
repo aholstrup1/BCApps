@@ -12,7 +12,7 @@
         .\build.ps1 -ALGoProject "Test Stability Tools" -AutoFill
 #>
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText', '', Justification = 'local build')]
-param
+param 
 (
     [Parameter(Mandatory=$true)]
     [string] $ALGoProject,
