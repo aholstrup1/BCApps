@@ -13,7 +13,7 @@
 #>
 [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText', '', Justification = 'local build')]
 param 
-(
+( 
     [Parameter(Mandatory=$true)]
     [string] $ALGoProject,
     [switch] $AutoFill
