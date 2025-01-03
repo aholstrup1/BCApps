@@ -1,7 +1,7 @@
 {
   "image": "mcr.microsoft.com/devcontainers/universal:2",
   "tasks": {
-    "build": "Write-Host 'Supported'",
+    "build": "pwsh -Command \"& {./build.ps1}\"",
     "test": "Write-Host 'Not Supported'",
     "run": "Write-Host 'Not Supported'"
   },
