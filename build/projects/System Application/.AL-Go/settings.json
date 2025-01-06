@@ -10,6 +10,9 @@
     "doNotRunTests": true,
     "useCompilerFolder": true,
     "doNotPublishApps": true,
+    "projectDependencies": [
+        "Build/projects/Add-Ons (W1)"
+    ],
     "ConditionalSettings": [
         {
             "branches": [
