@@ -19,7 +19,7 @@
                 "GitHub.vscode-github-actions",
                 "GitHub.vscode-pull-request-github",
                 "ms-vscode.powershell",
-		"ms-dynamics-smb.al"
+		"ms-dynamics-smb.al@prerelease"
             ],
             "settings": {
               "terminal.integrated.defaultProfile.linux": "pwsh"
