@@ -1,17 +1,29 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "image": "mcr.microsoft.com/devcontainers/universal:latest",
   "tasks": {
-    "build": "pwsh -Command \"& {./build.ps1}\"",
-    "test": "Write-Host 'Not Supported'",
-    "run": "Write-Host 'Not Supported'"
+    "build": "",
+    "test": "pwsh -File Tests/runtests.ps1",
+    "run": ""
   },
-  "settings": {
-		"terminal.integrated.defaultProfile.linux": "pwsh"
-	},
   "features": {
     "ghcr.io/devcontainers/features/powershell:1": {
       "modules": "BcContainerHelper"
-    }
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "postCreateCommand": "Import-Module BCContainerHelper"
+  "customizations": {
+        "vscode": {
+            "extensions": [
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "GitHub.vscode-github-actions",
+                "GitHub.vscode-pull-request-github",
+                "ms-vscode.powershell",
+		"ms-dynamics-smb.al"
+            ],
+            "settings": {
+              "terminal.integrated.defaultProfile.linux": "pwsh"
+            }
+        }
+    }
 }
