@@ -241,14 +241,19 @@ function Test-IsStrictModeEnabled
     {
         $BranchName = Get-CurrentBranch
     }
+    Write-Host "Checking if Strict Mode is enabled for branch: $BranchName"
 
     if ($BranchName -NotMatch "^releases\/\d+\.\d+$")
     {
+        Write-Host "Strict Mode is not enabled for branch: $BranchName"
         return $false
     }
 
     $remoteTags = git ls-remote --tags origin
     $expectedTag = "$($BranchName+$StrictModeString)"
+
+    Write-Host "Checking if tag $expectedTag exists in remote tags"
+    Write-Host "Remote tags: $remoteTags"
 
     if ($remoteTags -and ($remoteTags -match $expectedTag)) {
         return $true
