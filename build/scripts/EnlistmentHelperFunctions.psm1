@@ -29,6 +29,10 @@ function Get-BuildMode() {
 }
 
 function Get-CurrentBranch() {
+    if ($ENV:GITHUB_HEAD_REF) {
+        return $ENV:GITHUB_HEAD_REF
+    }
+    
     if ($ENV:GITHUB_REF_NAME) {
         return $ENV:GITHUB_REF_NAME
     }
