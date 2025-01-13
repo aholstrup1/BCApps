@@ -23,7 +23,7 @@ codeunit 30125 "Shpfy Gift Cards"
     end;
 
     /// <summary> 
-    /// Add Sold Gift Cards.
+    /// Add Sold Gift Cards. 
     /// </summary>
     /// <param name="JGiftCards">Parameter of type JsonArray.</param>
     internal procedure AddSoldGiftCards(JGiftCards: JsonArray)
