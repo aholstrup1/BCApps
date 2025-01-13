@@ -1,9 +1,11 @@
 {
     "projectName": "Add-Ons (W1)",
     "appFolders":  [
-        "../../../src/Add-Ons/W1/*/app"
     ],
-    "testFolders":  [],
+    "testFolders":  [
+        "../../../src/Add-Ons/W1/*/Test",
+        "../../../src/Add-Ons/W1/*/Test Library"
+    ],
     "buildModes": [
         "Translated"
     ],
@@ -21,5 +23,5 @@
     "installTestLibraries": true,
     "installTestFramework": true,
     "installTestRunner": true,
-    "useProjectDependencies": false
+    "useProjectDependencies": true
 }
