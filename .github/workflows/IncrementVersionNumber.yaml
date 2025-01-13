@@ -46,7 +46,7 @@ jobs:
     runs-on: [ windows-latest ]
     steps:
       - name: Dump Workflow Information
-        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@private/aholstrup/555754
+        uses: microsoft/AL-Go/Actions/DumpWorkflowInfo@1c9e7141ae2b09165f864c64912ead99b9aab55c
         with:
           shell: powershell
 
@@ -55,18 +55,18 @@ jobs:
 
       - name: Initialize the workflow
         id: init
-        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@private/aholstrup/555754
+        uses: microsoft/AL-Go/Actions/WorkflowInitialize@1c9e7141ae2b09165f864c64912ead99b9aab55c
         with:
           shell: powershell
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@private/aholstrup/555754
+        uses: microsoft/AL-Go/Actions/ReadSettings@1c9e7141ae2b09165f864c64912ead99b9aab55c
         with:
           shell: powershell
 
       - name: Read secrets
         id: ReadSecrets
-        uses: aholstrup1/AL-Go/Actions/ReadSecrets@private/aholstrup/555754
+        uses: microsoft/AL-Go/Actions/ReadSecrets@1c9e7141ae2b09165f864c64912ead99b9aab55c
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -74,7 +74,7 @@ jobs:
           useGhTokenWorkflowForPush: '${{ github.event.inputs.useGhTokenWorkflow }}'
 
       - name: Increment Version Number
-        uses: aholstrup1/AL-Go/Actions/IncrementVersionNumber@private/aholstrup/555754
+        uses: microsoft/AL-Go/Actions/IncrementVersionNumber@1c9e7141ae2b09165f864c64912ead99b9aab55c
         with:
           shell: powershell
           token: ${{ steps.ReadSecrets.outputs.TokenForPush }}
@@ -85,7 +85,7 @@ jobs:
 
       - name: Finalize the workflow
         if: always()
-        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@private/aholstrup/555754
+        uses: microsoft/AL-Go/Actions/WorkflowPostProcess@1c9e7141ae2b09165f864c64912ead99b9aab55c
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
