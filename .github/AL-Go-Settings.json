@@ -1,6 +1,6 @@
 {
   "type": "PTE",
-  "templateUrl": "https://github.com/aholstrup1/AL-Go@private/aholstrup/555754",
+  "templateUrl": "https://github.com/microsoft/AL-Go-PTE@v6.2",
   "bcContainerHelperVersion": "preview",
   "runs-on": "windows-latest",
   "cacheImageName": "",
@@ -72,7 +72,7 @@
     ]
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
-  "templateSha": "17f1d7b4185601c91643699286c4f75cdd701d4a",
+  "templateSha": "1da40263f0c86f956b19ea1ace7ee1595e2d3d32",
   "commitOptions": {
     "messageSuffix": "Related to AB#539394",
     "pullRequestAutoMerge": true,
