@@ -21,5 +21,5 @@
     "installTestLibraries": true,
     "installTestFramework": true,
     "installTestRunner": true,
-    "useProjectDependencies": false
+    "useProjectDependencies": true
 }
