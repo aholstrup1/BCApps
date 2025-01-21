@@ -1,0 +1,25 @@
+{
+    "projectName": "Add-Ons (W1)",
+    "appFolders":  [
+        "../../../src/Add-Ons/W1/*/app"
+    ],
+    "testFolders":  [],
+    "buildModes": [
+        "Translated"
+    ],
+    "installOnlyReferencedApps": false,
+    "ConditionalSettings": [
+        {
+            "branches": [
+                "releases/*.[0-5]"
+            ],
+            "settings": {
+                "buildModes": [ "Strict" ]
+            }
+        }
+    ],
+    "installTestLibraries": true,
+    "installTestFramework": true,
+    "installTestRunner": true,
+    "useProjectDependencies": false
+}
