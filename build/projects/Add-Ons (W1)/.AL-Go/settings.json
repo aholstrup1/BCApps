@@ -8,6 +8,7 @@
         "Translated"
     ],
     "installOnlyReferencedApps": false,
+    "rulesetFile": "../../../src/rulesets/app.ruleset.json",
     "ConditionalSettings": [
         {
             "buildModes": [
