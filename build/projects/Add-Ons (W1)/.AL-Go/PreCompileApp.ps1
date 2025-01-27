@@ -3,9 +3,5 @@ Param(
     [ref] $compilationParams
 )
 
-if($appType -eq 'app')
-{
-    Write-Host "compilationParams: $compilationParams"
-
-    . $scriptPath -AppFolder $compilationParams.Value["appProjectFolder"]
-}
+$scriptPath = Join-Path $PSScriptRoot "../../../scripts/PreCompileApp.ps1" -Resolve
+. $scriptPath -parameters $compilationParams -appType $appType
