@@ -50,11 +50,11 @@ if($appType -eq 'app')
 
                 if ($recompileDependencies) {
                     # Copy apps to packagecachepath
-                    $projectFolder = Get-Project $parameters["appProjectFolder"]
+                    $projectFolder = Get-Project $parameters.Value["appProjectFolder"]
                     # Look for all .app files in project folder
                     $appFiles = Get-ChildItem -Path $projectFolder -Filter "*Base Application.app"
                     foreach ($appFile in $appFiles) {
-                        $appFile | Copy-Item -Destination $parameters["packageCachePath"] -Force
+                        $appFile | Copy-Item -Destination $parameters.Value["packageCachePath"] -Force
                     }
                 }
 
