@@ -4,4 +4,4 @@ Param(
 )
 
 $scriptPath = Join-Path $PSScriptRoot "../../../scripts/PreCompileApp.ps1" -Resolve
-. $scriptPath -parameters $compilationParams -appType $appType
+. $scriptPath -parameters $compilationParams -appType $appType -recompileDependencies $true

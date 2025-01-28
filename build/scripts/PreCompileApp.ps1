@@ -1,6 +1,7 @@
 Param(
     [ValidateSet('app', 'testApp', 'bcptApp')]
     [string] $appType = 'app',
+    [boolean] $recompileDependencies = $false,
     [ref] $parameters
 )
 
@@ -46,6 +47,16 @@ if($appType -eq 'app')
                 $appJson = Join-Path $tempParameters["appProjectFolder"] "app.json"
                 $appName = (Get-Content -Path $appJson | ConvertFrom-Json).Name
                 $tempParameters["appName"] = "$($appName)_clean.app"
+
+                if ($recompileDependencies) {
+                    # Copy apps to packagecachepath
+                    $projectFolder = Get-Project $parameters["appProjectFolder"]
+                    # Look for all .app files in project folder
+                    $appFiles = Get-ChildItem -Path $projectFolder -Filter "*Base Application.app"
+                    foreach ($appFile in $appFiles) {
+                        $appFile | Copy-Item -Destination $parameters["packageCachePath"] -Force
+                    }
+                }
 
                 if($useCompilerFolder) {
                     Compile-AppWithBcCompilerFolder @tempParameters | Out-Null
