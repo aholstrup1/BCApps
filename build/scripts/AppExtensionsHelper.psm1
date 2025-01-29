@@ -28,7 +28,7 @@ function Update-Dependencies() {
     foreach ($key in $CompilationParameters.Keys) {
         Write-Host "$key : $($CompilationParameters[$key])"
     }
-    Compile-AppWithBcCompilerFolder $CompilationParameters
+    Compile-AppWithBcCompilerFolder @CompilationParameters
 
     # Copy the new app files to the symbols folder
     $appFiles = Get-ChildItem -Path $projectFolder -Filter "*.app"
