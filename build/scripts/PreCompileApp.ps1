@@ -53,11 +53,12 @@ if($appType -eq 'app')
                     # Copy apps to packagecachepath
                     $projectFolder = $parameters.Value["appProjectFolder"]
                     # Look for all .app files in project folder
-                    Write-Host "Get-ChildItem -Path $projectFolder -Filter "
-                    $appFiles = Get-ChildItem -Path $projectFolder -Filter "*.app"
+                    Write-Host "Get-ChildItem -Path $projectFolder"
+                    $appFiles = Get-ChildItem -Path $projectFolder
                     Write-Host "Copying apps to packagecachepath"
                     Write-Host "Found $($appFiles.Count) apps"
                     foreach ($appFile in $appFiles) {
+                        Write-Host "Copying $appFile"
                         $appFile | Copy-Item -Destination $parameters.Value["packageCachePath"] -Force
                     }
                 }
