@@ -56,7 +56,7 @@ if($appType -eq 'app')
                     Write-Host "Get-ChildItem -Path $projectFolder"
                     $appFiles = Get-ChildItem -Path $projectFolder -Name "*.app"
                     Write-Host "Copying apps to packagecachepath"
-                    Write-Host "Found $($appFiles.Count) apps"
+                    Write-Host $appFiles
                     foreach ($appFile in $appFiles) {
                         Write-Host "Copying $appFile to $($parameters.Value["packageCachePath"])"
                         $appFile | Copy-Item -Destination $parameters.Value["packageCachePath"] -Force
