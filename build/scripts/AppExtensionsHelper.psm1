@@ -34,6 +34,10 @@ function Update-Dependencies() {
 
     # Recompile them
     $CompilationParameters["appProjectFolder"] = "$tempFolder/BaseApplicationSource"
+    $CompilationParameters["EnableAppSourceCop"] = $false
+    $CompilationParameters["EnableCodeCop"] = $false
+    $CompilationParameters["EnableUICop"] = $false
+    $CompilationParameters["EnablePerTenantExtensionCop"] = $false
 
     # Iterate through hashtable and print keys and values
     foreach ($key in $CompilationParameters.Keys) {
