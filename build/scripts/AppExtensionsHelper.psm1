@@ -22,7 +22,12 @@ function Update-Dependencies() {
     Get-ChildItem -Path $tempFolder -Recurse -Filter "$App.Source.zip" | Expand-Archive -Destination $tempFolder/BaseApplicationSource
 
     # Recompile them
-    $CompilationParameters["appProjectFolder"] = Join-Path $tempFolder "BaseApplicationSource"
+    $CompilationParameters["appProjectFolder"] = Join-Path "$tempFolder/BaseApplicationSource"
+
+    # Iterate through hashtable and print keys and values
+    foreach ($key in $CompilationParameters.Keys) {
+        Write-Host "$key : $($CompilationParameters[$key])"
+    }
     Compile-AppWithBcCompilerFolder $CompilationParameters
 
     # Copy the new app files to the symbols folder
