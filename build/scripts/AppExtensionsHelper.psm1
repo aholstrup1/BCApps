@@ -10,7 +10,7 @@ function Update-Dependencies() {
     $SymbolsFolder = $CompilationParameters["appSymbolsFolder"]
     
     # Find out which version of the apps we need 
-    $artifactVersion = "https://bcinsider-fvh2ekdjecfjd6gk.b02.azurefd.net/sandbox/26.0.29478.0/base"
+    $artifactVersion = "https://bcinsider-fvh2ekdjecfjd6gk.b02.azurefd.net/sandbox/26.0.29478.0/platform"
 
     # Download the artifact that contains the source code for those apps
     # Set up temp folder to download the artifact to
