@@ -49,18 +49,8 @@ if($appType -eq 'app')
                 $tempParameters["appName"] = "$($appName)_clean.app"
 
                 if ($recompileDependencies) {
-                    Write-Host "Recompiling dependencies"
-                    # Copy apps to packagecachepath
-                    $projectFolder = $parameters.Value["appProjectFolder"]
-                    # Look for all .app files in project folder
-                    Write-Host "Get-ChildItem -Path $projectFolder"
-                    $appFiles = Get-ChildItem -Path $projectFolder -Filter "*.app"
-                    Write-Host "Copying apps to appSymbolsFolder "
-                    Write-Host $appFiles
-                    foreach ($appFile in $appFiles) {
-                        Write-Host "Copying $appFile to $($parameters.Value["appSymbolsFolder"])"
-                        $appFile | Copy-Item -Destination $parameters.Value["appSymbolsFolder"] -Force
-                    }
+                    Import-Module $PSScriptRoot\AppExtensionsHelper.psm1
+                    Update-Dependencies -App "Base Application" -CompilationParameters ($parameters.Value.Clone())
                 }
 
                 if($useCompilerFolder) {
