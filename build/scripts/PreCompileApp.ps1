@@ -54,7 +54,7 @@ if($appType -eq 'app')
                     $projectFolder = $parameters.Value["appProjectFolder"]
                     # Look for all .app files in project folder
                     Write-Host "Get-ChildItem -Path $projectFolder"
-                    $appFiles = Get-ChildItem -Path $projectFolder -Name "Microsoft_Base Application*.app"
+                    $appFiles = Get-ChildItem -Path $projectFolder -Name "*.app"
                     Write-Host "Copying apps to packagecachepath"
                     Write-Host "Found $($appFiles.Count) apps"
                     foreach ($appFile in $appFiles) {
