@@ -39,6 +39,8 @@ function Update-Dependencies() {
     $CompilationParameters["EnableUICop"] = $false
     $CompilationParameters["EnablePerTenantExtensionCop"] = $false
 
+    $CompilationParameters.Remove("ruleset")
+
     # Iterate through hashtable and print keys and values
     foreach ($key in $CompilationParameters.Keys) {
         Write-Host "$key : $($CompilationParameters[$key])"
