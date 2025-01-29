@@ -53,7 +53,9 @@ function Update-Dependencies() {
     if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.1") {
         Remove-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.1" -Recurse -Force
     }
-    $dotNetRuntimeVersionInstalled = [version] "8.0.12"
+    # Rename 8.0.12 to 9.0.1
+    Rename-Item "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.12" "9.0.1"
+    Rename-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.12" "9.0.1"
 
     Compile-AppWithBcCompilerFolder @CompilationParameters
 
