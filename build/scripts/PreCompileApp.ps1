@@ -54,12 +54,12 @@ if($appType -eq 'app')
                     $projectFolder = $parameters.Value["appProjectFolder"]
                     # Look for all .app files in project folder
                     Write-Host "Get-ChildItem -Path $projectFolder"
-                    $appFiles = Get-ChildItem -Path $projectFolder -Name "*.app"
+                    $appFiles = Get-ChildItem -Path $projectFolder -Filter "*.app"
                     Write-Host "Copying apps to appSymbolsFolder "
                     Write-Host $appFiles
                     foreach ($appFile in $appFiles) {
-                        Write-Host "Copying $appFile to $($parameters.Value["appSymbolsFolder "])"
-                        $appFile | Copy-Item -Destination $parameters.Value["appSymbolsFolder "] -Force
+                        Write-Host "Copying $appFile to $($parameters.Value["appSymbolsFolder"])"
+                        $appFile | Copy-Item -Destination $parameters.Value["appSymbolsFolder"] -Force
                     }
                 }
 
