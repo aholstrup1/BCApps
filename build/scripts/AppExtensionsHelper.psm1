@@ -24,13 +24,13 @@ function Update-Dependencies() {
     $sourceCodeFolder = "$tempFolder/$($App -replace " ", "_")Source"
     Get-ChildItem -Path $tempFolder -Recurse -Filter "$App.Source.zip" | Expand-Archive -Destination $sourceCodeFolder
 
-    if (-not (Test-Path $tempFolder/BaseApplicationSource)) {
+    if (-not (Test-Path $sourceCodeFolder)) {
         Write-Error "Could not find the source code for the Base Application"
         throw
     }
 
     # Find app.json inside the source code
-    $appJson = Get-ChildItem -Path $tempFolder/BaseApplicationSource -Recurse -Filter "app.json" | Select-Object -First 1
+    $appJson = Get-ChildItem -Path $sourceCodeFolder -Recurse -Filter "app.json" | Select-Object -First 1
     # print the app.json path
     Write-Host "Found app.json at $appJson"
     Write-Host $appJson.FullName
