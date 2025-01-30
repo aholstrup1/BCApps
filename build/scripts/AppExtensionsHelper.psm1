@@ -66,7 +66,7 @@ function Update-Dependencies() {
     }
     # End of temp fix
 
-    Compile-AppWithBcCompilerFolder @CompilationParameters
+    #Compile-AppWithBcCompilerFolder @CompilationParameters
     <#
     # Copy the new app files to the symbols folder
     $appFiles = Get-ChildItem -Path $projectFolder -Filter "*.app"
