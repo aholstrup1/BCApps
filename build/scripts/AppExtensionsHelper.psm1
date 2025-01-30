@@ -15,11 +15,14 @@ function Update-Dependencies() {
     # Download the artifact that contains the source code for those apps
     # Set up temp folder to download the artifact to
     $tempFolder = Join-Path $env:TEMP ([System.Guid]::NewGuid().ToString())
+    $newSymbolsFolder = (Join-Path $tempFolder "Symbols")
     New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
+    New-Item -ItemType Directory -Path $newSymbolsFolder -Force | Out-Null
     Download-Artifacts -artifactUrl $artifactVersion -basePath $tempFolder
     
     # Unzip it 
-    Get-ChildItem -Path $tempFolder -Recurse -Filter "$App.Source.zip" | Expand-Archive -Destination $tempFolder/BaseApplicationSource
+    $sourceCodeFolder = "$tempFolder/$($App -replace " ", "_")Source"
+    Get-ChildItem -Path $tempFolder -Recurse -Filter "$App.Source.zip" | Expand-Archive -Destination $sourceCodeFolder
 
     if (-not (Test-Path $tempFolder/BaseApplicationSource)) {
         Write-Error "Could not find the source code for the Base Application"
@@ -33,7 +36,9 @@ function Update-Dependencies() {
     Write-Host $appJson.FullName
 
     # Recompile them
-    $CompilationParameters["appProjectFolder"] = "$tempFolder/BaseApplicationSource"
+    $CompilationParameters["appProjectFolder"] = $sourceCodeFolder
+    $CompilationParameters["appOutputFolder"] = $SymbolsFolder
+    $CompilationParameters["appSymbolsFolder"] = $newSymbolsFolder
     $CompilationParameters["EnableAppSourceCop"] = $false
     $CompilationParameters["EnableCodeCop"] = $false
     $CompilationParameters["EnableUICop"] = $false
@@ -53,12 +58,16 @@ function Update-Dependencies() {
     if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.1") {
         Remove-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.1" -Recurse -Force
     }
-    # Rename 8.0.12 to 9.0.1
-    Rename-Item "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.12" "9.0.1"
-    Rename-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.12" "9.0.1"
+    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.12") {
+        Rename-Item "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.12" "9.0.1"
+    }
+    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.12") {
+        Rename-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.12" "9.0.1"
+    }
+    # End of temp fix
 
     Compile-AppWithBcCompilerFolder @CompilationParameters
-
+    <#
     # Copy the new app files to the symbols folder
     $appFiles = Get-ChildItem -Path $projectFolder -Filter "*.app"
     
@@ -66,4 +75,5 @@ function Update-Dependencies() {
         Write-Host "Copying $appFile to $SymbolsFolder"
         $appFile | Copy-Item -Destination $SymbolsFolder -Force
     }
+    #>
 }
