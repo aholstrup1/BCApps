@@ -37,7 +37,7 @@ function Update-Dependencies() {
 
     # Recompile them
     $CompilationParameters["appProjectFolder"] = $sourceCodeFolder
-    $CompilationParameters["appOutputFolder"] = $SymbolsFolder
+    $CompilationParameters["appOutputFolder"] = $newSymbolsFolder
     $CompilationParameters["appSymbolsFolder"] = $newSymbolsFolder
     $CompilationParameters["EnableAppSourceCop"] = $false
     $CompilationParameters["EnableCodeCop"] = $false
@@ -66,7 +66,15 @@ function Update-Dependencies() {
     }
     # End of temp fix
 
-    #Compile-AppWithBcCompilerFolder @CompilationParameters
+    Compile-AppWithBcCompilerFolder @CompilationParameters
+    # Find the created .app file in the newSymbolsFolder
+    $appFiles = Get-ChildItem -Path $newSymbolsFolder -Filter "*$App*.app"
+    # Copy the new app files to the symbols folder
+    foreach ($appFile in $appFiles) {
+        Write-Host "Copying $appFile to $SymbolsFolder"
+        $appFile | Copy-Item -Destination $SymbolsFolder -Force
+    }
+    #
     <#
     # Copy the new app files to the symbols folder
     $appFiles = Get-ChildItem -Path $projectFolder -Filter "*.app"
