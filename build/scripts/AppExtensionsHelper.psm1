@@ -8,6 +8,10 @@ function Update-Dependencies() {
     # Copy apps to packagecachepath
     $projectFolder = $CompilationParameters["appProjectFolder"]
     $SymbolsFolder = $CompilationParameters["appSymbolsFolder"]
+
+    # Log what is in the symbols folder
+    Write-Host "Symbols folder: $SymbolsFolder"
+    Get-ChildItem -Path $SymbolsFolder
     
     # Find out which version of the apps we need 
     $artifactVersion = "https://bcinsider-fvh2ekdjecfjd6gk.b02.azurefd.net/sandbox/26.0.29478.0/platform"
@@ -70,10 +74,10 @@ function Update-Dependencies() {
     # Find the created .app file in the newSymbolsFolder
     $appFiles = Get-ChildItem -Path $newSymbolsFolder -Filter "*$App*.app"
     # Copy the new app files to the symbols folder
-    foreach ($appFile in $appFiles) {
+    <#foreach ($appFile in $appFiles) {
         Write-Host "Copying $appFile to $SymbolsFolder"
         $appFile | Copy-Item -Destination $SymbolsFolder -Force
-    }
+    }#>
     #
     <#
     # Copy the new app files to the symbols folder
