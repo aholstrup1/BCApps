@@ -3,7 +3,9 @@
     "appFolders": [
         "../../../src/Add-Ons/W1/*/app"
     ],
-    "testFolders": [],
+    "testFolders": [
+        "../../../test/Add-Ons/W1/*/test"
+    ],
     "buildModes": [
         "Translated"
     ],
