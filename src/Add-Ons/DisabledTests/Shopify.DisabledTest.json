@@ -1,0 +1,14 @@
+[
+    {
+        "bug": "1",
+        "codeunitId": 139580,
+        "codeunitName": "Shpfy Checklist Init. Test",
+        "method": "TestChecklistInitializationForNonEval"
+    },
+    {
+        "bug": "1",
+        "codeunitId": 139588,
+        "codeunitName": "Shpfy Connector Guide Test",
+        "method": "ConnectorGuideUrlAutoFillTest"
+    }
+]
