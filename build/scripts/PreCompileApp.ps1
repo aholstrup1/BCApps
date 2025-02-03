@@ -50,7 +50,7 @@ if($appType -eq 'app')
 
                 if ($recompileDependencies) {
                     Import-Module $PSScriptRoot\AppExtensionsHelper.psm1
-                    Update-Dependencies -App "Base Application" -CompilationParameters ($parameters.Value.Clone())
+                    Update-Dependencies -App "System Application" -CompilationParameters ($parameters.Value.Clone())
                 }
 
                 if($useCompilerFolder) {
