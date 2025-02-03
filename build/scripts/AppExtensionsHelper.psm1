@@ -37,7 +37,7 @@ function Update-Dependencies() {
 
     # Recompile them
     $CompilationParameters["appProjectFolder"] = $sourceCodeFolder
-    $CompilationParameters["appOutputFolder"] = $newSymbolsFolder
+    $CompilationParameters["appOutputFolder"] = $SymbolsFolder
     $CompilationParameters["appSymbolsFolder"] = $newSymbolsFolder
     $CompilationParameters["EnableAppSourceCop"] = $false
     $CompilationParameters["EnableCodeCop"] = $false
