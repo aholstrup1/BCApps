@@ -55,20 +55,6 @@ function Update-Dependencies() {
         Write-Host "$key : $($CompilationParameters[$key])"
     }
 
-    # Temp fix for: Error: AL0196 The call is ambiguous between the method 
-    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\9.0.1") {
-        Remove-Item "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\9.0.1" -Recurse -Force
-    }
-    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.1") {
-        Remove-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.1" -Recurse -Force
-    }
-    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.12") {
-        Rename-Item "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.12" "9.0.1"
-    }
-    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.12") {
-        Rename-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.12" "9.0.1"
-    }
-    # End of temp fix
 
     Compile-AppWithBcCompilerFolder @CompilationParameters
     # Find the created .app file in the newSymbolsFolder
