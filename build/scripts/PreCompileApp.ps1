@@ -1,8 +1,8 @@
 Param(
     [ValidateSet('app', 'testApp', 'bcptApp')]
     [string] $appType = 'app',
-    [boolean] $recompileDependencies = $false,
-    [ref] $parameters
+    [ref] $parameters,
+    [boolean] $recompileDependencies = $false
 )
 
 Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
