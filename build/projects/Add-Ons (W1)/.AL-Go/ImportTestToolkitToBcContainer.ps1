@@ -3,6 +3,7 @@ Param(
     [hashtable] $parameters
 )
 
-$parameters.ImportAction = 'Skip'
-
 Import-TestToolkitToBcContainer @parameters
+
+Import-Module (Join-Path $PSScriptRoot "../../../scripts/DevEnv/NewDevContainer.psm1" -Resolve)
+Setup-ContainerForDevelopment -ContainerName $parameters.ContainerName -RepoVersion "26.0"

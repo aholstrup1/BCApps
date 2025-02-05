@@ -22,7 +22,7 @@ $installedApps | ForEach-Object {
 }
 
 # Set the app version and move to dev scope
-Import-Module "$PSScriptRoot\DevEnv\NewDevContainer.psm1"
+<#Import-Module "$PSScriptRoot\DevEnv\NewDevContainer.psm1"
 Setup-ContainerForDevelopment -ContainerName $parameters.ContainerName -RepoVersion "26.0"
-
+#>
 Invoke-ScriptInBcContainer -containerName $parameters.ContainerName -scriptblock { $progressPreference = 'SilentlyContinue' }
