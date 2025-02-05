@@ -3,4 +3,6 @@ Param(
     [hashtable] $parameters
 )
 
-Write-Host "Skipping Test Toolkit import"
+$parameters.ImportAction = 'Skip'
+
+Import-TestToolkitToBcContainer @parameters
