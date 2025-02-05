@@ -185,7 +185,7 @@ function Setup-ContainerForDevelopment() {
     )
 
     $NewDevContainerModule = Join-Path "$PSScriptRoot" "NewDevContainer.psm1" -Resolve
-    Copy-FileToBcContainer -containerName $ContainerName -localpath "$NewDevContainerModule"
+    Copy-FileToBcContainer -containerName $ContainerName -localpath "$NewDevContainerModule" -containerPath (Join-Path "C:\run" "NewDevContainer.psm1")
 
     Invoke-ScriptInBcContainer -containerName $ContainerName -scriptblock {
         param([string] $DevContainerModule, [System.Version] $RepoVersion, [string] $DatabaseName = "CRONUS")
