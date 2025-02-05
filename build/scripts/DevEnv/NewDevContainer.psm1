@@ -184,7 +184,7 @@ function Setup-ContainerForDevelopment() {
         [System.Version] $RepoVersion
     )
 
-    $NewDevContainerModule = Join-Path "$PSScriptRoot\NewDevContainer.psm1" "" -Resolve
+    $NewDevContainerModule = Join-Path "$PSScriptRoot" "NewDevContainer.psm1" -Resolve
     Copy-FileToBcContainer -containerName $ContainerName -localpath "$NewDevContainerModule"
 
     Invoke-ScriptInBcContainer -containerName $ContainerName -scriptblock {
