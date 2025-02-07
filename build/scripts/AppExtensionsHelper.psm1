@@ -6,7 +6,6 @@ function Update-Dependencies() {
 
     Write-Host "Recompiling dependencies"
     # Copy apps to packagecachepath
-    $projectFolder = $CompilationParameters["appProjectFolder"]
     $SymbolsFolder = $CompilationParameters["appSymbolsFolder"]
 
     # Log what is in the symbols folder
@@ -33,45 +32,22 @@ function Update-Dependencies() {
         throw
     }
 
-    # Find app.json inside the source code
-    $appJson = Get-ChildItem -Path $sourceCodeFolder -Recurse -Filter "app.json" | Select-Object -First 1
-    # print the app.json path
-    Write-Host "Found app.json at $appJson"
-    Write-Host $appJson.FullName
-
-    # Recompile them
+    # Update the CompilationParameters
     $CompilationParameters["appProjectFolder"] = $sourceCodeFolder
     $CompilationParameters["appOutputFolder"] = $SymbolsFolder
     $CompilationParameters["appSymbolsFolder"] = $newSymbolsFolder
+
+    # Disable all cops
     $CompilationParameters["EnableAppSourceCop"] = $false
     $CompilationParameters["EnableCodeCop"] = $false
     $CompilationParameters["EnableUICop"] = $false
     $CompilationParameters["EnablePerTenantExtensionCop"] = $false
-
     $CompilationParameters.Remove("ruleset")
 
-    # Iterate through hashtable and print keys and values
     foreach ($key in $CompilationParameters.Keys) {
         Write-Host "$key : $($CompilationParameters[$key])"
     }
 
 
     Compile-AppWithBcCompilerFolder @CompilationParameters
-    # Find the created .app file in the newSymbolsFolder
-    $appFiles = Get-ChildItem -Path $newSymbolsFolder -Filter "*$App*.app"
-    # Copy the new app files to the symbols folder
-    <#foreach ($appFile in $appFiles) {
-        Write-Host "Copying $appFile to $SymbolsFolder"
-        $appFile | Copy-Item -Destination $SymbolsFolder -Force
-    }#>
-    #
-    <#
-    # Copy the new app files to the symbols folder
-    $appFiles = Get-ChildItem -Path $projectFolder -Filter "*.app"
-    
-    foreach ($appFile in $appFiles) {
-        Write-Host "Copying $appFile to $SymbolsFolder"
-        $appFile | Copy-Item -Destination $SymbolsFolder -Force
-    }
-    #>
 }

@@ -1,12 +1,8 @@
 Param(
     [Hashtable]$parameters
 )
-$keepApps = @()
 
-$projectSettings = Get-Content (Join-Path $PSScriptRoot "settings.json" -Resolve) | ConvertFrom-Json
-if ($projectSettings.useProjectDependencies -eq $false) {
-    $keepApps = @("System Application", "Business Foundation", "Base Application", "Application")
-}
+$externalDependencies = (Get-Content (Join-Path $PSScriptRoot "customSettings.json" -Resolve) | ConvertFrom-Json).ExternalAppDependencies
 
 $script = Join-Path $PSScriptRoot "../../../scripts/NewBcContainer.ps1" -Resolve
-. $script -parameters $parameters -keepApps $keepApps
+. $script -parameters $parameters -keepApps $externalDependencies

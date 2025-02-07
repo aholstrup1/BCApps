@@ -2,7 +2,7 @@ Param(
     [ValidateSet('app', 'testApp', 'bcptApp')]
     [string] $appType = 'app',
     [ref] $parameters,
-    [boolean] $recompileDependencies = $false
+    [string[]] $recompileDependencies = @()
 )
 
 Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
@@ -48,7 +48,7 @@ if($appType -eq 'app')
                 $appName = (Get-Content -Path $appJson | ConvertFrom-Json).Name
                 $tempParameters["appName"] = "$($appName)_clean.app"
 
-                if ($recompileDependencies) {
+                if ($recompileDependencies.Count -gt 0) {
                     Import-Module $PSScriptRoot\AppExtensionsHelper.psm1
                     # Temp fix for: Error: AL0196 The call is ambiguous between the method 
                     if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\9.0.1") {
@@ -64,10 +64,9 @@ if($appType -eq 'app')
                         Rename-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.12" "9.0.1"
                     }
                     # End of temp fix
-                    @("System Application", "Business Foundation", "Base Application", "Application") | ForEach-Object {
+                    $recompileDependencies | ForEach-Object {
                         Update-Dependencies -App $_ -CompilationParameters ($parameters.Value.Clone())
                     }
-                    #Update-Dependencies -App "System Application" -CompilationParameters ($parameters.Value.Clone())
                 }
 
                 if($useCompilerFolder) {

@@ -221,8 +221,11 @@ function Setup-ContainerForDevelopment() {
                     Write-Host "Moving $($_.Name) to Dev Scope"
                     Move-AppIntoDevScope -Name ($_.Name) -DatabaseName $DatabaseName
                 }
-                if ($_.Version -ne "$($RepoVersion.Major).$($RepoVersion.Minor).0.0") {
-                    Set-AppVersion -Name ($_.Name) -DatabaseName $DatabaseName -Major $RepoVersion.Major -Minor $RepoVersion.Minor
+                if ($null -ne $RepoVersion) {
+                    if ($_.Version -ne "$($RepoVersion.Major).$($RepoVersion.Minor).0.0") {
+                        Write-Host "Setting version of $($_.Name) to $($RepoVersion).0.0"
+                        #Set-AppVersion -Name ($_.Name) -DatabaseName $DatabaseName -Major $RepoVersion.Major -Minor $RepoVersion.Minor
+                    }
                 }
             }
         } finally {
