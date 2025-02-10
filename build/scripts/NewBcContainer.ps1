@@ -12,12 +12,14 @@ if ("$env:GITHUB_RUN_ID" -eq "") {
 }
 
 New-BcContainer @parameters
-#Unpublish-BcContainerApp -containerName $parameters.ContainerName -name "Shopify Connector" -unInstall -doNotSaveData -doNotSaveSchema -force
-
 if ($keepApps) {
     # Set the app version and move to dev scope
     Import-Module "$PSScriptRoot\DevEnv\NewDevContainer.psm1"
-    Setup-ContainerForDevelopment -ContainerName $parameters.ContainerName -RepoVersion $null
+    #Setup-ContainerForDevelopment -ContainerName $parameters.ContainerName -RepoVersion $null
+
+    # Unpublish the apps we are building in BCApps
+    # This also means that we can't have apps in NAV with dependencies to apps in BCApps (good thing?)
+    Unpublish-BcContainerApp -containerName $parameters.ContainerName -name "Shopify Connector" -unInstall -doNotSaveData -doNotSaveSchema -force
 } else {
     $installedApps = Get-BcContainerAppInfo -containerName $containerName -tenantSpecificProperties -sort DependenciesLast
     $installedApps | ForEach-Object {
