@@ -1,4 +1,4 @@
 Param([Hashtable]$parameters)
 
-#$parameters["useDevEndpoint"] = $true
+$parameters["scope"] = "Tenant"
 Publish-BcContainerApp @parameters
