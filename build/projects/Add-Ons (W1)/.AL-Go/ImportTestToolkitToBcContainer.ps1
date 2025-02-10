@@ -4,6 +4,7 @@ Param(
 )
 
 Write-Host "Skipping ImportTestToolkitToBcContainer.ps1"
+$parameters.useDevEndpoint = $true
 Import-TestToolkitToBcContainer @parameters
 
 <#
