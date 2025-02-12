@@ -1,6 +1,6 @@
 name: Work Item Validation
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, reopened, edited]
     branches: [ 'main', 'releases/*' ]
 
@@ -28,7 +28,6 @@ jobs:
           build/scripts/PullRequestValidation/ValidateIssuesForPullRequest.ps1 -PullRequestNumber ${{ github.event.pull_request.number }} -Repository ${{ github.repository }}
 
   WorkItemValidationForMicrosoft:
-    if: github.repository_owner == 'microsoft' && github.event.pull_request.state == 'open'
     name: 'For Microsoft: Validate link to internal work items'
     runs-on: ubuntu-latest
     needs: GitHubIssueValidation
