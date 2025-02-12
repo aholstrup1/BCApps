@@ -85,6 +85,7 @@ function Test-GitHubIssue() {
 }
 
 Write-Host "Validating PR $PullRequestNumber"
+throw "ERROR!!!"
 
 $pullRequest = [GitHubPullRequest]::Get($PullRequestNumber, $Repository)
 if (-not $pullRequest) {
