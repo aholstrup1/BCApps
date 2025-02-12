@@ -17,7 +17,7 @@ codeunit 7767 "AOAI Authorization"
 
     var
         [NonDebuggable]
-        Endpoint: Text;
+        Endpoint: Text; 
         [NonDebuggable]
         Deployment: Text;
         [NonDebuggable]
