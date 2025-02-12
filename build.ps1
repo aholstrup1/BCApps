@@ -3,7 +3,7 @@
         Build script for AL-Go projects
     .Description
         This script will run localDevEnv.ps1 in the specified AL-Go project
-    .Parameter ALGoProject
+    .Parameter ALGoProject 
         The name of the AL-Go project
     .Parameter AutoFill
         If specified, the script will generate a random password and use that for the credential
