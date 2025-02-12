@@ -6,7 +6,7 @@ on:
     branches: [ 'main', 'releases/*' ]
 
 jobs:
-  build:
+  SavePRNumber:
     runs-on: ubuntu-latest
 
     steps:        

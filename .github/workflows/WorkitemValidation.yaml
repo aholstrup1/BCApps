@@ -23,7 +23,7 @@ jobs:
         id: get_pr_number
         run: |
           # Print the payload of the event in powershell
-          $payload = $Env:GITHUB_EVENT_PATH | Get-Content -Raw
+          $payload = Get-Content -Encoding UTF8 -Path $env:GITHUB_EVENT_PATH -Raw
           Write-Host "Payload: $payload"
 
 
