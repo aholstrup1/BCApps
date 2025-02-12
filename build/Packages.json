@@ -2,7 +2,7 @@
   "Microsoft.Dynamics.BusinessCentral.Translations": {
     "Version": "26.0.20250210.4",
     "Source": "NuGet.org"
-  },
+  }, 
   "AppBaselines-BCArtifacts": {
     "Version": "25.5.29976.0",
     "Source": "BCArtifacts",
