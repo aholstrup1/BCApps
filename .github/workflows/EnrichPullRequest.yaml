@@ -18,7 +18,6 @@ jobs:
   GetPullRequestNumber:
     name: 'Get PR number'
     runs-on: ubuntu-latest
-    if: github.event.workflow_run.conclusion == 'success'
     outputs:
       PRNumber: ${{ steps.GetPRNumber.outputs.PRNumber }}
     steps:
