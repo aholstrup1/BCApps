@@ -5,7 +5,7 @@
 namespace System.AI;
 
 using System.Environment;
-using System.Privacy;
+using System.Privacy;  
 
 /// <summary>
 /// This page is used to set the Copilot settings in the Environment.
