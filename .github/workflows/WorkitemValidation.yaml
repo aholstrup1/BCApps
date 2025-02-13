@@ -7,6 +7,10 @@ on:
 
 permissions: read-all
 
+defaults:
+  run:
+    shell: pwsh
+
 jobs:
     WorkItemValidationForMicrosoft:
         name: 'For Microsoft: Validate link to internal work items'
