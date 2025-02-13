@@ -14,7 +14,7 @@ page 7775 "Copilot AI Capabilities"
 {
     PageType = Document;
     ApplicationArea = All;
-    UsageCategory = Administration;
+    UsageCategory = Administration; 
     Caption = 'Copilot & agent capabilities';
     DataCaptionExpression = '';
     AboutTitle = 'About Copilot';
