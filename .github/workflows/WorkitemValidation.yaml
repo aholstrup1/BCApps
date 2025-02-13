@@ -5,6 +5,8 @@ on:
     types: [opened, synchronize, reopened, edited]
     branches: [ 'main', 'releases/*' ]
 
+permissions: read-all
+
 jobs:
     WorkItemValidationForMicrosoft:
         name: 'For Microsoft: Validate link to internal work items'
@@ -19,9 +21,13 @@ jobs:
             uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
             
           - name: Validate work items for pull request
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             run: |
               build/scripts/PullRequestValidation/ValidateIssuesForPullRequest.ps1 -PullRequestNumber ${{ github.event.pull_request.number }} -Repository ${{ github.repository }} -ValidateOnly
 
           - name: Validate internal work items for pull request
+            env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             run: |
               build/scripts/PullRequestValidation/ValidateInternalWorkItemForPullRequest.ps1 -PullRequestNumber ${{ github.event.pull_request.number }} -Repository ${{ github.repository }} -ValidateOnly
