@@ -1,4 +1,4 @@
 Param([Hashtable]$parameters)
 
-$parameters["scope"] = "Tenant"
+#$parameters["scope"] = "Tenant"
 Publish-BcContainerApp @parameters

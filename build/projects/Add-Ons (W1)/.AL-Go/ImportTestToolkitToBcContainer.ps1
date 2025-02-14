@@ -3,5 +3,5 @@ Param(
     [hashtable] $parameters
 )
 
-$parameters.scope = "Tenant"
+#$parameters.scope = "Tenant"
 Import-TestToolkitToBcContainer @parameters
