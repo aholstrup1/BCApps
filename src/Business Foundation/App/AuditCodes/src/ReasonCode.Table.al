@@ -6,7 +6,7 @@
 namespace Microsoft.Foundation.AuditCodes;
 
 /// <summary>
-/// Reason codes supplement the source codes and are used to indicate why an entry was created.
+/// Reason codes supplement the source codes and are used to indicate why an entry was created.  
 /// </summary>
 /// <remarks>
 /// https://learn.microsoft.com/en-us/dynamics365/business-central/finance-setup-trail-codes
