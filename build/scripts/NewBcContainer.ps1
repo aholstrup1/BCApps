@@ -1,6 +1,6 @@
 Param(
     [Hashtable]$parameters,
-    [boolean]$keepApps = $false
+    [string[]]$uninstallApps = @()
 )
 
 $parameters.multitenant = $false
@@ -12,15 +12,14 @@ if ("$env:GITHUB_RUN_ID" -eq "") {
 }
 
 New-BcContainer @parameters
-if ($keepApps) {
-    # Set the app version and move to dev scope
-    Import-Module "$PSScriptRoot\DevEnv\NewDevContainer.psm1"
-    #Setup-ContainerForDevelopment -ContainerName $parameters.ContainerName -RepoVersion $null
-
+if ($uninstallApps) {
     # Unpublish the apps we are building in BCApps
     # This also means that we can't have apps in NAV with dependencies to apps in BCApps (good thing?)
-    Unpublish-BcContainerApp -containerName $parameters.ContainerName -name "Shopify Connector" -unInstall -doNotSaveData -doNotSaveSchema -force
+    foreach($app in $uninstallApps) {
+        Unpublish-BcContainerApp -containerName $parameters.ContainerName -name $app -unInstall -doNotSaveData -doNotSaveSchema -force
+    }
 } else {
+    # Unpublish all apps in the container
     $installedApps = Get-BcContainerAppInfo -containerName $containerName -tenantSpecificProperties -sort DependenciesLast
     $installedApps | ForEach-Object {
         Write-Host "Removing $($_.Name)"
