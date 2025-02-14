@@ -33,21 +33,6 @@ if($appType -eq 'app')
             Import-Module $PSScriptRoot\GuardingV2ExtensionsHelper.psm1
 
             if($appBuildMode -eq 'Clean') {
-                Write-Host "Compile the app without any preprocessor symbols to generate a baseline app to use for breaking changes check"
-
-                $tempParameters = $parameters.Value.Clone()
-
-                # Wipe the preprocessor symbols to ensure that the baseline is generated without any preprocessor symbols
-                $tempParameters["preprocessorsymbols"] = @()
-
-                # Place the app directly in the symbols folder
-                $tempParameters["appOutputFolder"] = $tempParameters["appSymbolsFolder"]
-
-                # Rename the app to avoid overwriting the app that will be generated with preprocessor symbols
-                $appJson = Join-Path $tempParameters["appProjectFolder"] "app.json"
-                $appName = (Get-Content -Path $appJson | ConvertFrom-Json).Name
-                $tempParameters["appName"] = "$($appName)_clean.app"
-
                 if ($recompileDependencies.Count -gt 0) {
                     Import-Module $PSScriptRoot\AppExtensionsHelper.psm1
                     # Temp fix for: Error: AL0196 The call is ambiguous between the method 
@@ -65,9 +50,24 @@ if($appType -eq 'app')
                     }
                     # End of temp fix
                     $recompileDependencies | ForEach-Object {
-                        Update-Dependencies -App $_ -CompilationParameters ($parameters.Value.Clone())
+                        Build-Dependency -App $_ -CompilationParameters ($parameters.Value.Clone())
                     }
                 }
+                
+                Write-Host "Compile the app without any preprocessor symbols to generate a baseline app to use for breaking changes check"
+
+                $tempParameters = $parameters.Value.Clone()
+
+                # Wipe the preprocessor symbols to ensure that the baseline is generated without any preprocessor symbols
+                $tempParameters["preprocessorsymbols"] = @()
+
+                # Place the app directly in the symbols folder
+                $tempParameters["appOutputFolder"] = $tempParameters["appSymbolsFolder"]
+
+                # Rename the app to avoid overwriting the app that will be generated with preprocessor symbols
+                $appJson = Join-Path $tempParameters["appProjectFolder"] "app.json"
+                $appName = (Get-Content -Path $appJson | ConvertFrom-Json).Name
+                $tempParameters["appName"] = "$($appName)_clean.app"
 
                 if($useCompilerFolder) {
                     Compile-AppWithBcCompilerFolder @tempParameters | Out-Null
