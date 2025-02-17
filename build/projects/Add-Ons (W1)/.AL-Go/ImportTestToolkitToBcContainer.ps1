@@ -9,4 +9,6 @@ foreach($app in $installedApps) {
     Write-Host "$($app.Name) - $($app.Version) - $($app.Scope) - $($app.Tenant) - $($app.IsPublished) - $($app.IsInstalled)"
 }
 
+$parameters.scope = "Tenant"
+
 Import-TestToolkitToBcContainer @parameters
