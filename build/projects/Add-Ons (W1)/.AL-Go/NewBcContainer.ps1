@@ -17,4 +17,4 @@ function Get-AppsInFolder() {
 
 $apps = Get-AppsInFolder -folder (Join-Path $PSScriptRoot "../../../../src/Add-Ons/W1" -Resolve)
 $script = Join-Path $PSScriptRoot "../../../scripts/NewBcContainer.ps1" -Resolve
-. $script -parameters $parameters -uninstallApps $apps
+. $script -parameters $parameters -uninstallApps @("None") -moveAppsToDevScope $apps

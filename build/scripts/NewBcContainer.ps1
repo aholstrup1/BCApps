@@ -1,6 +1,7 @@
 Param(
     [Hashtable]$parameters,
-    [string[]]$uninstallApps = @("*")
+    [string[]]$uninstallApps = @("*"),
+    [string[]]$moveAppsToDevScope
 )
 
 $parameters.multitenant = $false
@@ -19,6 +20,12 @@ foreach($app in $installedApps) {
         Write-Host "Removing $($app.Name)"
         Unpublish-BcContainerApp -containerName $parameters.ContainerName -name $app.Name -unInstall -doNotSaveData -doNotSaveSchema -force
     }
+}
+
+Import-Module (Join-Path $PSScriptRoot "DevEnv/NewDevContainer.psm1" -Resolve) -Force
+
+if ($moveAppsToDevScope) {
+    Setup-ContainerForDevelopment -containerName $parameters.ContainerName -RepoVersion "26.0" -SelectedApps $moveAppsToDevScope
 }
 
 Invoke-ScriptInBcContainer -containerName $parameters.ContainerName -scriptblock { $progressPreference = 'SilentlyContinue' }
