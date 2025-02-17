@@ -11,7 +11,7 @@ function GetSourceCode() {
         $artifactVersion = "https://bcinsider-fvh2ekdjecfjd6gk.b02.azurefd.net/sandbox/26.0.29478.0/platform"
 
         # Download the artifact that contains the source code for those apps
-        Download-Artifacts -artifactUrl $artifactVersion -basePath $TempFolder
+        Download-Artifacts -artifactUrl $artifactVersion -basePath $TempFolder | Out-Null
 
         # Unzip it 
         $sourceArchive = Get-ChildItem -Path $TempFolder -Recurse -Filter "$App.Source.zip" 
@@ -75,3 +75,5 @@ function Build-Dependency() {
 
     Compile-AppWithBcCompilerFolder @CompilationParameters
 }
+
+Export-ModuleMember -Function GetSourceCode, Build-Dependency
