@@ -22,6 +22,12 @@ foreach($app in $installedApps) {
     }
 }
 
+# Print all installed apps 
+$installedApps = Get-BcContainerAppInfo -containerName $parameters.containerName -tenantSpecificProperties -sort DependenciesLast
+foreach($app in $installedApps) {
+    Write-Host "$($app.Name) - $($app.Version) - $($app.Scope) - $($app.Tenant) - $($app.IsPublished) - $($app.IsInstalled)"
+}
+
 Import-Module (Join-Path $PSScriptRoot "DevEnv/NewDevContainer.psm1" -Resolve) -Force
 
 if ($moveAppsToDevScope) {
