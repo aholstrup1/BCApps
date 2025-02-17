@@ -3,6 +3,11 @@
         "System Application",
         "Business Foundation", 
         "Base Application", 
-        "Application"
+        "Application",
+        "Any",
+        "Library Assert",
+        "Library Variable Storage",
+        "System Application Test Library",
+        "Tests-TestLibraries"
     ]
 }
