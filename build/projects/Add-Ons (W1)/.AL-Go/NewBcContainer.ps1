@@ -15,4 +15,4 @@ $keepApps = @(
 )
 
 $script = Join-Path $PSScriptRoot "../../../scripts/NewBcContainer.ps1" -Resolve
-. $script -parameters $parameters -keepApps $keepApps
+. $script -parameters $parameters -keepApps @() # $keepApps
