@@ -8,5 +8,3 @@ $installedApps = Get-BcContainerAppInfo -containerName $parameters.containerName
 foreach($app in $installedApps) {
     Write-Host "$($app.Name) - $($app.Version) - $($app.Scope) - $($app.Tenant) - $($app.IsPublished) - $($app.IsInstalled)"
 }
-
-#Import-TestToolkitToBcContainer @parameters
