@@ -6,6 +6,7 @@
     "testFolders":  [
         "../../../src/System Application/Test"
     ],
+    "installOnlyReferencedApps": false,
     "ConditionalSettings": [
         {
             "buildModes": [
