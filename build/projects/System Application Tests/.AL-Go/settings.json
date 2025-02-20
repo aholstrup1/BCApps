@@ -1,8 +1,10 @@
 {
     "projectName": "System Application Tests",
-    "testFolders":  [
-        "../../../src/System Application/Test",
+    "appFolders": [
         "../../../src/System Application/Test Library"
+    ],
+    "testFolders":  [
+        "../../../src/System Application/Test"
     ],
     "ConditionalSettings": [
         {

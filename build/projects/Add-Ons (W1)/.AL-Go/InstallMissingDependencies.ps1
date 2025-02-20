@@ -5,7 +5,6 @@ Param(
 # Ordered list of test framework apps to install
 $allApps = (Invoke-ScriptInBCContainer -containerName $containerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
 $testToolkitApps = @(
-    "System Application Test Library", #temp fix
     "Tests-TestLibraries"
 )
 
