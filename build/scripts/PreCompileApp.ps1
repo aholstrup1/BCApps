@@ -9,7 +9,7 @@ Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
 
 $appBuildMode = Get-BuildMode
 
-if($appType -ne 'blank') #TODO
+if($appType -eq 'app')
 {
     # Setup compiler features to generate captions and LCGs
     if (!$parameters.Value.ContainsKey("Features")) {
@@ -64,16 +64,7 @@ if($appType -ne 'blank') #TODO
                 # Place the app directly in the symbols folder
                 $tempParameters["appOutputFolder"] = $tempParameters["appSymbolsFolder"]
 
-                # Set up a new temp folder for app symbols
-                $newSymbolsFolder = (Join-Path $tempParameters["appProjectFolder"] "Symbols2")
-                if (-not (Test-Path $newSymbolsFolder)) {
-                    New-Item -ItemType Directory -Path $newSymbolsFolder -Force | Out-Null
-                }
-                $tempParameters["appSymbolsFolder"] = $newSymbolsFolder
-
                 # Rename the app to avoid overwriting the app that will be generated with preprocessor symbols
-                $appJson = Join-Path $tempParameters["appProjectFolder"] "app.json"
-                $appName = (Get-Content -Path $appJson | ConvertFrom-Json).Name
                 $tempParameters["appName"] = "$($appName)_clean.app"
 
                 if($useCompilerFolder) {
