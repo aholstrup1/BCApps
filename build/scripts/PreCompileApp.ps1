@@ -9,7 +9,7 @@ Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
 
 $appBuildMode = Get-BuildMode
 
-if($appType -eq 'app')
+if($appType -ne 'blank') #TODO
 {
     # Setup compiler features to generate captions and LCGs
     if (!$parameters.Value.ContainsKey("Features")) {
