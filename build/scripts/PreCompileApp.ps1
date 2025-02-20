@@ -65,6 +65,8 @@ if($appType -eq 'app')
                 $tempParameters["appOutputFolder"] = $tempParameters["appSymbolsFolder"]
 
                 # Rename the app to avoid overwriting the app that will be generated with preprocessor symbols
+                $appJson = Join-Path $tempParameters["appProjectFolder"] "app.json"
+                $appName = (Get-Content -Path $appJson | ConvertFrom-Json).Name
                 $tempParameters["appName"] = "$($appName)_clean.app"
 
                 if($useCompilerFolder) {
