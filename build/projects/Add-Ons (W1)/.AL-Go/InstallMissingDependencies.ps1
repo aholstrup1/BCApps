@@ -2,6 +2,22 @@ Param(
     [hashtable] $parameters
 )
 
+# Reinstall all the apps we uninstalled
+$allAppsInEnvironment = Get-BcContainerAppInfo -containerName $containerName -tenantSpecificProperties -sort DependenciesFirst
+foreach ($app in $allAppsInEnvironment) {
+    if ($app.IsInstalled -eq $true) {
+        Write-Host "$($app.Name) is already installed"
+    } else {
+        $isAppAlreadyInstalled = $allAppsInEnvironment | Where-Object { ($($_.Name) -eq $app.Name) -and $($_.IsInstalled -eq $true) }
+        if ($isAppAlreadyInstalled) {
+            Write-Host "$($app.Name) is already installed"
+        } else {
+            Write-Host "Installing $($app.Name)"
+            Install-BcContainerApp -containerName $containerName -name $app.Name -sync
+        }
+    }
+}
+
 # Ordered list of test framework apps to install
 $allApps = (Invoke-ScriptInBCContainer -containerName $containerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
 $testToolkitApps = @(
