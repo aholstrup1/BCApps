@@ -11,6 +11,6 @@ foreach($app in $installedApps) {
 $projectSettings = Get-Content "$PSScriptRoot/settings.json" | ConvertFrom-Json
 if ($projectSettings.useProjectDependencies -eq $false) {
     Import-TestToolkitToBcContainer @parameters
-} else {[
+} else {
     Write-Host "Project dependencies are enabled, skipping importing test toolkit"
-]}
+}
