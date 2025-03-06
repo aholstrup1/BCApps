@@ -42,11 +42,11 @@ if($appType -eq 'app')
                     if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.2") {
                         Remove-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.2" -Recurse -Force
                     }
-                    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.12") {
-                        Rename-Item "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.12" "9.0.2"
+                    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.13") {
+                        Rename-Item "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.13" "9.0.2"
                     }
-                    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.12") {
-                        Rename-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.12" "9.0.2"
+                    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.13") {
+                        Rename-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.13" "9.0.2"
                     }
                     # End of temp fix
                     $recompileDependencies | ForEach-Object {
