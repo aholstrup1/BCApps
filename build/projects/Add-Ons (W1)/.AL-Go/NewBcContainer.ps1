@@ -5,6 +5,7 @@ Param(
 $projectSettings = Get-Content "$PSScriptRoot/settings.json" | ConvertFrom-Json
 
 $keepApps = @()
+$useProjectDependencies = $projectSettings.useProjectDependencies
 if ($projectSettings.useProjectDependencies -eq $false) {
     $keepApps = @(
         "System Application",
@@ -20,4 +21,4 @@ if ($projectSettings.useProjectDependencies -eq $false) {
 }
 
 $script = Join-Path $PSScriptRoot "../../../scripts/NewBcContainer.ps1" -Resolve
-. $script -parameters $parameters -keepApps $keepApps
+. $script -parameters $parameters -keepApps $keepApps -useProjectDependencies $useProjectDependencies
