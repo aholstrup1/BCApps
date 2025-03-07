@@ -25,8 +25,8 @@ function PrepareEnvironment() {
     if ($UseProjectDependencies) {
         # Clean the container for all apps. Apps will be installed by AL-Go
         foreach($app in $installedApps) {
-            Write-Host "Removing $($_.Name)"
-            Unpublish-BcContainerApp -containerName $parameters.ContainerName -name $_.Name -unInstall -doNotSaveData -doNotSaveSchema -force
+            Write-Host "Removing $($app.Name)"
+            Unpublish-BcContainerApp -containerName $parameters.ContainerName -name $app.Name -unInstall -doNotSaveData -doNotSaveSchema -force
         }  
     } else {
         # Keep the apps that are in the keepApps list
