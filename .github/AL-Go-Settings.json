@@ -15,7 +15,7 @@
         "Clean"
       ],
       "settings": {
-        "preprocessorSymbols": [
+        "preprocessorSymbols": [ 
           "CLEAN17",
           "CLEAN18",
           "CLEAN19",
