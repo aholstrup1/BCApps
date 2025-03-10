@@ -8,7 +8,7 @@ function GetSourceCode() {
 
     if (-not $sourceArchive) {
         # Find out which version of the apps we need 
-        $artifactVersion = "https://bcinsider-fvh2ekdjecfjd6gk.b02.azurefd.net/sandbox/26.0.30369.0/platform"
+        $artifactVersion = "https://bcinsider-fvh2ekdjecfjd6gk.b02.azurefd.net/sandbox/27.0.31285.0/platform"
 
         # Download the artifact that contains the source code for those apps
         Download-Artifacts -artifactUrl $artifactVersion -basePath $TempFolder | Out-Null
