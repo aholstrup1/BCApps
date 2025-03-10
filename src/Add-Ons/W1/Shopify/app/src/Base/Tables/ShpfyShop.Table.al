@@ -37,7 +37,7 @@ table 30102 "Shpfy Shop"
         }
         field(2; "Shopify URL"; Text[250])
         {
-            Caption = 'Shopify URL';
+            Caption = 'Shopify Admin URL';
             Access = Internal;
             DataClassification = SystemMetadata;
             ExtendedDatatype = URL;
@@ -772,6 +772,11 @@ table 30102 "Shpfy Shop"
             Caption = 'Sync Business Central Doc. No. as Attribute';
             DataClassification = SystemMetadata;
             InitValue = true;
+        }
+        field(134; "Shpfy Comp. Tax Id Mapping"; Enum "Shpfy Comp. Tax Id Mapping")
+        {
+            Caption = 'Company Tax Id Mapping';
+            DataClassification = CustomerContent;
         }
         field(200; "Shop Id"; Integer)
         {

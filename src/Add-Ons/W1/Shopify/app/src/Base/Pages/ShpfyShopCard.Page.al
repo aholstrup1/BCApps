@@ -36,7 +36,7 @@ page 30101 "Shpfy Shop Card"
                     ApplicationArea = All;
                     ShowMandatory = true;
                     Importance = Promoted;
-                    ToolTip = 'Specifies the URL of the Shopify Shop.';
+                    ToolTip = 'Specifies the URL of the Shopify Admin you are connecting to. Use the format: "https://{store ID}.myshopify.com". You can build the URL by combining the store ID from the admin URL, e.g., "admin.shopify.com/store/{store ID}" and ".myshopify.com". Simply copy the URL from the Shopify Admin, and the connector will convert it to the required format. Ensure you copy the URL from the Shopify Admin, not the online store, as the online store may display a redirect URL.';
                     AboutTitle = 'Get people to your shop';
                     AboutText = 'Provide the URL that people will use to access your shop. For example, *https://myshop.myshopify.com*.';
 
@@ -419,6 +419,11 @@ page 30101 "Shpfy Shop Card"
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies how to map companies.';
+                }
+                field("Shpfy Comp. Tax Id Mapping"; Rec."Shpfy Comp. Tax Id Mapping")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies how to map Shopify Tax Id with Business Central.';
                 }
                 field("Auto Create Unknown Companies"; Rec."Auto Create Unknown Companies")
                 {
