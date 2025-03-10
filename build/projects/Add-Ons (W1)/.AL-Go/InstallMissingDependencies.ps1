@@ -8,13 +8,8 @@ foreach ($app in $allAppsInEnvironment) {
     if ($app.IsInstalled -eq $true) {
         Write-Host "$($app.Name) is already installed"
     } else {
-        $isAppAlreadyInstalled = $allAppsInEnvironment | Where-Object { ($($_.Name) -eq $app.Name) -and $($_.IsInstalled -eq $true) }
-        if ($isAppAlreadyInstalled) {
-            Write-Host "$($app.Name) is already installed"
-        } else {
-            Write-Host "Installing $($app.Name)"
-            Install-BcContainerApp -containerName $containerName -name $app.Name -sync
-        }
+        Write-Host "Installing $($app.Name)"
+        Install-BcContainerApp -containerName $containerName -name $app.Name -sync
     }
 }
 
