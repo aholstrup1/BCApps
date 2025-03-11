@@ -11,6 +11,7 @@ foreach ($app in $allAppsInEnvironment) {
     } else {
         Write-Host "Installing $($app.Name)"
         Install-BcContainerApp -containerName $containerName -appName $app.Name -appPublisher $app.Publisher -appVersion $app.Version -Force
+        Sync-BcContainerApp -containerName $containerName -appName $app.Name -appPublisher $app.Publisher -Mode ForceSync -Force
     }
 }
 
