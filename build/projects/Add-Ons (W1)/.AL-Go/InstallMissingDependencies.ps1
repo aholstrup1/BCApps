@@ -5,7 +5,8 @@ Param(
 # Reinstall all the apps we uninstalled
 $allAppsInEnvironment = Get-BcContainerAppInfo -containerName $containerName -tenantSpecificProperties -sort DependenciesFirst
 foreach ($app in $allAppsInEnvironment) {
-    if ($app.IsInstalled -eq $true) {
+    $isAppAlreadyInstalled = $allAppsInEnvironment | Where-Object { ($($_.Name) -eq $app.Name) -and ($_.IsInstalled -eq $true) }
+    if (($app.IsInstalled -eq $true) -or ($isAppAlreadyInstalled)) {
         Write-Host "$($app.Name) is already installed"
     } else {
         Write-Host "Installing $($app.Name)"
