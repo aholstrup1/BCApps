@@ -10,8 +10,8 @@ foreach ($app in $allAppsInEnvironment) {
         Write-Host "$($app.Name) is already installed"
     } else {
         Write-Host "Installing $($app.Name)"
-        Install-BcContainerApp -containerName $containerName -appName $app.Name -appPublisher $app.Publisher -appVersion $app.Version -Force
         Sync-BcContainerApp -containerName $containerName -appName $app.Name -appPublisher $app.Publisher -Mode ForceSync -Force
+        Install-BcContainerApp -containerName $containerName -appName $app.Name -appPublisher $app.Publisher -appVersion $app.Version -Force
     }
 }
 
