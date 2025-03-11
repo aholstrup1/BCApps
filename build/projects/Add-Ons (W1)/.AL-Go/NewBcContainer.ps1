@@ -18,6 +18,13 @@ if ($projectSettings.useProjectDependencies -eq $false) {
         "System Application Test Library",
         "Tests-TestLibraries"
     )
+} else {
+    # We want to use the apps built in BCApps as project dependencies
+    # We need to keep the base app in the container
+    $keepApps = @(
+        "Base Application", 
+        "Application"
+    )
 }
 
 $script = Join-Path $PSScriptRoot "../../../scripts/NewBcContainer.ps1" -Resolve
