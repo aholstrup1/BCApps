@@ -22,8 +22,15 @@ if ($projectSettings.useProjectDependencies -eq $false) {
     # We want to use the apps built in BCApps as project dependencies
     # We need to keep the base app in the container
     $keepApps = @(
+        "System Application",
+        "Business Foundation", 
         "Base Application", 
-        "Application"
+        "Application",
+        "Any",
+        "Library Assert",
+        "Library Variable Storage",
+        "System Application Test Library",
+        "Tests-TestLibraries"
     )
 }
 
