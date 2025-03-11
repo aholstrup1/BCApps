@@ -21,8 +21,6 @@ function PrepareEnvironment() {
         [string[]] $KeepApps = @()
     )
     $installedApps = Get-BcContainerAppInfo -containerName $containerName -tenantSpecificProperties -sort DependenciesLast
-    # TODO: test Hack
-    $UseProjectDependencies = $false
 
     if ($UseProjectDependencies) {
         # Clean the container for all apps. Apps will be installed by AL-Go
