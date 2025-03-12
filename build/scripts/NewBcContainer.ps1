@@ -27,13 +27,13 @@ function PrepareEnvironment() {
         foreach($app in $installedApps) {
             UnInstall-BcContainerApp -containerName $parameters.ContainerName -name $app.Name -doNotSaveData -doNotSaveSchema -force
 
-            <#if (($keepApps -notcontains $app.Name)) {
+            if ((-not $KeepApps)) {
                 Write-Host "Unpublishing $($app.Name)"
                 Unpublish-BcContainerApp -containerName $parameters.ContainerName -name $app.Name -unInstall -doNotSaveData -doNotSaveSchema -force
             } else {
                 Write-Host "Uninstalling $($app.Name)"
                 UnInstall-BcContainerApp -containerName $parameters.ContainerName -name $app.Name -doNotSaveData -doNotSaveSchema -force
-            }#>
+            }
         }  
     } else {
         # Keep the apps that are in the keepApps list
