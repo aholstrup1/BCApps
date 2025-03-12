@@ -15,7 +15,15 @@ foreach ($app in $allAppsInEnvironment) {
     }
 }
 
-if ($parameters["missingDependencies"] -contains "5d86850b-0d76-4eca-bd7b-951ad998e997") { # Tests-TestLibraries
+try {
+    $missingDependencies = $parameters["missingDependencies"] -join ","
+    Write-Host "Missing dependencies: $missingDependencies"
+} catch {
+    Write-Host "Something went wrong while getting the missing dependencies"
+    Write-Host "Error: $($_.Exception.Message)"
+}
+
+if ($true) { #if ($parameters["missingDependencies"] -contains "5d86850b-0d76-4eca-bd7b-951ad998e997") { # Tests-TestLibraries
     Write-Host "Installing Tests-TestLibraries"
     # Ordered list of test framework apps to install
     $allApps = (Invoke-ScriptInBCContainer -containerName $containerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
