@@ -2,17 +2,8 @@ Param(
     [hashtable] $parameters
 )
 
-$dependenciesToInstall = @(
-        "System Application",
-        "Business Foundation", 
-        "Base Application", 
-        "Application",
-        "Any",
-        "Library Assert",
-        "Library Variable Storage",
-        "System Application Test Library",
-        "Tests-TestLibraries"
-)
+$customSettings = Get-Content -Path (Join-Path $PSScriptRoot "customSettings.json" -Resolve) | ConvertFrom-Json
+$dependenciesToInstall = $customSettings.ExternalAppDependencies
 
 # Reinstall all the apps we uninstalled
 $allAppsInEnvironment = Get-BcContainerAppInfo -containerName $containerName -tenantSpecificProperties -sort DependenciesFirst
