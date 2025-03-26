@@ -32,7 +32,6 @@
     {
       "branches": [
         "main",
-        "v1/*",
         "releases/*.x"
       ],
       "settings": {
