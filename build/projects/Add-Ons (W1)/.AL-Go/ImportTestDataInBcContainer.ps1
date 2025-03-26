@@ -1,8 +1,5 @@
 Param(
-    [Parameter(ParameterSetName="ALGo")]
-    [Hashtable]$parameters,
-    [Parameter(ParameterSetName="Manual")]
-    [string]$containerName
+    [Hashtable]$parameters
 )
 
 function Get-NavDefaultCompanyName
@@ -10,8 +7,17 @@ function Get-NavDefaultCompanyName
     return "CRONUS International Ltd."
 }
 
-if ($PSCmdlet.ParameterSetName -eq 'ALGo') {
-    $containerName = $parameters.ContainerName
+$containerName = $parameters.containerName
+
+# Print all parameters without using the getenumerator()
+try {
+    Write-Host "Parameters:"
+    Write-Host "-----------------"
+    foreach ($key in $parameters.Keys) {
+        Write-Host "$key : $($parameters[$key])"
+    }
+} catch {
+    Write-Host "Error printing parameters: $($_.Exception.Message)"
 }
 
 $projectSettings = Get-Content "$PSScriptRoot/settings.json" | ConvertFrom-Json
