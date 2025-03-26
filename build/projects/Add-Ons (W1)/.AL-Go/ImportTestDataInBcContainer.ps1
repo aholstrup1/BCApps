@@ -19,7 +19,7 @@ $projectSettings = Get-Content "$PSScriptRoot/settings.json" | ConvertFrom-Json
 if ($projectSettings.useProjectDependencies -eq $true) {
     # Get the repoversion
     Import-Module "$PSScriptRoot\EnlistmentHelperFunctions.psm1"
-    $repoVersion = Get-ConfigValue -ConfigType "AL-GO" -Key "RepoVersion"
+    $repoVersion = "27.0" #Get-ConfigValue -ConfigType "AL-GO" -Key "RepoVersion"
     $DemoDataType = "EXTENDED"
 
     Write-Host "Initializing company"
