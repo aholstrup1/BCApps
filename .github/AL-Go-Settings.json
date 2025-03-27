@@ -25,13 +25,15 @@
           "CLEAN23",
           "CLEAN24",
           "CLEAN25",
-          "CLEAN26"
+          "CLEAN26",
+          "CLEAN27"
         ]
       }
     },
     {
       "branches": [
         "main",
+        "v1/*",
         "releases/*.x"
       ],
       "settings": {
