@@ -8,7 +8,6 @@
         "Library Assert",
         "Library Variable Storage",
         "System Application Test Library",
-        "Tests-TestLibraries",
-        "Contoso Coffee Demo Dataset"
+        "Tests-TestLibraries"    
     ]
 }

@@ -15,10 +15,11 @@ foreach ($app in $allAppsInEnvironment) {
     }
 }
 
-# Log the name and version of all apps in the container
+# START LOGGING: Print all installed apps TODO
 foreach ($app in (Get-BcContainerAppInfo -containerName $parameters.ContainerName -tenantSpecificProperties -sort DependenciesLast)) {
     Write-Host "App: $($app.Name) ($($app.Version)) - Scope: $($app.Scope) - $($app.IsInstalled) / $($app.IsPublished)"
 }
+# END LOGGING
 
 $script = Join-Path $PSScriptRoot "../../../scripts/RunTestsInBcContainer.ps1" -Resolve
 . $script -parameters $parameters
