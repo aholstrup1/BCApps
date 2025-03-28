@@ -5,11 +5,7 @@ function Invoke-ContosoDemoTool() {
         [switch]$SetupData = $false,
         [string]$DemodataApp = "Contoso Coffee Demo Dataset"
     )
-
-    if (-not (Install-AppsInContainer -ContainerName $ContainerName -Apps @($DemodataApp))) {
-        Write-Host "App $DemodataApp not found in the container. Installing it from file instead."
-        Install-AppsFromFile -ContainerName $ContainerName-AppName $DemodataApp
-    }
+    Install-AppsInContainer -ContainerName $ContainerName -Apps @($DemodataApp)
     
     Write-Host "Initializing company in container $ContainerName"
     Invoke-NavContainerCodeunit -Codeunitid 2 -containerName $ContainerName -CompanyName $CompanyName
@@ -34,13 +30,13 @@ function Install-AppsInContainer() {
     $allAppsInEnvironment = Get-BcContainerAppInfo -containerName $ContainerName -tenantSpecificProperties -sort DependenciesFirst
     foreach ($app in $Apps) {
         # Check if app can be found in the container
-        $appInContainer = $allAppsInEnvironment | Where-Object { ($($_.Name) -eq $app.Name) }
+        $appInContainer = $allAppsInEnvironment | Where-Object { ($($_.Name) -eq $app) }
 
         if (-not $appInContainer) {
-            Write-Host "App $($app.Name) not found in the container. Cannot install it until it is published."
+            Write-Host "App $($app) not found in the container. Cannot install it until it is published."
             return $false
         } elseif ($appInContainer.IsInstalled -eq $true) {
-            Write-Host "$($app.Name) is already installed"
+            Write-Host "$($app) is already installed"
             return $true
         } else {
             Write-Host "Installing $appInContainer from container $ContainerName"
