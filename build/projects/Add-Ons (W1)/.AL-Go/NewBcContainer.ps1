@@ -11,4 +11,4 @@ $customSettings = Get-Content -Path (Join-Path $PSScriptRoot "customSettings.jso
 $keepApps = $customSettings.ExternalAppDependencies
 
 $script = Join-Path $PSScriptRoot "../../../scripts/NewBcContainer.ps1" -Resolve
-. $script -parameters $parameters -keepApps $keepApps -useProjectDependencies $useProjectDependencies
+. $script -parameters $parameters -keepApps $keepApps -useProjectDependencies $true #$useProjectDependencies
