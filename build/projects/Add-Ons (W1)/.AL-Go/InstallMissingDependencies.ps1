@@ -21,6 +21,14 @@ foreach ($app in $allAppsInEnvironment) {
     }
 }
 
+$projectSettings = Get-Content "$PSScriptRoot/settings.json" | ConvertFrom-Json
+if ($projectSettings.useProjectDependencies -eq $false) {
+    Import-TestToolkitToBcContainer @parameters
+} else {
+    # If using project dependencies we get the test toolkit from the project dependencies
+    Write-Host "Project dependencies are enabled, skipping importing test toolkit"
+}
+
 $allApps = (Invoke-ScriptInBCContainer -containerName $containerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
 foreach ($dependency in $parameters["missingDependencies"]) {
     # Format the dependency variable is AppId:Filename
