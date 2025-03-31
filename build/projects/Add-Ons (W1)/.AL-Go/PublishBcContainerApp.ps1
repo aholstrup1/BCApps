@@ -1,10 +1,5 @@
 Param([Hashtable]$parameters)
 
-# Print all parameters key value pairs
-foreach ($key in $parameters.Keys) {
-    Write-Host "$key : $($parameters[$key])"
-}
-
 # If parameters contains upgrade then remove
 if ($parameters.ContainsKey("upgrade")) {
     Write-Host "Do no upgrade"
