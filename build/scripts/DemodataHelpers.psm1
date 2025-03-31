@@ -47,25 +47,6 @@ function Install-AppsInContainer() {
     }
 }
 
-function Install-AppsFromFile() {
-    param(
-        [string] $ContainerName,
-        [string] $AppFilePath,
-        [string] $AppName
-    )
-    if (-not $AppFilePath) {
-        $allApps = (Invoke-ScriptInBCContainer -containerName $containerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
-        $AppFilePath = $allApps | Where-Object { $($_.Name) -eq "$AppName" } | ForEach-Object { $_.FullName }
-    }
-    
-    if (-not $AppFilePath) {
-        throw "App file not found"
-    }
-
-    Write-Host "Installing app from file: $AppFilePath"
-    Publish-BcContainerApp -containerName $ContainerName -appFile ":$($AppFilePath.FullName)" -skipVerification -scope Global -install -sync
-}
-
 function Get-NavDefaultCompanyName
 {
     return "CRONUS International Ltd."
