@@ -18,7 +18,8 @@ function PrepareEnvironment() {
         [string] $ContainerName,
         [boolean] $KeepAppsPublished = $false
     )
-    $installedApps = Get-BcContainerAppInfo -containerName $containerName -tenantSpecificProperties -sort DependenciesLast
+    Write-Host "Preparing environment for container $ContainerName"
+    $installedApps = Get-BcContainerAppInfo -containerName $ContainerName -tenantSpecificProperties -sort DependenciesLast
 
     # Clean the container for all apps. Apps will be installed by AL-Go
     foreach($app in $installedApps) {
