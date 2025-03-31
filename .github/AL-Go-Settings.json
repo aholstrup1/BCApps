@@ -34,6 +34,7 @@
       "branches": [
         "main",
         "v1/*",
+        "v3/*",
         "releases/*.x"
       ],
       "settings": {
