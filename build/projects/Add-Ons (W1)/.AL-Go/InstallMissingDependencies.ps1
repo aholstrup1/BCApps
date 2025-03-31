@@ -9,8 +9,8 @@ function Install-AppsFromFile() {
         [string] $AppName
     )
     if (-not $AppFilePath) {
-        $allApps = (Invoke-ScriptInBCContainer -containerName $containerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
-        $AppFilePath = $allApps | Where-Object { $($_.Name) -eq "$AppName" } | ForEach-Object { $_.FullName }
+        $allApps = (Invoke-ScriptInBCContainer -containerName $ContainerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
+        $AppFilePath = $allApps | Where-Object { $($_.BaseName) -like "*$($AppName)" } | ForEach-Object { $_.FullName }
     }
     
     if (-not $AppFilePath) {
@@ -18,7 +18,7 @@ function Install-AppsFromFile() {
     }
 
     Write-Host "Installing app from file: $AppFilePath"
-    Publish-BcContainerApp -containerName $ContainerName -appFile ":$($AppFilePath.FullName)" -skipVerification -scope Global -install -sync
+    Publish-BcContainerApp -containerName $ContainerName -appFile ":$($AppFilePath)" -skipVerification -scope Global -install -sync
 }
 
 $customSettings = Get-Content -Path (Join-Path $PSScriptRoot "customSettings.json" -Resolve) | ConvertFrom-Json
