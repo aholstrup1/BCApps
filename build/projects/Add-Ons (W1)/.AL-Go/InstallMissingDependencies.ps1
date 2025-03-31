@@ -2,10 +2,29 @@ Param(
     [hashtable] $parameters
 )
 
+function Install-AppsFromFile() {
+    param(
+        [string] $ContainerName,
+        [string] $AppFilePath,
+        [string] $AppName
+    )
+    if (-not $AppFilePath) {
+        $allApps = (Invoke-ScriptInBCContainer -containerName $containerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
+        $AppFilePath = $allApps | Where-Object { $($_.Name) -eq "$AppName" } | ForEach-Object { $_.FullName }
+    }
+    
+    if (-not $AppFilePath) {
+        throw "App file not found"
+    }
+
+    Write-Host "Installing app from file: $AppFilePath"
+    Publish-BcContainerApp -containerName $ContainerName -appFile ":$($AppFilePath.FullName)" -skipVerification -scope Global -install -sync
+}
+
 $customSettings = Get-Content -Path (Join-Path $PSScriptRoot "customSettings.json" -Resolve) | ConvertFrom-Json
 $dependenciesToInstall = $customSettings.ExternalAppDependencies
 
-# Reinstall all the apps we uninstalled
+# Reinstall the dependencies in the container
 $allAppsInEnvironment = Get-BcContainerAppInfo -containerName $containerName -tenantSpecificProperties -sort DependenciesFirst
 foreach ($app in $allAppsInEnvironment) {
     $isAppAlreadyInstalled = $allAppsInEnvironment | Where-Object { ($($_.Name) -eq $app.Name) -and ($_.IsInstalled -eq $true) }
@@ -21,14 +40,15 @@ foreach ($app in $allAppsInEnvironment) {
     }
 }
 
+# When we use project dependencies we get the test toolkit from 
 $projectSettings = Get-Content "$PSScriptRoot/settings.json" | ConvertFrom-Json
 if ($projectSettings.useProjectDependencies -eq $false) {
     Import-TestToolkitToBcContainer -containerName $containerName
 } else {
-    # If using project dependencies we get the test toolkit from the project dependencies
-    Write-Host "Project dependencies are enabled, skipping importing test toolkit"
+    # Install Tests-TestLibraries - Remaining test libraries should be in BCApps so they are installed as project dependencies
+    Install-AppsFromFile -ContainerName $containerName "Tests-TestLibraries"
 }
-
+<#
 $allApps = (Invoke-ScriptInBCContainer -containerName $containerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
 foreach ($dependency in $parameters["missingDependencies"]) {
     # Format the dependency variable is AppId:Filename
@@ -48,3 +68,4 @@ foreach ($dependency in $parameters["missingDependencies"]) {
     Publish-BcContainerApp -containerName $containerName -appFile ":$($appFilePath.FullName)" -skipVerification -scope Global -install -sync
     $appFilePath = $null
 }
+#>
