@@ -73,7 +73,8 @@ function Build-Dependency() {
         Write-Host "$key : $($CompilationParameters[$key])"
     }
 
-    Compile-AppWithBcCompilerFolder @CompilationParameters
+    #Compile-AppWithBcCompilerFolder @CompilationParameters
+    Compile-AppInBcContainer @CompilationParameters
 }
 
 Export-ModuleMember -Function GetSourceCode, Build-Dependency
