@@ -4,11 +4,14 @@ Param(
 
 function Install-AppsFromFile() {
     param(
+        [Parameter(Mandatory = $true)]
         [string] $ContainerName,
+        [Parameter(Mandatory = $true, ParameterSetName = "ByAppFilePath")]
         [string] $AppFilePath,
+        [Parameter(Mandatory = $true, ParameterSetName = "ByAppName")]
         [string] $AppName
     )
-    if (-not $AppFilePath) {
+    if ($PSCmdlet.ParameterSetName -eq "ByAppName") {
         $allApps = (Invoke-ScriptInBCContainer -containerName $ContainerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
         $AppFilePath = $allApps | Where-Object { $($_.BaseName) -like "*$($AppName)" } | ForEach-Object { $_.FullName }
     }
@@ -46,7 +49,7 @@ if ($projectSettings.useProjectDependencies -eq $false) {
     Import-TestToolkitToBcContainer -containerName $containerName
 } else {
     # Install Tests-TestLibraries - Remaining test libraries should be in BCApps so they are installed as project dependencies
-    Install-AppsFromFile -ContainerName $containerName "Tests-TestLibraries"
+    Install-AppsFromFile -ContainerName $containerName -AppName "Tests-TestLibraries"
 }
 <#
 $allApps = (Invoke-ScriptInBCContainer -containerName $containerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
