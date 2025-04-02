@@ -80,11 +80,18 @@ function Build-Dependency() {
     foreach ($key in $CompilationParameters.Keys) {
         Write-Host "$key : $($CompilationParameters[$key])"
     }
-    $files = Invoke-ScriptInBcContainer -containerName $CompilationParameters["containerName"] -scriptblock { Get-ChildItem -Path "C:\Program Files\dotnet\shared" -Recurse }
 
+    $ContainerName = $CompilationParameters["containerName"]
+    $netPackages = @()
+    $netPackages += @(Get-ChildItem -Path "$($bcContainerHelperConfig.containerHelperFolder)\\Extensions\\$ContainerName\\.netPackages\\Shared\\Microsoft.AspNetCore.App" | Sort-Object -Descending | Select-Object -ExpandProperty FullName)
+    $netPackages += @(Get-ChildItem -Path "$($bcContainerHelperConfig.containerHelperFolder)\\Extensions\\$ContainerName\\.netPackages\\Shared\\Microsoft.NETCore.App" | Sort-Object -Descending | Select-Object -ExpandProperty FullName)
+  
+    $files = Invoke-ScriptInBcContainer -containerName $CompilationParameters["containerName"] -scriptblock { Get-ChildItem -Path "$($bcContainerHelperConfig.containerHelperFolder)\\Extensions\\$ContainerName" -Recurse }
     $files | ForEach-Object {
         Write-Host $_.FullName
     }
+    $CompilationParameters["assemblyProbingPaths"] = $netPackages
+    $bcContainerHelperConfig.MinimumDotNetRuntimeVersionStr = "99.0.0"
 
     #Compile-AppWithBcCompilerFolder @CompilationParameters
     Compile-AppInBcContainer @CompilationParameters
