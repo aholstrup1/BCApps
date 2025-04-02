@@ -80,6 +80,11 @@ function Build-Dependency() {
     foreach ($key in $CompilationParameters.Keys) {
         Write-Host "$key : $($CompilationParameters[$key])"
     }
+    $files = Invoke-ScriptInBcContainer -containerName $CompilationParameters["containerName"] -scriptblock { Get-ChildItem -Path "C:\Program Files\dotnet\shared" -Recurse }
+
+    $files | ForEach-Object {
+        Write-Host $_.FullName
+    }
 
     #Compile-AppWithBcCompilerFolder @CompilationParameters
     Compile-AppInBcContainer @CompilationParameters
