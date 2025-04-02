@@ -82,15 +82,16 @@ function Build-Dependency() {
     }
 
     $ContainerName = $CompilationParameters["containerName"]
-    $netPackages = @()
-    $netPackages += @(Get-ChildItem -Path "$($bcContainerHelperConfig.containerHelperFolder)\\Extensions\\$ContainerName\\.netPackages\\Shared\\Microsoft.AspNetCore.App" | Sort-Object -Descending | Select-Object -ExpandProperty FullName)
-    $netPackages += @(Get-ChildItem -Path "$($bcContainerHelperConfig.containerHelperFolder)\\Extensions\\$ContainerName\\.netPackages\\Shared\\Microsoft.NETCore.App" | Sort-Object -Descending | Select-Object -ExpandProperty FullName)
-  
-    $files = Invoke-ScriptInBcContainer -containerName $CompilationParameters["containerName"] -scriptblock { Get-ChildItem -Path "$($bcContainerHelperConfig.containerHelperFolder)\\Extensions\\$ContainerName" -Recurse }
+    $files = Get-ChildItem -Path "$($bcContainerHelperConfig.containerHelperFolder)\\Extensions\\$ContainerName" -Recurse
     $files | ForEach-Object {
         Write-Host $_.FullName
     }
-    $CompilationParameters["assemblyProbingPaths"] = $netPackages
+    #$netPackages = @()
+    #$netPackages += @(Get-ChildItem -Path "$($bcContainerHelperConfig.containerHelperFolder)\\Extensions\\$ContainerName\\.netPackages\\Shared\\Microsoft.AspNetCore.App" | Sort-Object -Descending | Select-Object -ExpandProperty FullName)
+    #$netPackages += @(Get-ChildItem -Path "$($bcContainerHelperConfig.containerHelperFolder)\\Extensions\\$ContainerName\\.netPackages\\Shared\\Microsoft.NETCore.App" | Sort-Object -Descending | Select-Object -ExpandProperty FullName)
+  
+    
+    #$CompilationParameters["assemblyProbingPaths"] = $netPackages
     $bcContainerHelperConfig.MinimumDotNetRuntimeVersionStr = "99.0.0"
 
     #Compile-AppWithBcCompilerFolder @CompilationParameters
