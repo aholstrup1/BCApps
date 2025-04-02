@@ -33,7 +33,7 @@
     {
       "branches": [
         "main",
-        "v1/*",
+        "v5/*",
         "releases/*.x"
       ],
       "settings": {
