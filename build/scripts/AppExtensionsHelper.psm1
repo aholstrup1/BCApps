@@ -21,7 +21,7 @@ function GetSourceCode() {
                 [string] $App
             )
             $sourceArchive = Get-ChildItem -Path "C:\Applications\" -Filter "$App.Source.zip" -Recurse
-            $sourceCodeFolder = "C:\Applications\$($sourceArchive.BaseName)"
+            $sourceCodeFolder = "c:\sources\$($sourceArchive.BaseName)"
             Write-Host "Unzipping $($sourceArchive.FullName) into $sourceCodeFolder"
             Expand-Archive -Path $sourceArchive.FullName -DestinationPath $sourceCodeFolder -Force
             return $sourceCodeFolder
