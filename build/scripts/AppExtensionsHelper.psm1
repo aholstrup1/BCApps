@@ -1,28 +1,39 @@
 function GetSourceCode() {
     param(
         [string] $App,
+        [string] $ContainerName,
         [string] $TempFolder
     )
     $sourceArchive = Get-ChildItem -Path $TempFolder -Recurse -Filter "$App.Source.zip" -ErrorAction SilentlyContinue
-    $sourceCodeFolder = "$TempFolder/$($App -replace " ", "_")Source"
+    #$sourceCodeFolder = "$TempFolder/$($App -replace " ", "_")Source"
 
     if (-not $sourceArchive) {
         # Find out which version of the apps we need 
-        $artifactVersion = "https://bcinsider-fvh2ekdjecfjd6gk.b02.azurefd.net/sandbox/27.0.31285.0/platform"
+        #$artifactVersion = "https://bcinsider-fvh2ekdjecfjd6gk.b02.azurefd.net/sandbox/27.0.31285.0/platform"
 
         # Download the artifact that contains the source code for those apps
-        Download-Artifacts -artifactUrl $artifactVersion -basePath $TempFolder | Out-Null
+        #Download-Artifacts -artifactUrl $artifactVersion -basePath $TempFolder | Out-Null
 
         # Unzip it 
-        $sourceArchive = Get-ChildItem -Path $TempFolder -Recurse -Filter "$App.Source.zip" 
+        #$sourceArchive = Get-ChildItem -Path $TempFolder -Recurse -Filter "$App.Source.zip"
+        $sourceCodeFolder = Invoke-ScriptInBcContainer -containerName $ContainerName -scriptblock {
+            param(
+                [string] $App
+            )
+            $sourceArchive = Get-ChildItem -Path "C:\Applications\" -Filter "$App.Source.zip" -Recurse
+            $sourceCodeFolder = "C:\Applications\$($sourceArchive.BaseName)"
+            Write-Host "Unzipping $($sourceArchive.FullName) into $sourceCodeFolder"
+            Expand-Archive -Path $sourceArchive.FullName -DestinationPath $sourceCodeFolder -Force
+            return $sourceCodeFolder
+        } -ArgumentList $App
     }
     
-    $sourceArchive | Expand-Archive -Destination $sourceCodeFolder
+    #$sourceArchive | Expand-Archive -Destination $sourceCodeFolder
 
-    if (-not (Test-Path $sourceCodeFolder)) {
-        Write-Error "Could not find the source code for $App"
-        throw
-    }
+    #if (-not (Test-Path $sourceCodeFolder)) {
+    #    Write-Error "Could not find the source code for $App"
+    #    throw
+    #}
 
     return $sourceCodeFolder
 }
@@ -45,7 +56,7 @@ function Build-Dependency() {
     }
 
     Write-Host "Get source code for $App"
-    $sourceCodeFolder = GetSourceCode -App $App -TempFolder $script:tempFolder
+    $sourceCodeFolder = GetSourceCode -App $App -ContainerName $CompilationParameters["containerName"] -TempFolder $script:tempFolder
 
     # Copy apps to packagecachepath
     $addOnsSymbolsFolder = $CompilationParameters["appSymbolsFolder"]
