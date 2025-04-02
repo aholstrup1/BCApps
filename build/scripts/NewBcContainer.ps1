@@ -18,7 +18,7 @@ function PrepareEnvironment() {
         [string] $ContainerName,
         [boolean] $KeepAppsPublished = $false
     )
-    $installedApps = Get-BcContainerAppInfo -containerName $containerName -tenantSpecificProperties -sort DependenciesLast
+    $installedApps = Get-BcContainerAppInfo -containerName $ContainerName -tenantSpecificProperties -sort DependenciesLast
 
     # Clean the container for all apps. Apps will be installed by AL-Go
     foreach($app in $installedApps) {
@@ -29,12 +29,12 @@ function PrepareEnvironment() {
             Unpublish-BcContainerApp -containerName $ContainerName -name $app.Name -unInstall -doNotSaveData -doNotSaveSchema -force
         }
     }
+
+    foreach ($app in (Get-BcContainerAppInfo -containerName $parameters.ContainerName -tenantSpecificProperties -sort DependenciesLast)) {
+        Write-Host "App: $($app.Name) ($($app.Version)) - Scope: $($app.Scope) - IsInstalled: $($app.IsInstalled) - IsPublished: $($app.IsPublished)"
+    }
 }
 
 PrepareEnvironment -ContainerName $parameters.ContainerName -KeepAppsPublished:$KeepAppsPublished
-
-foreach ($app in (Get-BcContainerAppInfo -containerName $parameters.ContainerName -tenantSpecificProperties -sort DependenciesLast)) {
-    Write-Host "App: $($app.Name) ($($app.Version)) - Scope: $($app.Scope) - $($app.IsInstalled) / $($app.IsPublished)"
-}
 
 Invoke-ScriptInBcContainer -containerName $parameters.ContainerName -scriptblock { $progressPreference = 'SilentlyContinue' }
