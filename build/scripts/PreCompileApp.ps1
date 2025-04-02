@@ -35,20 +35,6 @@ if($appType -eq 'app')
             if($appBuildMode -eq 'Clean') {
                 if ($recompileDependencies.Count -gt 0) {
                     Import-Module $PSScriptRoot\AppExtensionsHelper.psm1
-                    # Temp fix for: Error: AL0196 The call is ambiguous between the method 
-                    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\9.0.3") {
-                        Remove-Item "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\9.0.3" -Recurse -Force
-                    }
-                    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.3") {
-                        Remove-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.3" -Recurse -Force
-                    }
-                    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.14") {
-                        Rename-Item "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.14" "9.0.3"
-                    }
-                    if (Test-Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.14") {
-                        Rename-Item "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.14" "9.0.3"
-                    }
-                    # End of temp fix
                     $recompileDependencies | ForEach-Object {
                         Build-Dependency -App $_ -CompilationParameters ($parameters.Value.Clone())
                     }

@@ -56,6 +56,13 @@ function Build-Dependency() {
         Write-Host $_.Name
     }
     
+    $bcContainerHelperConfig.MinimumDotNetRuntimeVersionStr = "99.0.0"
+    $CompilationParameters["assemblyProbingPaths"] = @("C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.14", "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.14")
+    
+    Get-ChildItem -Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App" | ForEach-Object {
+        Write-Host "Versions: $($_.Name)"
+    }
+
     # Update the CompilationParameters
     $CompilationParameters["appProjectFolder"] = $sourceCodeFolder # Use the downloaded source code as the project folder
     $CompilationParameters["appOutputFolder"] = $addOnsSymbolsFolder # Place the app directly in the symbols folder for Add-Ons
