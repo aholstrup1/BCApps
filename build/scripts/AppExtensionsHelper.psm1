@@ -57,7 +57,7 @@ function Build-Dependency() {
     }
     
     $bcContainerHelperConfig.MinimumDotNetRuntimeVersionStr = "99.0.0"
-    $CompilationParameters["assemblyProbingPaths"] = @("C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.14", "C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.14")
+    $CompilationParameters["assemblyProbingPaths"] = "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.14,C:\Program Files\dotnet\shared\Microsoft.NETCore.App\8.0.14"
     
     Get-ChildItem -Path "C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App" | ForEach-Object {
         Write-Host "Versions: $($_.Name)"
