@@ -55,8 +55,15 @@ function Install-MissingDependencies() {
 
         $appToInstall = $uninstalledApps[0]
         Write-Host "[Install Missing Dependencies] - Installing $($dependency)"
-        Sync-BcContainerApp -containerName $ContainerName -appName $appToInstall.Name -appPublisher $appToInstall.Publisher -Mode ForceSync -Force
-        Install-BcContainerApp -containerName $ContainerName -appName $appToInstall.Name -appPublisher $appToInstall.Publisher -appVersion $appToInstall.Version -Force
+        try {
+            Sync-BcContainerApp -containerName $ContainerName -appName $appToInstall.Name -appPublisher $appToInstall.Publisher -Mode ForceSync -Force
+            Install-BcContainerApp -containerName $ContainerName -appName $appToInstall.Name -appPublisher $appToInstall.Publisher -appVersion $appToInstall.Version -Force
+        } catch {
+            Write-Host "[Install Missing Dependencies] - Failed to install $($dependency) ($($appToInstall.Version))"
+            Write-Host $_.Exception.Message
+            $missingDependencies += $dependency
+            continue
+        }
     }
 
     if ($missingDependencies.Count -gt 0) {
