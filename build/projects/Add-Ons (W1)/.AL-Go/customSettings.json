@@ -4,10 +4,12 @@
         "Business Foundation", 
         "Base Application", 
         "Application",
+        "Permissions Mock",
         "Any",
         "Library Assert",
         "Library Variable Storage",
         "System Application Test Library",
+        "Business Foundation Test Libraries",
         "Tests-TestLibraries"    
     ]
 }
