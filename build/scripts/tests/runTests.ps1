@@ -55,6 +55,6 @@ function Get-GitHubAppAuthToken {
 }
 
 # There's a GitHub variable in the repo called ClientId. Get it from there.
-Get-GitHubAppAuthToken -gitHubAppClientId $ENV:CLIENT_ID -privateKey $ENV:PRIVATE_KEY -repository "aholstrup1/BCApps"
-
+$token = Get-GitHubAppAuthToken -gitHubAppClientId $ENV:CLIENT_ID -privateKey $ENV:PRIVATE_KEY -repository "aholstrup1/BCApps"
+$token | gh auth login --with-token
 gh pr comment 827 --repo "aholstrup1/BCApps" --body "test3"
