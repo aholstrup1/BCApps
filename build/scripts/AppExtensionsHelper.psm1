@@ -55,7 +55,7 @@ function Get-AssemblyProbingPaths() {
         # Set the minimum .NET runtime version for the bccontainerhelper to avoid containerhelper injecting a newer version of the .NET runtime
         $bcContainerHelperConfig.MinimumDotNetRuntimeVersionStr = "99.0.0"
     }
-    return $assemblyProbingPaths
+    return $assemblyProbingPaths -join ","
 }
 
 function Build-Dependency() {
