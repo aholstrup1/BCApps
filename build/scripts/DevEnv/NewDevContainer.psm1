@@ -181,16 +181,14 @@ function Move-AppIntoDevScope()
 function Setup-ContainerForDevelopment() {
     param(
         [string] $ContainerName,
-        [System.Version] $RepoVersion,
-        [string[]] $SelectedApps = @("*")
+        [System.Version] $RepoVersion
     )
 
-    $NewDevContainerModule = Join-Path "$PSScriptRoot" "NewDevContainer.psm1" -Resolve
-    $ModuleContainerPath = Join-Path "C:\run" "NewDevContainer.psm1"
-    Copy-FileToBcContainer -containerName $ContainerName -localpath "$NewDevContainerModule" -containerPath $ModuleContainerPath
+    $NewDevContainerModule = "$PSScriptRoot\NewDevContainer.psm1"
+    Copy-FileToBcContainer -containerName $ContainerName -localpath $NewDevContainerModule
 
     Invoke-ScriptInBcContainer -containerName $ContainerName -scriptblock {
-        param([string] $DevContainerModule, [System.Version] $RepoVersion, [string[]] $SelectedApps, [string] $DatabaseName = "CRONUS")
+        param([string] $DevContainerModule, [System.Version] $RepoVersion, [string] $DatabaseName = "CRONUS")
 
         Import-Module $DevContainerModule -DisableNameChecking -Force
 
@@ -219,18 +217,11 @@ function Setup-ContainerForDevelopment() {
         try {
             $installedApps | ForEach-Object {
                 if ($_.Scope -eq 'Global') {
-                    if (($SelectedApps -contains "*") -or ($SelectedApps -contains $_.Name)) {
-                        Write-Host "Moving $($_.Name) to Dev Scope"
-                        Move-AppIntoDevScope -Name ($_.Name) -DatabaseName $DatabaseName
-                    }
+                    Write-Host "Moving $($_.Name) to Dev Scope"
+                    Move-AppIntoDevScope -Name ($_.Name) -DatabaseName $DatabaseName
                 }
-                if ($null -ne $RepoVersion) {
-                    if ($_.Version -ne "$($RepoVersion.Major).$($RepoVersion.Minor).0.0") {
-                        if (($SelectedApps -contains "*") -or ($SelectedApps -contains $_.Name)) {
-                            Write-Host "Setting version of $($_.Name) to $($RepoVersion).0.0"
-                            Set-AppVersion -Name ($_.Name) -DatabaseName $DatabaseName -Major $RepoVersion.Major -Minor $RepoVersion.Minor
-                        }
-                    }
+                if ($_.Version -ne "$($RepoVersion.Major).$($RepoVersion.Minor).0.0") {
+                    Set-AppVersion -Name ($_.Name) -DatabaseName $DatabaseName -Major $RepoVersion.Major -Minor $RepoVersion.Minor
                 }
             }
         } finally {
@@ -239,7 +230,7 @@ function Setup-ContainerForDevelopment() {
         }
 
 
-    } -argumentList $ModuleContainerPath,$RepoVersion,$SelectedApps -usePwsh $false
+    } -argumentList $NewDevContainerModule,$RepoVersion -usePwsh $false
 }
 
 Export-ModuleMember -Function Setup-ContainerForDevelopment
