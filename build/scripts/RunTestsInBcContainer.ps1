@@ -39,32 +39,6 @@ function Get-TestsInGroup {
     return $testsInGroup
 }
 
-function Install-UninstalledAppsInEnvironment() {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string] $ContainerName
-    )
-    # Get all apps in the environment
-    $allAppsInEnvironment = Get-BcContainerAppInfo -containerName $ContainerName -tenantSpecificProperties -sort DependenciesFirst
-    foreach ($app in $allAppsInEnvironment) {
-        # Check if the app is already installed 
-        $isAppAlreadyInstalled = $allAppsInEnvironment | Where-Object { ($($_.Name) -eq $app.Name) -and ($_.IsInstalled -eq $true) }
-        if (($app.IsInstalled -eq $true) -or ($isAppAlreadyInstalled)) {
-            Write-Host "$($app.Name) is already installed"
-        } else {
-            Write-Host "Re-Installing $($app.Name)"
-            Sync-BcContainerApp -containerName $ContainerName -appName $app.Name -appPublisher $app.Publisher -Mode ForceSync -Force
-            Install-BcContainerApp -containerName $ContainerName -appName $app.Name -appPublisher $app.Publisher -appVersion $app.Version -Force
-        }
-    }
-
-    # START LOGGING: Print all installed apps TODO
-    foreach ($app in (Get-BcContainerAppInfo -containerName $ContainerName -tenantSpecificProperties -sort DependenciesLast)) {
-        Write-Host "App: $($app.Name) ($($app.Version)) - Scope: $($app.Scope) - $($app.IsInstalled) / $($app.IsPublished)"
-    }
-    # END LOGGING
-}
-
 $disabledTests = @(Get-DisabledTests)
 $noIsolationTests = Get-TestsInGroup -groupName "No Test Isolation"
 
@@ -92,7 +66,8 @@ if ($disabledTests)
 }
 
 if ($ReinstallUninstalledApps) {
-    Install-UninstalledAppsInEnvironment -ContainerName $parameters["containerName"]
+    Import-Module $PSScriptRoot\AppExtensionsHelper.psm1
+    Install-UninstalledAppsInEnvironment -ContainerName $parameters["containerName"] -Verbose
 }
 
 Run-TestsInBcContainer @parameters

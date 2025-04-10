@@ -107,4 +107,123 @@ function Build-Dependency() {
     Compile-AppWithBcCompilerFolder @CompilationParameters
 }
 
-Export-ModuleMember -Function GetSourceCode, Build-Dependency
+function Install-UninstalledAppsInEnvironment() {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string] $ContainerName
+    )
+    # Get all apps in the environment
+    $allAppsInEnvironment = Get-BcContainerAppInfo -containerName $ContainerName -tenantSpecificProperties -sort DependenciesFirst
+    foreach ($app in $allAppsInEnvironment) {
+        # Check if the app is already installed 
+        $isAppAlreadyInstalled = $allAppsInEnvironment | Where-Object { ($($_.Name) -eq $app.Name) -and ($_.IsInstalled -eq $true) }
+        if (($app.IsInstalled -eq $true) -or ($isAppAlreadyInstalled)) {
+            Write-Host "$($app.Name) is already installed"
+        } else {
+            Write-Host "Re-Installing $($app.Name)"
+            Sync-BcContainerApp -containerName $ContainerName -appName $app.Name -appPublisher $app.Publisher -Mode ForceSync -Force
+            Install-BcContainerApp -containerName $ContainerName -appName $app.Name -appPublisher $app.Publisher -appVersion $app.Version -Force
+        }
+    }
+
+    foreach ($app in (Get-BcContainerAppInfo -containerName $ContainerName -tenantSpecificProperties -sort DependenciesLast)) {
+        Write-Verbose "App: $($app.Name) ($($app.Version)) - Scope: $($app.Scope) - $($app.IsInstalled) / $($app.IsPublished)"
+    }
+}
+
+function Publish-AppFromFile() {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string] $ContainerName,
+        [Parameter(Mandatory = $true, ParameterSetName = "ByAppFilePath")]
+        [string] $AppFilePath,
+        [Parameter(Mandatory = $true, ParameterSetName = "ByAppName")]
+        [string] $AppName
+    )
+    if ($PSCmdlet.ParameterSetName -eq "ByAppName") {
+        Write-Host "Searching for app file with name: $AppName"
+        $allApps = (Invoke-ScriptInBCContainer -containerName $ContainerName -scriptblock { Get-ChildItem -Path "C:\Applications\" -Filter "*.app" -Recurse })
+        $AppFilePath = $allApps | Where-Object { $($_.BaseName) -like "*$($AppName)" } | ForEach-Object { $_.FullName }
+    }
+    
+    if (-not $AppFilePath) {
+        throw "App file not found"
+    }
+
+    Write-Host "Installing app from file: $AppFilePath"
+    Publish-BcContainerApp -containerName $ContainerName -appFile ":$($AppFilePath)" -skipVerification -scope Global -install -sync
+}
+
+function Install-MissingDependencies() {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string] $ContainerName,
+        [Parameter(Mandatory = $true)]
+        [string[]] $DependenciesToInstall
+    )
+    $allAppsInEnvironment = Get-BcContainerAppInfo -containerName $ContainerName -tenantSpecificProperties -sort DependenciesFirst
+    $missingDependencies = @()
+    foreach($dependency in $DependenciesToInstall) {
+        $appInContainer = $allAppsInEnvironment | Where-Object Name -eq $dependency
+        if (-not $appInContainer) {
+            Write-Host "[Install Missing Dependencies] - $($dependency) is not published to the container"
+            $missingDependencies += $dependency
+            continue
+        }
+
+        $isAppInstalled = $appInContainer | Where-Object IsInstalled -eq $true
+        if ($isAppInstalled) {
+            Write-Host "[Install Missing Dependencies] - $($dependency) ($($isAppInstalled.Version)) is already installed"
+            continue
+        }
+        
+        $uninstalledApps = @($appInContainer | Where-Object IsInstalled -eq $false)
+        if ($uninstalledApps.Count -gt 1) {
+            throw "[Install Missing Dependencies] - $($dependency) has multiple versions published. Cannot determine which one to install"
+        }
+
+        $appToInstall = $uninstalledApps[0]
+        Write-Host "[Install Missing Dependencies] - Installing $($dependency)"
+        try {
+            Sync-BcContainerApp -containerName $ContainerName -appName $appToInstall.Name -appPublisher $appToInstall.Publisher -Mode ForceSync -Force
+            Install-BcContainerApp -containerName $ContainerName -appName $appToInstall.Name -appPublisher $appToInstall.Publisher -appVersion $appToInstall.Version -Force
+        } catch {
+            Write-Host "[Install Missing Dependencies] - Failed to install $($dependency) ($($appToInstall.Version))"
+            Write-Host $_.Exception.Message
+            $missingDependencies += $dependency
+            continue
+        }
+    }
+
+    if ($missingDependencies.Count -gt 0) {
+        Write-Host "[Install Missing Dependencies] - The following dependencies are missing: $($missingDependencies -join ', ')"
+    }
+    return $missingDependencies
+}
+
+function Install-AppsInContainer() {
+    param(
+        [string] $ContainerName,
+        [string[]] $Apps
+    )
+    $allAppsInEnvironment = Get-BcContainerAppInfo -containerName $ContainerName -tenantSpecificProperties -sort DependenciesFirst
+    foreach ($app in $Apps) {
+        # Check if app can be found in the container
+        $appInContainer = $allAppsInEnvironment | Where-Object { ($($_.Name) -eq $app) }
+
+        if (-not $appInContainer) {
+            Write-Host "App $($app) not found in the container. Cannot install it until it is published."
+            return $false
+        } elseif ($appInContainer.IsInstalled -eq $true) {
+            Write-Host "$($app) is already installed"
+            return $true
+        } else {
+            Write-Host "Installing $appInContainer from container $ContainerName"
+            Sync-BcContainerApp -containerName $ContainerName -appName $appInContainer.Name -appPublisher $appInContainer.Publisher -Mode ForceSync -Force
+            Install-BcContainerApp -containerName $ContainerName -appName $appInContainer.Name -appPublisher $appInContainer.Publisher -appVersion $appInContainer.Version -Force
+            return $true
+        }
+    }
+}
+
+Export-ModuleMember -Function Build-Dependency, Install-UninstalledAppsInEnvironment, Publish-AppFromFile, Install-MissingDependencies, Install-AppsInContainer
