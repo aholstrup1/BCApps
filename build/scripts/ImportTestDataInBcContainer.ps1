@@ -33,4 +33,4 @@ function Get-NavDefaultCompanyName
     return "CRONUS International Ltd."
 }
 
-Invoke-ContosoDemoTool
+Invoke-ContosoDemoTool -ContainerName $parameters.ContainerName
