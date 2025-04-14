@@ -7,11 +7,25 @@ function GetSourceCode() {
     $sourceCodeFolder = "$TempFolder/$($App -replace " ", "_")Source"
 
     if (-not $sourceArchive) {
-        # Find out which version of the apps we need 
-        $artifactVersion = "https://bcinsider-fvh2ekdjecfjd6gk.b02.azurefd.net/sandbox/27.0.31285.0/platform"
+        # Find out which version of the apps we need
+        if ($env:artifact) {
+            Write-Host "Found artifact: $($env:artifact)"
+            $artifact = $env:artifact
+        } else {
+            Write-Host "No artifact found. Using default artifact version."
+            Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
+            $artifact = Get-ConfigValue -ConfigType "AL-GO" -Key "artifact"
+        }
+        # Test that artifact is a url
+        if ($artifact -notmatch "^https?://") {
+            Write-Error "Artifact is not a valid URL: $artifact"
+            throw
+        }
+
+        $artifactVersion = $artifact -replace "/[^/]+$", "/w1"
 
         # Download the artifact that contains the source code for those apps
-        Download-Artifacts -artifactUrl $artifactVersion -basePath $TempFolder | Out-Null
+        Download-Artifacts -artifactUrl $artifactVersion -basePath $TempFolder -includePlatform | Out-Null
 
         # Unzip it 
         $sourceArchive = Get-ChildItem -Path $TempFolder -Recurse -Filter "$App.Source.zip" 
@@ -81,10 +95,18 @@ function Build-Dependency() {
     $addOnsSymbolsFolder = $CompilationParameters["appSymbolsFolder"]
 
     # Log what is in the symbols folder
-    Write-Host "Symbols folder: $SymbolsFolder"
-    Get-ChildItem -Path $SymbolsFolder | ForEach-Object {
+    Write-Host "Symbols folder: $addOnsSymbolsFolder"
+    Get-ChildItem -Path $addOnsSymbolsFolder | ForEach-Object {
         Write-Host $_.Name
     }
+
+    # If app is already there then skip it
+    $appSymbolsExist = Get-ChildItem -Path $addOnsSymbolsFolder | Where-Object { $_.Name -like "Microsoft_$($App)*.app" }
+    if ($appSymbolsExist) {
+        Write-Host "$App is already in the symbols folder. Skipping recompilation"
+        return
+    }
+
     $CompilationParameters["assemblyProbingPaths"] = Get-AssemblyProbingPaths
     
     # Update the CompilationParameters
