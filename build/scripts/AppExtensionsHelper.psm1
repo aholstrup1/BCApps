@@ -16,6 +16,12 @@ function GetSourceCode() {
             Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
             $artifact = Get-ConfigValue -ConfigType "AL-GO" -Key "artifact"
         }
+        # Test that artifact is a url
+        if ($artifact -notmatch "^https?://") {
+            Write-Error "Artifact is not a valid URL: $artifact"
+            throw
+        }
+
         $artifactVersion = $artifact -replace "/[^/]+$", "/w1"
 
         # Download the artifact that contains the source code for those apps
