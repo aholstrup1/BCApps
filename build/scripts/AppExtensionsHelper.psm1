@@ -100,9 +100,9 @@ function Build-Dependency() {
         Write-Host $_.Name
     }
 
-    # If app is already there then skip it - TODO this shouldn't happen when useprojectfolder is set to false
-    $isAppThere = Get-ChildItem -Path $addOnsSymbolsFolder | Where-Object { $_.Name -like "Microsoft_$($App)*.app" }
-    if ($isAppThere) {
+    # If app is already there then skip it
+    $appSymbolsExist = Get-ChildItem -Path $addOnsSymbolsFolder | Where-Object { $_.Name -like "Microsoft_$($App)*.app" }
+    if ($appSymbolsExist) {
         Write-Host "$App is already in the symbols folder. Skipping recompilation"
         return
     }
