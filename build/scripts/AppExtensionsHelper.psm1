@@ -7,11 +7,19 @@ function GetSourceCode() {
     $sourceCodeFolder = "$TempFolder/$($App -replace " ", "_")Source"
 
     if (-not $sourceArchive) {
-        # Find out which version of the apps we need 
-        $artifactVersion = "https://bcinsider-fvh2ekdjecfjd6gk.b02.azurefd.net/sandbox/27.0.31285.0/platform"
+        # Find out which version of the apps we need
+        if ($env:artifact) {
+            Write-Host "Found artifact: $($env:artifact)"
+            $artifact = $env:artifact
+        } else {
+            Write-Host "No artifact found. Using default artifact version."
+            Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
+            $artifact = Get-ConfigValue -ConfigType "AL-GO" -Key "artifact"
+        }
+        $artifactVersion = $artifact -replace "/[^/]+$", "/w1"
 
         # Download the artifact that contains the source code for those apps
-        Download-Artifacts -artifactUrl $artifactVersion -basePath $TempFolder | Out-Null
+        Download-Artifacts -artifactUrl $artifactVersion -basePath $TempFolder -includePlatform | Out-Null
 
         # Unzip it 
         $sourceArchive = Get-ChildItem -Path $TempFolder -Recurse -Filter "$App.Source.zip" 
