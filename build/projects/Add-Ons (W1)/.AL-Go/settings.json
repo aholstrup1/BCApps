@@ -35,5 +35,6 @@
     "installTestLibraries": true,
     "installTestFramework": true,
     "installTestRunner": true,
-    "useProjectDependencies": true
+    "useProjectDependencies": true,
+    "rulesetFile": "../../../src/rulesets/app.ruleset.json"
 }
