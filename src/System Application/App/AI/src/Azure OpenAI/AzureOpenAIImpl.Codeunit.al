@@ -602,28 +602,4 @@ codeunit 7772 "Azure OpenAI Impl" implements "AI Service Name"
         if not TempPrivacyNotice.Insert() then;
     end;
 
-    procedure GetAzureOpenAICategory(): Code[50]
-    begin
-        exit(AzureOpenAiTxt);
-    end;
-
-    procedure GetServiceName(): Text[250];
-    begin
-        exit(AzureOpenAiTxt);
-    end;
-
-    procedure GetServiceId(): Code[50];
-    begin
-        exit(AzureOpenAiTxt);
-    end;
-
-    [EventSubscriber(ObjectType::Codeunit, Codeunit::"Privacy Notice", 'OnRegisterPrivacyNotices', '', false, false)]
-    local procedure CreatePrivacyNoticeRegistrations(var TempPrivacyNotice: Record "Privacy Notice" temporary)
-    begin
-        TempPrivacyNotice.Init();
-        TempPrivacyNotice.ID := GetAzureOpenAICategory();
-        TempPrivacyNotice."Integration Service Name" := GetServiceName();
-        if not TempPrivacyNotice.Insert() then;
-    end;
-
 }
