@@ -3,9 +3,9 @@
   "description": "This ruleset applies to 1st party extensions",
   "generalAction": "Error",
   "includedRuleSets": [
-    {
-      "action": "Default",
-      "path": "../BCApps/src/rulesets/ruleset.json"
+    {    
+      "action": "Default", 
+      "path": "./ruleset.json"
     }
   ],
   "rules": [
