@@ -68,6 +68,8 @@ if ($disabledTests)
 if ($ReinstallUninstalledApps) {
     Import-Module $PSScriptRoot\AppExtensionsHelper.psm1
     Install-UninstalledAppsInEnvironment -ContainerName $parameters["containerName"] -Verbose
+    Set-BcContainerServerConfiguration -containerName $parameters["containerName"] -keyName ApiServicesEnabled -keyValue "true"
+    Restart-BcContainerServiceTier -ContainerName $parameters["containerName"]
 }
 
 Run-TestsInBcContainer @parameters
