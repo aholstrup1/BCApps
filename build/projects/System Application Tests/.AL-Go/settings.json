@@ -5,20 +5,5 @@
     ],
     "testFolders":  [
         "../../../src/System Application/Test"
-    ],
-    "installOnlyReferencedApps": false,
-    "enableCodeCop": false,
-    "enableAppSourceCop": false,
-    "enablePerTenantExtensionCop": false,
-    "enableUICop": false,
-    "ConditionalSettings": [
-        {
-            "buildModes": [
-                "Clean"
-            ],
-            "settings": {
-                "doNotRunTests": true
-            }
-        }
     ]
 }
