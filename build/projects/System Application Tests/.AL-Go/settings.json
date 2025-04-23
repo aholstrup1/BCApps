@@ -1,7 +1,6 @@
 {
     "projectName": "System Application Tests",
-    "appFolders": [
-    ],
+    "appFolders": [],
     "testFolders":  [
         "../../../src/System Application/Test"
     ],
