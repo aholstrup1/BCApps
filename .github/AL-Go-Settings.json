@@ -27,7 +27,8 @@
     {
       "branches": [
         "main",
-        "releases/*.x"
+        "releases/*.x",
+        "v1/*"
       ],
       "settings": {
         "buildModes": [
