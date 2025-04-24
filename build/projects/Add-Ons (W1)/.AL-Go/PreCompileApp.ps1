@@ -4,18 +4,17 @@ Param(
 )
 
 if ($ENV:BuildMode -eq 'Clean') {
-    $customSettings = Get-Content (Join-Path $PSScriptRoot "customSettings.json" -Resolve) | ConvertFrom-Json
-    $externalDependencies = ($customSettings.ExternalAppDependencies + $customSettings.ExternalTestAppDependencies)
-    $settings = Get-Content (Join-Path $PSScriptRoot "settings.json" -Resolve) | ConvertFrom-Json
 
+    # If useProjectDependencies is set to false, we need to remove the app symbols folder so we recompile everything.
+    $settings = Get-Content (Join-Path $PSScriptRoot "settings.json" -Resolve) | ConvertFrom-Json
     if ($settings.useProjectDependencies -eq $false) {
-        # Remove everything in the app symbols folder so we recompile everything.
         $symbolsFolder = $compilationParams.Value["appSymbolsFolder"]
         if (Test-Path $symbolsFolder) {
             Remove-Item -Path $symbolsFolder\* -Recurse -Force -Verbose
         }
     }
 
+    Import-Module (Join-Path $PSScriptRoot "../../../scripts/AppExtensionsHelper.psm1" -Resolve)
     $scriptPath = Join-Path $PSScriptRoot "../../../scripts/PreCompileApp.ps1" -Resolve
-    . $scriptPath -parameters $compilationParams -appType $appType -recompileDependencies $externalDependencies
+    . $scriptPath -parameters $compilationParams -appType $appType -recompileDependencies (Get-ExternalDependencies)
 }
