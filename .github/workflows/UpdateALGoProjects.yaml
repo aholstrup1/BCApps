@@ -14,7 +14,6 @@ permissions: read-all
 jobs:
   GetBranches:
     name: Get Official Branches
-    if: github.repository_owner == 'microsoft'
     runs-on: ubuntu-latest
     outputs:
       updateBranches: ${{ steps.getOfficialBranches.outputs.branchesJson }}
@@ -33,7 +32,6 @@ jobs:
 
   UpdateBCArtifactVersion:
     name: "[${{ matrix.branch }}] Update BC Artifact Version"
-    if: github.repository_owner == 'microsoft'
     permissions:
       contents: write
     environment: Official-Build
@@ -58,7 +56,7 @@ jobs:
       - name: Update BC Artifact Version
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        uses: microsoft/BCApps/.github/actions/RunAutomation@main
+        uses: aholstrup1/BCApps/.github/actions/RunAutomation@main
 
         with:
           automations: UpdateUseProjectDependencies
