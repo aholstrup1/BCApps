@@ -1,10 +1,12 @@
 Param(
     [ValidateSet('app', 'testApp', 'bcptApp')]
     [string] $appType = 'app',
-    [ref] $parameters
+    [ref] $parameters,
+    [string[]] $recompileDependencies = @()
 )
 
 Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
+Import-Module $PSScriptRoot\AppExtensionsHelper.psm1
 
 $appBuildMode = Get-BuildMode
 
@@ -32,6 +34,12 @@ if($appType -eq 'app')
             Import-Module $PSScriptRoot\GuardingV2ExtensionsHelper.psm1
 
             if($appBuildMode -eq 'Clean') {
+                if ($recompileDependencies.Count -gt 0) {
+                    $recompileDependencies | ForEach-Object {
+                        Build-Dependency -App $_ -CompilationParameters ($parameters.Value.Clone())
+                    }
+                }
+
                 Write-Host "Compile the app without any preprocessor symbols to generate a baseline app to use for breaking changes check"
 
                 $tempParameters = $parameters.Value.Clone()
@@ -68,4 +76,9 @@ if($appType -eq 'app')
             Enable-BreakingChangesCheck -AppSymbolsFolder $parameters.Value["appSymbolsFolder"] -AppProjectFolder $parameters.Value["appProjectFolder"] -BuildMode $appBuildMode | Out-Null
         }
     }
+}
+
+if($useCompilerFolder) {
+    Write-Host "Using compiler folder for compilation - Setting assemblyProbingPaths"
+    $parameters.Value["assemblyProbingPaths"] = Get-AssemblyProbingPaths
 }

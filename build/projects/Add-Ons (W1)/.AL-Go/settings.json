@@ -1,0 +1,39 @@
+{
+    "projectName": "Add-Ons (W1)",
+    "appFolders": [
+        "../../../src/Add-Ons/W1/*/app"
+    ],
+    "testFolders": [
+        "../../../src/Add-Ons/W1/*/test",
+        "../../../src/Add-Ons/W1/*/test library"
+
+    ],
+    "buildModes": [
+        "Translated"
+    ],
+    "installOnlyReferencedApps": false,
+    "rulesetFile": "../../../src/rulesets/app.ruleset.json",
+    "ConditionalSettings": [
+        {
+            "buildModes": [
+                "Clean"
+            ],
+            "settings": {
+                "doNotRunTests": true,
+                "useCompilerFolder": true,
+                "doNotPublishApps": true
+            }
+        },
+        {
+            "branches": [
+                "releases/*.[0-5]"
+            ],
+            "settings": {
+                "buildModes": [
+                    "Strict"
+                ]
+            }
+        }
+    ],
+    "useProjectDependencies": false
+}
