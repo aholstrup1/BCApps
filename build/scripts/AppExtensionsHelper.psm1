@@ -71,11 +71,16 @@ function Build-App() {
     # Log what is in the symbols folder
     Write-Host "Symbols folder: $($CompilationParameters['appSymbolsFolder'])"
     Get-ChildItem -Path $CompilationParameters["appSymbolsFolder"] | ForEach-Object {
-        Write-Host $_.Name
+        Write-Host "- $($_.Name)"
     }
 
     # If app is already there then skip it
     if (Test-Path $CompilationParameters["appOutputFolder"]) {
+        Write-Host "Output folder: $($CompilationParameters['appOutputFolder'])"
+        Get-ChildItem -Path $CompilationParameters["appOutputFolder"] | ForEach-Object {
+            Write-Host "- $($_.Name)"
+        }
+
         $appSymbolsExist = Get-ChildItem -Path $CompilationParameters["appOutputFolder"] | Where-Object { $_.Name -like "Microsoft_$($App)*.app" }
         if ($appSymbolsExist) {
             Write-Host "$App is already in the symbols folder. Skipping recompilation"
@@ -113,6 +118,7 @@ function Build-App() {
         $appJson.version = "27.0.0.0"
         $appJson | ConvertTo-Json -Depth 99 | Set-Content -Path $appJsonFile
         Write-Host "Updated version in $appJsonFile"
+        Write-Host "New App.json: $($appJson | ConvertTo-Json -Depth 99)"
     }
 
     # Disable all cops for dependencies
