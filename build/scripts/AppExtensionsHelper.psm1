@@ -94,8 +94,24 @@ function Build-App() {
     }
 
 
-    Write-Host "Get source code for $App"
-    $sourceCodeFolder = GetSourceCodeFromArtifact -App $App -TempFolder $script:tempFolder
+    $alGoSettings = $env:settings | ConvertFrom-Json
+    $sourceCodeFolder = $null
+    if ($alGoSettings.useProjectDependencies) {
+        Write-Host "Get source code for $App"
+        Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
+        $sourceCodeFolder = Get-ChildItem -Path (Get-BaseFolder) -Filter "app.json" -Recurse | ForEach-Object {
+            $appName = (Get-Content -Path $_.FullName | ConvertFrom-Json).Name
+            if ($appName -eq $App) {
+                $sourceCodeFolder = Split-Path $_.FullName -Parent
+                Write-Host "Found code for $App in $sourceCodeFolder"
+                return $sourceCodeFolder
+            }
+        }
+    }
+
+    if (-not $sourceCodeFolder) {
+        $sourceCodeFolder = GetSourceCodeFromArtifact -App $App -TempFolder $script:tempFolder
+    }
 
     # Update the CompilationParameters
     $CompilationParameters["appProjectFolder"] = $sourceCodeFolder # Use the downloaded source code as the project folder
