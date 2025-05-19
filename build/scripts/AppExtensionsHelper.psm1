@@ -68,16 +68,6 @@ function Build-App() {
         New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
     }
 
-    <## Create a new folder for the symbols if it does not exist
-    if (($null -ne $CompilationParameters["preprocessorsymbols"]) -and ($CompilationParameters["preprocessorsymbols"].Count -gt 0)) {
-        $newSymbolsFolder = (Join-Path $script:tempFolder "CleanSymbols")
-    } else {
-        $newSymbolsFolder = (Join-Path $script:tempFolder "Symbols")
-    }
-    if (-not (Test-Path $newSymbolsFolder)) {
-        New-Item -ItemType Directory -Path $newSymbolsFolder -Force | Out-Null
-    }#>
-
     # Log what is in the symbols folder
     Write-Host "Symbols folder: $($CompilationParameters['appSymbolsFolder'])"
     Get-ChildItem -Path $CompilationParameters["appSymbolsFolder"] | ForEach-Object {
@@ -115,7 +105,15 @@ function Build-App() {
 
     # Update the CompilationParameters
     $CompilationParameters["appProjectFolder"] = $sourceCodeFolder # Use the downloaded source code as the project folder
-    #$CompilationParameters["appSymbolsFolder"] = $newSymbolsFolder # New symbols folder only used for recompliation. Not used for compilation of Add-Ons
+
+    # In the source code folder there is an app.json file with a property called "version". Update that to "27.0.0.0"
+    $appJsonFile = Join-Path $sourceCodeFolder "app.json"
+    if (Test-Path $appJsonFile) {
+        $appJson = Get-Content -Path $appJsonFile | ConvertFrom-Json
+        $appJson.version = "27.0.0.0"
+        $appJson | ConvertTo-Json -Depth 99 | Set-Content -Path $appJsonFile
+        Write-Host "Updated version in $appJsonFile"
+    }
 
     # Disable all cops for dependencies
     $CompilationParameters["EnableAppSourceCop"] = $false
