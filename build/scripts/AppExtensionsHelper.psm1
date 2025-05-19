@@ -68,7 +68,7 @@ function Build-App() {
         New-Item -ItemType Directory -Path $tempFolder -Force | Out-Null
     }
 
-    # Create a new folder for the symbols if it does not exist
+    <## Create a new folder for the symbols if it does not exist
     if (($null -ne $CompilationParameters["preprocessorsymbols"]) -and ($CompilationParameters["preprocessorsymbols"].Count -gt 0)) {
         $newSymbolsFolder = (Join-Path $script:tempFolder "CleanSymbols")
     } else {
@@ -76,7 +76,7 @@ function Build-App() {
     }
     if (-not (Test-Path $newSymbolsFolder)) {
         New-Item -ItemType Directory -Path $newSymbolsFolder -Force | Out-Null
-    }
+    }#>
 
     # Log what is in the symbols folder
     Write-Host "Symbols folder: $($CompilationParameters['appSymbolsFolder'])"
@@ -115,7 +115,7 @@ function Build-App() {
 
     # Update the CompilationParameters
     $CompilationParameters["appProjectFolder"] = $sourceCodeFolder # Use the downloaded source code as the project folder
-    $CompilationParameters["appSymbolsFolder"] = $newSymbolsFolder # New symbols folder only used for recompliation. Not used for compilation of Add-Ons
+    #$CompilationParameters["appSymbolsFolder"] = $newSymbolsFolder # New symbols folder only used for recompliation. Not used for compilation of Add-Ons
 
     # Disable all cops for dependencies
     $CompilationParameters["EnableAppSourceCop"] = $false

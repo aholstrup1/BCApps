@@ -57,6 +57,7 @@ if($appType -eq 'app')
                         $dependenciesParameters = $parameters.Value.Clone()
                         $dependenciesParameters["preprocessorsymbols"] = @() # Wipe the preprocessor symbols to ensure that the baseline is generated without any preprocessor symbols
                         $dependenciesParameters["appOutputFolder"] = $defaultSymbolsPath # Use the default symbols folder as appOutputFolder
+                        $dependenciesParameters["appSymbolsFolder"] = $defaultSymbolsPath # Use the default symbols folder as appSymbolsFolder
                         Build-App -App $_ -CompilationParameters $dependenciesParameters
                     }
                 }
