@@ -33,7 +33,7 @@ if($appType -eq 'app')
         $recompileDependencies | ForEach-Object {
             $dependenciesParameters = $parameters.Value.Clone()
             $dependenciesParameters["appOutputFolder"] = $dependenciesParameters["appSymbolsFolder"] # Output the apps into the symbols folder so we can use them for the clean build later
-            Build-App -App $_ -CompilationParameters ($parameters.Value.Clone())
+            Build-App -App $_ -CompilationParameters $dependenciesParameters
         }
     }
 
