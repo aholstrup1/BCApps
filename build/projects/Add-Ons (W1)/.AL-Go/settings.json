@@ -35,6 +35,5 @@
             }
         }
     ],
-    "useProjectDependencies": false,
-    "updateDependencies": true
+    "useProjectDependencies": false
 }

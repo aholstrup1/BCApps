@@ -111,9 +111,10 @@ function Build-App() {
     $cacheAppInfoJson = Join-Path $CompilationParameters['appSymbolsFolder'] "cache_AppInfo.json"
     if (Test-Path $cacheAppInfoJson) {
         $appInfo = Get-Content -Path $cacheAppInfoJson | ConvertFrom-Json 
+        Write-Host $appInfo | ConvertTo-Json -Depth 99
         # Set the version property to 27.0.0.0 for all apps
         $appInfo | ForEach-Object {
-            $_.Version = "27.0.0.0"
+            $_.version = "27.0.0.0"
         }
         $appInfo | ConvertTo-Json -Depth 99 | Set-Content -Path $cacheAppInfoJson
         Write-Host "Updated cache_AppInfo.json:"
