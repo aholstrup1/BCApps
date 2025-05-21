@@ -108,6 +108,7 @@ function Build-App() {
         $sourceCodeFolder = GetSourceCodeFromArtifact -App $App -TempFolder $script:tempFolder
     }
 
+    Write-Host "Getting cache_AppInfo.json"
     $cacheAppInfoJson = Join-Path $CompilationParameters['appSymbolsFolder'] "cache_AppInfo.json"
     if (Test-Path $cacheAppInfoJson) {
         $appInfo = Get-Content -Path $cacheAppInfoJson | ConvertFrom-Json 
@@ -119,6 +120,8 @@ function Build-App() {
         #$appInfo | ConvertTo-Json -Depth 99 | Set-Content -Path $cacheAppInfoJson
         #Write-Host "Updated cache_AppInfo.json:"
         #Write-Host $appInfo | ConvertTo-Json -Depth 99
+    } else {
+        Write-Host "cache_AppInfo.json not found in path $cacheAppInfoJson"
     }
 
     # Update the CompilationParameters
