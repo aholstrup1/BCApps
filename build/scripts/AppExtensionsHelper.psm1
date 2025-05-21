@@ -108,24 +108,6 @@ function Build-App() {
         $sourceCodeFolder = GetSourceCodeFromArtifact -App $App -TempFolder $script:tempFolder
     }
 
-    Write-Host "Getting cache_AppInfo.json"
-    $cacheAppInfoJson = Join-Path $CompilationParameters['appSymbolsFolder'] "cache_AppInfo.json"
-    if (Test-Path $cacheAppInfoJson) {
-        $appInfo = Get-Content -Path $cacheAppInfoJson | ConvertFrom-Json 
-        $properties = $appInfo.PSObject.Properties.Name
-        foreach ($property in $properties) {
-            $appInfo.$property.version = "27.0.0.0"
-        }
-        # Set the version property to 27.0.0.0 for all apps
-        #$appInfo | ForEach-Object {
-        #    $_.version = "27.0.0.0"
-        #}
-        $appInfo | ConvertTo-Json -Depth 99 | Set-Content -Path $cacheAppInfoJson
-        Write-Host "Updated cache_AppInfo.json"
-    } else {
-        Write-Host "cache_AppInfo.json not found in path $cacheAppInfoJson"
-    }
-
     # Update the CompilationParameters
     $CompilationParameters["appProjectFolder"] = $sourceCodeFolder # Use the downloaded source code as the project folder
 
