@@ -113,12 +113,12 @@ function Build-App() {
         $appInfo = Get-Content -Path $cacheAppInfoJson | ConvertFrom-Json 
         Write-Host $appInfo | ConvertTo-Json -Depth 99
         # Set the version property to 27.0.0.0 for all apps
-        $appInfo | ForEach-Object {
-            $_.version = "27.0.0.0"
-        }
-        $appInfo | ConvertTo-Json -Depth 99 | Set-Content -Path $cacheAppInfoJson
-        Write-Host "Updated cache_AppInfo.json:"
-        Write-Host $appInfo | ConvertTo-Json -Depth 99
+        #$appInfo | ForEach-Object {
+        #    $_.version = "27.0.0.0"
+        #}
+        #$appInfo | ConvertTo-Json -Depth 99 | Set-Content -Path $cacheAppInfoJson
+        #Write-Host "Updated cache_AppInfo.json:"
+        #Write-Host $appInfo | ConvertTo-Json -Depth 99
     }
 
     # Update the CompilationParameters
