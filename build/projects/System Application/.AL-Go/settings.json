@@ -13,6 +13,7 @@
   "doNotRunTests": true,
   "useCompilerFolder": true,
   "doNotPublishApps": true,
+  "githubRunner": "ubuntu-latest",
   "ConditionalSettings": [
     {
       "branches": [
