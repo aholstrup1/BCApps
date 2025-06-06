@@ -65,7 +65,7 @@ jobs:
 
       - name: Read settings
         id: ReadSettings
-        uses: microsoft/AL-Go-Actions/ReadSettings@v7.1
+        uses: aholstrup1/AL-Go/Actions/ReadSettings@telemetrybug
         with:
           shell: powershell
           get: type,powerPlatformSolutionFolder,useGitSubmodules
