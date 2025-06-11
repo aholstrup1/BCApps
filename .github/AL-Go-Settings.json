@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/microsoft/AL-Go-Actions/v7.2/settings.schema.json",
+  "$schema": "https://raw.githubusercontent.com/aholstrup1/AL-Go/aholstrup/symbolspackage/Actions/settings.schema.json",
   "type": "PTE",
   "templateUrl": "https://github.com/aholstrup1/AL-Go@aholstrup/symbolspackage",
   "bcContainerHelperVersion": "preview",
@@ -90,7 +90,7 @@
     ]
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
-  "templateSha": "773587b64b7cff61b6549b9fa126ca8125684f20",
+  "templateSha": "24c4c525011951ac779cb585565aac089b654a1a",
   "commitOptions": {
     "messageSuffix": "Related to AB#539394",
     "pullRequestAutoMerge": true,
