@@ -73,7 +73,9 @@
   "enableUICop": true,
   "enableCodeAnalyzersOnTestApps": true,
   "rulesetFile": "../../../src/rulesets/ruleset.json",
-  "installApps": ["../../../src/testapp.app"],
+  "installApps": [
+    "../../../src/testapp.app"
+  ],
   "skipUpgrade": true,
   "fullBuildPatterns": [
     "build/*",
@@ -91,7 +93,7 @@
     ]
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
-  "templateSha": "24c4c525011951ac779cb585565aac089b654a1a",
+  "templateSha": "0eb0a769fac2c428eb857ee9511e370e9746efc1",
   "commitOptions": {
     "messageSuffix": "Related to AB#539394",
     "pullRequestAutoMerge": true,
