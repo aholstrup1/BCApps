@@ -1,0 +1,6 @@
+{
+  "$schema": "https://raw.githubusercontent.com/aholstrup1/AL-Go/aholstrup/symbolspackage/Actions/settings.schema.json",
+  "artifact": "////nextminor",
+  "cacheImageName": "",
+  "versioningStrategy": 15
+}
