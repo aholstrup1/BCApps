@@ -74,6 +74,7 @@
   "enableCodeAnalyzersOnTestApps": true,
   "rulesetFile": "../../../src/rulesets/ruleset.json",
   "installApps": ["../../../src/testapp.app"],
+  "githubRunnerShell": "pwsh",
   "skipUpgrade": true,
   "fullBuildPatterns": [
     "build/*",
