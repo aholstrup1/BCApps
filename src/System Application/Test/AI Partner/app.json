@@ -24,12 +24,6 @@
       "version": "27.0.0.0"
     },
     {
-    "id": "0d60b215-6ee1-4789-8e53-866cfa50c23c",
-  "name": "System Application Test",
-  "publisher": "Microsoft",
-  "version": "27.0.0.0"
-    },
-        {
       "id": "dd0be2ea-f733-4d65-bb34-a28f4624fb14",
       "name": "Library Assert",
       "publisher": "Microsoft",
