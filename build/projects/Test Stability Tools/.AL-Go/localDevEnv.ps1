@@ -19,23 +19,14 @@ $errorActionPreference = "Stop"; $ProgressPreference = "SilentlyContinue"; Set-S
 function DownloadHelperFile {
     param(
         [string] $url,
-        [string] $folder,
-        [switch] $notifyAuthenticatedAttempt
+        [string] $folder
     )
 
     $prevProgressPreference = $ProgressPreference; $ProgressPreference = 'SilentlyContinue'
     $name = [System.IO.Path]::GetFileName($url)
     Write-Host "Downloading $name from $url"
     $path = Join-Path $folder $name
-    try {
-        Invoke-WebRequest -UseBasicParsing -uri $url -OutFile $path
-    }
-    catch {
-        if ($notifyAuthenticatedAttempt) {
-            Write-Host -ForegroundColor Red "Failed to download $name, trying authenticated download"
-        }
-        Invoke-WebRequest -UseBasicParsing -uri $url -OutFile $path -Headers @{ "Authorization" = "token $(gh auth token)" }
-    }
+    Invoke-WebRequest -UseBasicParsing -uri $url -OutFile $path
     $ProgressPreference = $prevProgressPreference
     return $path
 }
@@ -55,10 +46,10 @@ Write-Host -ForegroundColor Yellow @'
 
 $tmpFolder = Join-Path ([System.IO.Path]::GetTempPath()) "$([Guid]::NewGuid().ToString())"
 New-Item -Path $tmpFolder -ItemType Directory -Force | Out-Null
-$GitHubHelperPath = DownloadHelperFile -url 'https://raw.githubusercontent.com/microsoft/AL-Go/ab2f5319ed073c542e03914f8ae6c0fda029ee1e/Actions/Github-Helper.psm1' -folder $tmpFolder -notifyAuthenticatedAttempt
-$ALGoHelperPath = DownloadHelperFile -url 'https://raw.githubusercontent.com/microsoft/AL-Go/ab2f5319ed073c542e03914f8ae6c0fda029ee1e/Actions/AL-Go-Helper.ps1' -folder $tmpFolder
-DownloadHelperFile -url 'https://raw.githubusercontent.com/microsoft/AL-Go/ab2f5319ed073c542e03914f8ae6c0fda029ee1e/Actions/settings.schema.json' -folder $tmpFolder | Out-Null
-DownloadHelperFile -url 'https://raw.githubusercontent.com/microsoft/AL-Go/ab2f5319ed073c542e03914f8ae6c0fda029ee1e/Actions/Packages.json' -folder $tmpFolder | Out-Null
+$GitHubHelperPath = DownloadHelperFile -url 'https://raw.githubusercontent.com/aholstrup1/AL-Go/aholstrup/symbolspackage/Actions/Github-Helper.psm1' -folder $tmpFolder
+$ALGoHelperPath = DownloadHelperFile -url 'https://raw.githubusercontent.com/aholstrup1/AL-Go/aholstrup/symbolspackage/Actions/AL-Go-Helper.ps1' -folder $tmpFolder
+DownloadHelperFile -url 'https://raw.githubusercontent.com/aholstrup1/AL-Go/aholstrup/symbolspackage/Actions/settings.schema.json' -folder $tmpFolder | Out-Null
+DownloadHelperFile -url 'https://raw.githubusercontent.com/aholstrup1/AL-Go/aholstrup/symbolspackage/Actions/Packages.json' -folder $tmpFolder | Out-Null
 
 Import-Module $GitHubHelperPath
 . $ALGoHelperPath -local
