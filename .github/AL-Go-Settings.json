@@ -99,8 +99,7 @@
     ]
   },
   "installApps": [
-    "../../../src/ShopifySymbols.app",
-    "../../../src/Shopify.app",
-    "https://github.com/aholstrup1/BCApps/blob/main/src/Shopify.app"
+    "https://github.com/aholstrup1/BCApps/blob/main/src/Shopify.app",
+    "https://github.com/aholstrup1/BCApps/blob/main/src/ShopifySymbols.app"
   ]
 }
