@@ -99,7 +99,6 @@
     ]
   },
   "installApps": [
-    "../../../src/Shopify.app",
     "../../../src/ShopifySymbols.app"
   ]
 }
