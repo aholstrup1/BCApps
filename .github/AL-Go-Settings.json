@@ -10,6 +10,7 @@
   "country": "base",
   "useProjectDependencies": true,
   "versioningStrategy": 3,
+  "runNumberOffset": -1390,
   "repoVersion": "27.0",
   "conditionalSettings": [
     {
