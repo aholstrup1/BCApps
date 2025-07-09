@@ -1,6 +1,7 @@
 {
+  "$schema": "https://raw.githubusercontent.com/microsoft/AL-Go/private/jonasbl/increment-version-bug/Actions/settings.schema.json",
   "type": "PTE",
-  "templateUrl": "https://github.com/microsoft/AL-Go-PTE@preview",
+  "templateUrl": "https://github.com/microsoft/AL-Go@private/jonasbl/increment-version-bug",
   "bcContainerHelperVersion": "preview",
   "runs-on": "windows-latest",
   "cacheImageName": "",
@@ -73,5 +74,5 @@
     ]
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
-  "templateSha": "50903624159826257124c0f799a1b4add9b0260b"
+  "templateSha": "34caa796c6f37f7c3f9131e57932da577ba02509"
 }
