@@ -1,4 +1,5 @@
 {
+  "$schema": "https://raw.githubusercontent.com/microsoft/AL-Go/1598a2b57bfbf523c09d70b47177965180a70e9c/Actions/settings.schema.json",
   "type": "PTE",
   "templateUrl": "https://github.com/microsoft/AL-Go-PTE@preview",
   "bcContainerHelperVersion": "preview",
@@ -73,5 +74,5 @@
     ]
   },
   "UpdateALGoSystemFilesEnvironment": "Official-Build",
-  "templateSha": "50903624159826257124c0f799a1b4add9b0260b"
+  "templateSha": "d6f86883ed7ba33bade0cda65c95b57c7f21b759"
 }
