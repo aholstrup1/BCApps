@@ -126,7 +126,7 @@ function Restore-BaselinesFromArtifacts {
         # Copy all the files from the sandbox folder to the baseline folder
         Get-ChildItem -Path "$baselineFolder/sandbox/$BaselineVersion/W1/Extensions" -Filter "*_$($BaselineVersion).app" -Recurse | ForEach-Object {
             Write-Host "Copying $($_.FullName) to $TargetFolder"
-            Copy-Item -Path $_.FullName -Destination $TargetFolder | Out-Null
+            Copy-Item -Path $_.FullName -Destination $TargetFolder -Force | Out-Null
         }
     }
 
