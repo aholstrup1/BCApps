@@ -137,8 +137,8 @@ function Restore-BaselinesFromArtifacts {
         return
     }
 
-    Write-Host "Copying $($baselineApp.FullName) to $TargetFolder"
-    Copy-Item -Path $baselineApp.FullName -Destination $TargetFolder | Out-Null
+    #Write-Host "Copying $($baselineApp.FullName) to $TargetFolder"
+    #Copy-Item -Path $baselineApp.FullName -Destination $TargetFolder | Out-Null
 
     return $BaselineVersion
 }
