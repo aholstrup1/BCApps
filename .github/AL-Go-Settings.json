@@ -94,6 +94,7 @@
   "commitOptions": {
     "messageSuffix": "Related to AB#539394",
     "pullRequestAutoMerge": true,
+    "pullRequestMergeMethod": "merge",
     "pullRequestLabels": [
       "Automation"
     ]
