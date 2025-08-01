@@ -1,0 +1,37 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/universal:latest",
+  "tasks": {
+    "build": "",
+    "test": "pwsh -File Tests/runtests.ps1",
+    "run": ""
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/powershell:1": {
+      "modules": "BcContainerHelper"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "postCreateCommand": "Write-Host 'Created container with PowerShell and GitHub CLI features'",
+  "customizations": {
+        "vscode": {
+            "extensions": [
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "GitHub.vscode-github-actions",
+                "GitHub.vscode-pull-request-github",
+                "ms-vscode.powershell"
+            ],
+            "settings": {
+              "terminal.integrated.defaultProfile.linux": "pwsh",
+              "mcp": {
+                "servers": {
+                  "github": {
+                    "url": "https://api.githubcopilot.com/mcp/",
+                    "type": "http"
+                  }
+                }
+              }
+            }
+        }
+    }
+}
