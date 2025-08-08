@@ -22,10 +22,10 @@ updates:
   schedule:
     interval: weekly
   allow:
-    - dependency-type: "all"
+    - dependency-type: "production"
   groups:
     NuGet-Dependencies:
       applies-to: version-updates
-      dependency-type: "all"
+      dependency-type: "production"
   labels:
     - "Automation"
