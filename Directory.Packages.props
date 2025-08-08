@@ -2,6 +2,7 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
     <AppVersion>26.2.34746.36197</AppVersion>
     <RestorePackagesPath Condition="'$(NUGET_PACKAGES)'!=''">$(NUGET_PACKAGES)</RestorePackagesPath>
     <RestorePackagesPath Condition="'$(NUGET_PACKAGES)'==''">$(USERPROFILE)\.nuget\packages</RestorePackagesPath>
