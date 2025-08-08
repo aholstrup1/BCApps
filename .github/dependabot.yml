@@ -20,12 +20,5 @@ updates:
 - package-ecosystem: nuget
   directory: "/"
   schedule:
-    interval: weekly
-  allow:
-    - dependency-type: "production"
-  groups:
-    NuGet-Dependencies:
-      applies-to: version-updates
-      dependency-type: "production"
-  labels:
-    - "Automation"
+    interval: daily
+  open-pull-requests-limit: 20
