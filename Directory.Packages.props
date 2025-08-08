@@ -4,6 +4,7 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
     <AppVersion>26.2.34746.36197</AppVersion>
     <RestorePackagesPath Condition="'$(NUGET_PACKAGES)'!=''">$(NUGET_PACKAGES)</RestorePackagesPath>
+    <RestorePackagesPath Condition="'$(NUGET_PACKAGES)'==''">$(USERPROFILE)\.nuget\packages</RestorePackagesPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Microsoft.Application" Version="$(AppVersion)" />
