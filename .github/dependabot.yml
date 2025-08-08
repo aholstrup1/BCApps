@@ -2,6 +2,11 @@
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
+registries:
+  msapps-public:
+    type: nuget-feed
+    url: https://dynamicssmb2.pkgs.visualstudio.com/DynamicsBCPublicFeeds/_packaging/MSApps/nuget/v3/index.json
+
 updates:
 - package-ecosystem: github-actions
   directory: ".github/workflows/"
@@ -19,12 +24,16 @@ updates:
   
 - package-ecosystem: nuget
   directory: "/"
+  registries:
+    - msapps-public
   schedule:
     interval: daily
   open-pull-requests-limit: 20
 
 - package-ecosystem: nuget
   directory: "/build/projects/Apps (W1)"
+  registries:
+    - msapps-public
   schedule:
     interval: daily
   open-pull-requests-limit: 20
