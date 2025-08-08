@@ -6,6 +6,9 @@ registries:
   msapps-public:
     type: nuget-feed
     url: https://dynamicssmb2.pkgs.visualstudio.com/DynamicsBCPublicFeeds/_packaging/MSApps/nuget/v3/index.json
+  nuget-org:
+    type: nuget-feed
+    url: https://api.nuget.org/v3/index.json
 
 updates:
 - package-ecosystem: github-actions
@@ -26,14 +29,7 @@ updates:
   directory: "/"
   registries:
     - msapps-public
-  schedule:
-    interval: daily
-  open-pull-requests-limit: 20
-
-- package-ecosystem: nuget
-  directory: "/build/projects/Apps (W1)"
-  registries:
-    - msapps-public
+    - nuget-org
   schedule:
     interval: daily
   open-pull-requests-limit: 20
