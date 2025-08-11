@@ -13,6 +13,7 @@
     <PackageVersion Include="Microsoft.Tests-TestLibraries.5d86850b-0d76-4eca-bd7b-951ad998e997" Version="$(AppVersion)" />
     <PackageVersion Include="Microsoft.ContosoCoffeeDemoDataset.5a0b41e9-7a42-4123-d521-2265186cfb31" Version="$(AppVersion)" />
     <PackageVersion Include="Microsoft.BaseApplication.us.437dbf0e-84ff-417a-965d-ed2bb9650972" Version="$(AppVersion)" />
-    <PackageVersion Include="Newtonsoft.Json" Version="4.0.1" />
+    <PackageVersion Include="Microsoft.Dynamics.BusinessCentral.Development.Tools" Version="16.0.24.41895-beta" />
+    <PackageVersion Include="BcContainerHelper" Version="6.1.7-preview1343" />
   </ItemGroup>
 </Project>
