@@ -5,26 +5,15 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Dynamics.BusinessCentral.Development.Tools" Version="16.0.24.41895-beta"/>
-    <PackageReference Include="BcContainerHelper" Version="6.1.7-preview1343"/>
   </ItemGroup>
   <!-- The following ItemGroup is used for App configuration -->
   <ItemGroup Condition="'$(Configuration)' == 'App' or '$(Configuration)' == ''">
     <PackageReference Include="Microsoft.Application" Version="26.2.34746.36197"/>
     <PackageReference Include="Microsoft.PowerBIReports.e4e86220-cac0-4ec3-b853-7c2fa610399d" Version="26.2.34746.36197" />
-    <PackageReference Include="Microsoft.BaseApplication.us.437dbf0e-84ff-417a-965d-ed2bb9650972" Version="26.2.34746.36197" />
-    <PackageReference Include="Newtonsoft.Json" Version="4.0.1" />
   </ItemGroup>
   <!-- The following ItemGroup is used for Test configuration -->
   <ItemGroup Condition="'$(Configuration)' == 'Test' or '$(Configuration)' == ''">
     <PackageReference Include="Microsoft.Tests-TestLibraries.5d86850b-0d76-4eca-bd7b-951ad998e997" Version="26.2.34746.36197" />
     <PackageReference Include="Microsoft.ContosoCoffeeDemoDataset.5a0b41e9-7a42-4123-d521-2265186cfb31" Version="26.2.34746.36197" />
   </ItemGroup>
-  <!--<Target Name="CopyAppFiles" AfterTargets="Restore">
-    <ItemGroup>
-      <W1AppFiles Include="$(RestorePackagesPath)\**\*.app" Exclude="$(RestorePackagesPath)\.$(CountryCode).*\**\*.app" />
-      <LocalAppFiles Include="$(RestorePackagesPath)\*.$(CountryCode).*\**\*.app" />
-    </ItemGroup>
-    <Copy SourceFiles="@(W1AppFiles)" DestinationFolder="$(RestorePackagesPath)" />
-    <Copy SourceFiles="@(LocalAppFiles)" DestinationFolder="$(RestorePackagesPath)" />
-  </Target>-->
 </Project>

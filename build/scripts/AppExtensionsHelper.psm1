@@ -249,71 +249,63 @@ function Install-AppFromContainer() {
     return $missingDependencies
 }
 
-<#
-    .Synopsis
-        Get the external dependencies from the settings.json file.
-    .Description
-        This function will get the external dependencies from the settings.json file.
-    .Parameter AppDependencies
-        If this switch is set, only the app dependencies will be returned.
-    .Parameter TestAppDependencies
-        If this switch is set, only the test app dependencies will be returned.
-#>
-<#function Get-ExternalDependencies() {
+function GetAppInfo() {
     param(
-        [switch] $AppDependencies,
-        [switch] $TestAppDependencies
+        [string] $AppFilePath
     )
-    Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
-    $appExtensionsSettings = Join-Path (Get-BaseFolder) "build/projects/Apps (W1)/.AL-Go/customSettings.json" -Resolve
-    $customSettings = Get-Content -Path $appExtensionsSettings | ConvertFrom-Json
+    $alExe = Get-ChildItem -Path (Get-NugetCachePath) -Filter "*altool.exe" -Recurse | Select-Object -First 1 -ExpandProperty FullName
+    return (. $alExe GetPackageManifest $AppFilePath | ConvertFrom-Json)
+}
 
-    if ($AppDependencies) {
-        return $customSettings.ExternalAppDependencies
-    } elseif ($TestAppDependencies) {
-        return $customSettings.ExternalTestAppDependencies
-    } else {
-        return $customSettings.ExternalAppDependencies + $customSettings.ExternalTestAppDependencies
+function Get-NugetCachePath() {
+    Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
+    $env:NUGET_PACKAGES = Join-Path (Get-BaseFolder) "out/NugetCache" 
+    return $env:NUGET_PACKAGES
+}
+
+function Restore-Project() {
+    param(
+        [string] $Configuration = "",
+        [string] $NugetCache = ""
+    )
+    Get-NugetCachePath | Out-Null
+    try {
+        dotnet restore -p:Configuration="$Configuration" | Out-Null
+    } catch {
+        Write-Host "Failure while restoring dependencies: $($_.Exception.Message)" # Temporary until bug 596703 is fixed
     }
-}#>
+
+    #if ($LASTEXITCODE -ne 0) {
+    #    throw "Failed to restore dependencies. Please check the output for errors."
+    #}
+}
 
 function Get-ExternalDependencies() {
     param(
-        [string] $ContainerName,
         [switch] $AppDependencies,
         [switch] $TestAppDependencies
     )
     Import-Module $PSScriptRoot\EnlistmentHelperFunctions.psm1
 
-    $nugetCache = Join-Path (Get-BaseFolder) "NugetCache"
     $dependencies = @()
-
-    # Debugging - Print the current path and files in the path
-    Write-Host "Current path: $(Get-Location)"
-    Get-ChildItem -Path (Get-Location) | ForEach-Object {
-        Write-Host "- $($_.Name)"
-    }
-    # Debugging end
 
     try {
         if ($AppDependencies) {
-            dotnet restore -p:Configuration=App --packages "$nugetCache" | Out-Null
+            Restore-Project -Configuration "App"
         } elseif ($TestAppDependencies) {
-            dotnet restore -p:Configuration=Test --packages "$nugetCache" | Out-Null
+            Restore-Project -Configuration "Test"
         } else {
-            dotnet restore -p:Configuration=All --packages "$nugetCache"| Out-Null
-        }
-        if ($LASTEXITCODE -ne 0) {
-            throw "Failed to restore dependencies. Please check the output for errors."
+            Restore-Project
         }
 
-        $appFiles = Get-ChildItem -Path $nugetCache -Filter "*.app" -Recurse | Select-Object -ExpandProperty FullName
+        $appFiles = Get-ChildItem -Path (Get-NugetCachePath) -Filter "*.app" -Recurse | Select-Object -ExpandProperty FullName
+        Write-Host "Found the following app files: $($appFiles -join ', ')"
         $sortedAppFiles = Sort-appFilesByDependencies -appFiles $appfiles
 
-        $dependencies = $sortedAppFiles | ForEach-Object { Get-BcContainerAppInfo -appFilePath $_ -containerName $ContainerName } | Select-Object -ExpandProperty Name
+        $dependencies = $sortedAppFiles | ForEach-Object { GetAppInfo -AppFilePath $_ } | Select-Object -ExpandProperty Name
     } finally {
         # Clean up the out folder
-        Remove-Item -Path $nugetCache -Recurse -Force -ErrorAction SilentlyContinue
+        Remove-Item -Path (Get-NugetCachePath) -Recurse -Force -ErrorAction SilentlyContinue
     }
 
     # Temporary fix for PowerBI Reports dependency name
