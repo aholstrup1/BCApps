@@ -98,5 +98,6 @@
     "pullRequestLabels": [
       "Automation"
     ]
-  }
+  },
+  "trackALAlertsInGithub": true
 }
