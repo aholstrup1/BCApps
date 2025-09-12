@@ -16,6 +16,7 @@ codeunit 3112 "Activity Log Builder Impl."
         LogEntry: DotNet ActivityLogEntry;
         AttributeType: DotNet ActivityLogAttribute;
         GlobalFieldNo: Integer;
+        GlobalFieldNo2: Integer;
         BuilderNotInitializedErr: Label 'Activity Log Builder not initialized.';
 
     procedure Init(TableNo: Integer; FieldNo: Integer; RecSystemId: Guid): Codeunit "Activity Log Builder Impl."
@@ -42,7 +43,6 @@ codeunit 3112 "Activity Log Builder Impl."
     var
         TextURL: Text;
     begin
-        TextURL := System.GetUrl(CurrentClientType(), CompanyName(), ObjectType::Page, PageId, Rec, true);
         LogEntry.AddFieldAttribute(this.GlobalFieldNo, AttributeType::ReferenceSource, TextURL);
         exit(this);
     end;
