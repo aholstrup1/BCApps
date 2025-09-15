@@ -40,8 +40,6 @@ codeunit 3112 "Activity Log Builder Impl."
     end;
 
     procedure SetReferenceSource(PageId: Integer; var Rec: RecordRef): Codeunit "Activity Log Builder Impl."
-    var
-        TextURL: Text;
     begin
         LogEntry.AddFieldAttribute(this.GlobalFieldNo, AttributeType::ReferenceSource, TextURL);
         exit(this);
