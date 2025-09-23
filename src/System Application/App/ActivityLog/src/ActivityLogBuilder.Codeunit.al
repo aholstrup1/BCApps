@@ -30,7 +30,7 @@ codeunit 3111 "Activity Log Builder"
     /// Sets the explanation for the activity log entry.
     /// </summary>
     [Scope('OnPrem')]
-    procedure SetExplanation(Explanation: Text): Codeunit "Activity Log Builder"
+    procedure SetExplanation(Explanation: Text; Explanation2: Text): Codeunit "Activity Log Builder"
     begin
         ActivityLogBuilderImpl := ActivityLogBuilderImpl.SetExplanation(Explanation);
         exit(this);
@@ -86,7 +86,7 @@ codeunit 3111 "Activity Log Builder"
     [Scope('OnPrem')]
     procedure SetReferenceTitle(ReferenceTitle: Text): Codeunit "Activity Log Builder"
     begin
-        ActivityLogBuilderImpl := ActivityLogBuilderImpl.SetReferenceTitle(ReferenceTitle);
+        ActivityLogBuilderImpl := ActivityLogBuilderImpl.SetReferenceTitles(ReferenceTitle);
         exit(this);
     end;
 
