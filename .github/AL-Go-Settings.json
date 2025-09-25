@@ -99,5 +99,12 @@
       "Automation"
     ]
   },
+  "DeliverToGitHubPackages": {
+        "ContinuousDelivery": true,
+        "Branches": [
+            "branch1",
+            "featurebranches/*"
+        ]
+  },
   "runNumberOffset": 60000
 }
