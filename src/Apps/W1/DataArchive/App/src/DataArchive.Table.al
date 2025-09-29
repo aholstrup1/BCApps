@@ -39,9 +39,7 @@ table 600 "Data Archive"
             FieldClass = FlowField;
             CalcFormula = count("Data Archive Table" where("Data Archive Entry No." = field("Entry No.")));
         }
-#pragma warning disable AA0232
         field(8; "No. of Records"; Integer)
-#pragma warning restore AA0232
         {
             Caption = 'No. of Records';
             FieldClass = FlowField;
