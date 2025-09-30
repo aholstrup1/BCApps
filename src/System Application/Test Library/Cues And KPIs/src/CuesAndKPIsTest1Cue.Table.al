@@ -22,7 +22,6 @@ table 135039 "Cues And KPIs Test 1 Cue"
         {
             AutoFormatType = 0;
         }
-#pragma warning disable AA0232
         field(20; FlowfieldInteger; Integer)
         {
             FieldClass = FlowField;
@@ -36,7 +35,6 @@ table 135039 "Cues And KPIs Test 1 Cue"
             Editable = false;
             AutoFormatType = 0;
         }
-#pragma warning restore AA0232
     }
 
     keys
