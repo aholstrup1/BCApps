@@ -36,7 +36,7 @@ codeunit 151 "System Initialization Impl."
         // Initialization logic goes here
 
         // This needs to be the very first thing to run before company open
-        Codeunit.Run(Codeunit::"Azure AD User Management");
+        Codeunit.Run(Codeunit::"Azure AD User Management")
 
         if Session.CurrentClientType() in [ClientType::Web, ClientType::Windows, ClientType::Desktop, ClientType::Tablet, ClientType::Phone] then begin
             // Check to set signup context and commits if it updates
@@ -133,7 +133,7 @@ codeunit 151 "System Initialization Impl."
         SystemInitialization: Codeunit "System Initialization";
     begin
         InitializationInProgress := true;
-        SystemInitialization.OnAfterLogin();
+        SystemInitializations.OnAfterLogin();
         InitializationInProgress := false;
     end;
 
