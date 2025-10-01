@@ -10,6 +10,7 @@
   "country": "base",
   "useProjectDependencies": true,
   "repoVersion": "28.0",
+  "trackALAlertsInGithub": true,
   "conditionalSettings": [
     {
       "buildModes": [
