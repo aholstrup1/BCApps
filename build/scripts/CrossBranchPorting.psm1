@@ -11,6 +11,8 @@
     Skip the confirmation prompt.
     .PARAMETER ReuseWorkItem
     Reuse the work item number from the original pull request.
+    .PARAMETER WorkItemNumber
+    The work item number to use for the backport pull requests.
 #>
 function New-BCAppsBackport() {
     [CmdletBinding(SupportsShouldProcess=$true)]
@@ -23,7 +25,9 @@ function New-BCAppsBackport() {
         [Parameter(Mandatory=$false)]
         [switch] $SkipConfirmation,
         [Parameter(Mandatory=$false, DontShow=$true)]
-        [switch] $ReuseWorkItem
+        [switch] $ReuseWorkItem,
+        [Parameter(Mandatory=$false)]
+        [string] $WorkItemNumber
     )
     Import-Module $PSScriptRoot/EnlistmentHelperFunctions.psm1
 
@@ -42,7 +46,10 @@ function New-BCAppsBackport() {
         Write-Host "Pull Request Description: `n$($pullRequestDetails.body)" -ForegroundColor Cyan
 
         $workItemNumber = "[**Insert Work Item Number Here**]" # By default, work item number is not set and has to be added manually in the PR description
-        if($ReuseWorkItem) {
+        if($WorkItemNumber) {
+            $workItemNumber = $WorkItemNumber
+            Write-Host "Using provided work item number: $workItemNumber" -ForegroundColor Cyan
+        } elseif($ReuseWorkItem) {
             if ($pullRequestDetails.body -match "AB#(\d+)") {
                 $workItemNumber = $matches[1]
                 Write-Host "Reusing work item number: $workItemNumber" -ForegroundColor Cyan
