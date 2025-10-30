@@ -1,0 +1,37 @@
+name: Complete Backport PR 932
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  backport:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up PowerShell
+        shell: pwsh
+        run: |
+          Write-Host "PowerShell version: $($PSVersionTable.PSVersion)"
+
+      - name: Perform Backport
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Import the backport module
+          Import-Module ./build/scripts/CrossBranchPorting.psm1
+          
+          # Execute the backport with the custom work item number
+          New-BCAppsBackport `
+            -PullRequestNumber "932" `
+            -TargetBranches @("releases/27.x") `
+            -WorkItemNumber "123456" `
+            -SkipConfirmation
