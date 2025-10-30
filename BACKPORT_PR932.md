@@ -11,20 +11,21 @@ Modified `build/scripts/CrossBranchPorting.psm1` to add support for custom work 
 - Updated logic to use provided work item number when specified
 - Maintained backward compatibility with existing `ReuseWorkItem` parameter
 
-### 2. Created Backport Branch
-A backport branch has been created locally: `backport/releases/27.x/932/20251030075001`
-
-This branch:
-- Is based on `releases/27.x`
-- Contains all workflow file changes from PR #932
-- Includes a commit message with the work item reference: AB#123456
+### 2. Created GitHub Actions Workflow
+Created `.github/workflows/Complete-Backport-PR932.yaml` workflow that:
+- Can be manually triggered via workflow_dispatch
+- Uses the enhanced backport script with proper authentication
+- Automatically creates the backport branch based on `releases/27.x`
+- Applies all changes from PR #932
+- Includes work item reference AB#123456
+- Creates a pull request targeting releases/27.x
 
 ## Backport Details
 
-**Original PR:** #932
-**Target Branch:** releases/27.x
-**Work Item:** AB#123456
-**Backport Branch:** backport/releases/27.x/932/20251030075001
+**Original PR:** #932  
+**Target Branch:** releases/27.x  
+**Work Item:** AB#123456  
+**Workflow:** `.github/workflows/Complete-Backport-PR932.yaml`
 
 ## Files Changed
 The following workflow files were updated:
@@ -38,7 +39,21 @@ The following workflow files were updated:
 
 ## How to Complete the Backport
 
-To complete the backport using the enhanced script with authentication:
+### Option 1: Using GitHub Actions Workflow (Recommended)
+
+1. Navigate to the Actions tab in the GitHub repository
+2. Select the "Complete Backport PR 932" workflow
+3. Click "Run workflow"
+4. Select the branch to run from (this branch: `copilot/backport-pr-932-to-releases-27-x`)
+5. Click "Run workflow" button
+
+The workflow will automatically:
+- Create a backport branch from releases/27.x
+- Cherry-pick the changes from PR #932
+- Push the branch to origin
+- Create a pull request targeting releases/27.x with work item AB#123456
+
+### Option 2: Using PowerShell Script Locally
 
 ```powershell
 # Ensure you have gh CLI installed and authenticated
@@ -56,22 +71,6 @@ This will:
 4. Create a pull request targeting releases/27.x with the title "[releases/27.x] Bump the external-dependencies group across 1 directory with 3 updates"
 5. Reference work item AB#123456 in the PR description
 
-## Manual Alternative
+## Summary
 
-If the automated script cannot be used, the backport can be completed manually:
-
-1. Push the local backport branch to origin (requires git authentication):
-   ```bash
-   git push origin backport/releases/27.x/932/20251030075001
-   ```
-
-2. Create a pull request on GitHub:
-   - Base branch: `releases/27.x`
-   - Compare branch: `backport/releases/27.x/932/20251030075001`
-   - Title: `[releases/27.x] Bump the external-dependencies group across 1 directory with 3 updates`
-   - Description:
-     ```
-     This pull request backports #932 to releases/27.x
-     
-     Fixes AB#123456
-     ```
+The backport has been prepared and can be completed by running the GitHub Actions workflow or using the PowerShell script with proper authentication. All necessary changes have been made to support custom work item numbers in the backport process.
