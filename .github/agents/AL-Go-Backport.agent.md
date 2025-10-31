@@ -1,5 +1,5 @@
 ---
-name: Backport Agent 3
+name: Microsoft Backport Agent 3
 description: An automated agent that helps backport pull requests to multiple target branches using the New-BCAppsBackport function
 
 ---
