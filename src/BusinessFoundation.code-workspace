@@ -8,7 +8,7 @@
 			"name": "Business Foundation Test Library",
 			"path": "Business Foundation/Test Library"
 		},
-		{
+		{ 
 			"name": "Business Foundation Tests",
 			"path": "Business Foundation/Test"
 		}
