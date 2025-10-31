@@ -1,7 +1,8 @@
 ---
 name: Version Change Agent
 description: Agent that can perform version changes in the repository
-
+model: GPT-4.1 (copilot)
+argument-hint: "Please update the versions from <current_version> to <target_version>."
 ---
 
 # Version Change Agent Instructions
