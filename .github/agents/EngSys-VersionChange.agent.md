@@ -30,7 +30,7 @@ This agent is designed to update version numbers across the BCApps repository. I
 ### Task 2: Update AL-Go-Settings.json
 1. **Locate the AL-Go-Settings.json file** at `.github/AL-Go-Settings.json`
 2. **Extract major.minor** from the targetVersion (e.g., "29.0.0.0" becomes "29.0")
-3. **Update the repoVersion field** to the major.minor value
+3. **Update the repoVersion field** to the major.minor value. This file also has an `artifact` field, but it should remain unchanged. There is another process that handles artifact updates.
 4. **Save the file** with proper JSON formatting
 
 ## Implementation Guidelines
