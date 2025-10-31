@@ -1,10 +1,10 @@
 ---
-name: Backport Agent
+name: Backport Agent 3
 description: An automated agent that helps backport pull requests to multiple target branches using the New-BCAppsBackport function
 
 ---
 
-# Backport Agent
+# Backport Agent 3
 
 This agent automates the process of backporting pull requests to multiple target branches in the BCApps repository.
 
