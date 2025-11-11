@@ -102,6 +102,11 @@ jobs:
       - name: Determine Workflow Depth
         id: DetermineWorkflowDepth
         run: |
+          Write-Host "Temp Path:"
+          Write-Host "$([System.IO.Path]::GetTempPath())"
+          Write-Host "Runner Temp:"
+          Write-Host "$($env:RUNNER_TEMP)"
+          
           Add-Content -Encoding UTF8 -Path $env:GITHUB_OUTPUT -Value "WorkflowDepth=$($env:workflowDepth)"
 
       - name: Determine Projects To Build
