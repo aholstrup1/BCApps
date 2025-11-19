@@ -30,7 +30,7 @@ jobs:
           lfs: true
 
       - name: Troubleshooting
-        uses: microsoft/AL-Go/Actions/Troubleshooting@13868260bf008b56d26fd739c1f764b2bb2c8239
+        uses: jwikman/AL-Go/Actions/Troubleshooting@w/johwik/1952-Set-default-values-on-workflow_dispatch-input
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
