@@ -99,5 +99,31 @@
       "Automation"
     ]
   },
-  "runNumberOffset": 60000
+  "runNumberOffset": 60000,
+  "workflowDefaultInputs": [
+    {
+      "name": "skipUpdatingDependencies",
+      "value": true
+    },
+    {
+      "name": "directCommit",
+      "value": true
+    },
+    {
+      "name": "displayNameOfSecrets",
+      "value": "true"
+    },
+    {
+      "name": "displayNameOfSecrets",
+      "value": "true"
+    },
+    {
+      "name": "artifactsRetentionDays",
+      "value": 1
+    },
+    {
+      "name": "someinput",
+      "value": 10
+    }
+  ]
 }
