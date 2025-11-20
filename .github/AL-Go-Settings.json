@@ -111,11 +111,7 @@
     },
     {
       "name": "displayNameOfSecrets",
-      "value": "true"
-    },
-    {
-      "name": "displayNameOfSecrets",
-      "value": "true"
+      "value": true
     },
     {
       "name": "artifactsRetentionDays",
