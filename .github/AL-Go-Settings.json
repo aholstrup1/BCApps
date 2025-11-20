@@ -120,6 +120,14 @@
     {
       "name": "someinput",
       "value": 10
+    },
+    {
+      "name": "releaseType",
+      "value": "Draft"
+    },
+    {
+      "name": "releaseType",
+      "value": "Prerelease"
     }
   ]
 }
