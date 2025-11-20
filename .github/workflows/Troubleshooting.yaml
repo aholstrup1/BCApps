@@ -6,7 +6,7 @@ on:
       displayNameOfSecrets:
         description: Display the name (not the value) of secrets available to the repository
         type: boolean
-        default: false
+        default: true
 
 permissions:
   actions: read
