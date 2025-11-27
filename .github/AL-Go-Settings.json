@@ -95,7 +95,23 @@
     "pullRequestAutoMerge": true,
     "pullRequestLabels": [
       "Automation"
-    ]
+    ],
+    "createPullRequest": true
   },
-  "runNumberOffset": 60000
+  "runNumberOffset": 60000,
+  "customALGoFiles": {
+    "filesToInclude": [
+      {
+        "sourceFolder": "./",
+        "filter": "*.md",
+        "destinationFolder": "./"
+      }
+    ],
+    "filesToExclude": [
+      {
+        "sourceFolder": ".github/workflows",
+        "filter": "Troubleshooting.yaml"
+      }
+    ]
+  }
 }
