@@ -103,8 +103,15 @@
     "filesToInclude": [
       {
         "sourceFolder": "./",
-        "filter": "*.md",
-        "destinationFolder": "./"
+        "filter": "*.md"
+      },
+      {
+        "sourceFolder": "./",
+        "filter": "*.mymarkdown"
+      },
+      {
+        "sourceFolder": ".github/workflows",
+        "filter": "*.yaml"
       }
     ],
     "filesToExclude": [
