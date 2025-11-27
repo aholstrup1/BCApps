@@ -112,7 +112,8 @@
       },
       {
         "sourceFolder": ".github/workflows",
-        "filter": "*.yaml"
+        "filter": "*.yaml",
+        "perProject": true
       }
     ],
     "filesToExclude": [
