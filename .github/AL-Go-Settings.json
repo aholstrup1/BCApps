@@ -125,6 +125,10 @@
       {
         "sourceFolder": ".github/workflows",
         "filter": "Troubleshooting.yaml"
+      },
+      {
+        "sourceFolder": ".github/workflows",
+        "filter": "VerifyAppChanges.yaml"
       }
     ]
   }
