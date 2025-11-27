@@ -113,7 +113,12 @@
       {
         "sourceFolder": ".github/workflows",
         "filter": "*.yaml",
-        "perProject": true
+        "perProject": false
+      },
+      {
+        "sourceFolder": ".github/workflows",
+        "filter": "Increment*Numbe?.yaml",
+        "destinationFolder": "./"
       }
     ],
     "filesToExclude": [
