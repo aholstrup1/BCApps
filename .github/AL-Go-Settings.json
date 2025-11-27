@@ -102,33 +102,9 @@
   "customALGoFiles": {
     "filesToInclude": [
       {
-        "sourceFolder": "./",
-        "filter": "*.md",
-        "destinationFolder": "./DefaultMarkdowns/Subfolder"
-      },
-      {
-        "sourceFolder": "./",
-        "filter": "*.mymarkdown"
-      },
-      {
-        "sourceFolder": ".github/workflows",
-        "filter": "*.yaml",
-        "perProject": false
-      },
-      {
-        "sourceFolder": ".github/workflows",
-        "filter": "Increment*Numbe?.yaml",
+        "sourceFolder": "../",
+        "filter": "*",
         "destinationFolder": "./"
-      }
-    ],
-    "filesToExclude": [
-      {
-        "sourceFolder": ".github/workflows",
-        "filter": "Troubleshooting.yaml"
-      },
-      {
-        "sourceFolder": ".github/workflows",
-        "filter": "VerifyAppChanges.yaml"
       }
     ]
   }
