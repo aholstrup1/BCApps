@@ -103,7 +103,8 @@
     "filesToInclude": [
       {
         "sourceFolder": "./",
-        "filter": "*.md"
+        "filter": "*.md",
+        "destinationFolder": "./DefaultMarkdowns/Subfolder"
       },
       {
         "sourceFolder": "./",
