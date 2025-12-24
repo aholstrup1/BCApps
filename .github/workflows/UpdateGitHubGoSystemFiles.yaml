@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       templateUrl:
-        description: Template Repository URL (current is https://github.com/aholstrup1/AL-Go@main)
+        description: Template Repository URL (current is https://github.com/microsoft/AL-Go-PTE@preview)
         required: false
         default: ''
       downloadLatest:
@@ -17,6 +17,26 @@ on:
         default: false
       includeBranches:
         description: Specify a comma-separated list of branches to update. Wildcards are supported. The AL-Go settings will be read for every branch. Leave empty to update the current branch only.
+        required: false
+        default: ''
+  workflow_call:
+    inputs:
+      templateUrl:
+        description: Template Repository URL (current is https://github.com/microsoft/AL-Go-PTE@preview)
+        type: string
+        required: false
+        default: ''
+      downloadLatest:
+        description: Download latest from template repository
+        type: boolean
+        default: true
+      directCommit:
+        description: Direct Commit?
+        type: boolean
+        default: false
+      includeBranches:
+        description: Specify a comma-separated list of branches to update. Wildcards are supported. The AL-Go settings will be read for every branch. Leave empty to update the current branch only.
+        type: string
         required: false
         default: ''
 
@@ -42,18 +62,18 @@ jobs:
       TemplateUrl: ${{ steps.DetermineTemplateUrl.outputs.TemplateUrl }}
     steps:
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
       - name: Read settings
         id: ReadSettings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
+        uses: microsoft/AL-Go/Actions/ReadSettings@6f564fa18b52c98eebc26fb118f1402c0d781dd1
         with:
           shell: powershell
           get: templateUrl
 
       - name: Get Workflow Multi-Run Branches
         id: GetBranches
-        uses: aholstrup1/AL-Go/Actions/GetWorkflowMultiRunBranches@main
+        uses: microsoft/AL-Go/Actions/GetWorkflowMultiRunBranches@6f564fa18b52c98eebc26fb118f1402c0d781dd1
         with:
           shell: powershell
           includeBranches: ${{ github.event.inputs.includeBranches }}
@@ -83,30 +103,30 @@ jobs:
 
     steps:
       - name: Dump Workflow Information
-        uses: aholstrup1/AL-Go/Actions/DumpWorkflowInfo@main
+        uses: microsoft/AL-Go/Actions/DumpWorkflowInfo@6f564fa18b52c98eebc26fb118f1402c0d781dd1
         with:
           shell: powershell
 
       - name: Checkout
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           ref: ${{ matrix.branch }}
 
       - name: Initialize the workflow
         id: init
-        uses: aholstrup1/AL-Go/Actions/WorkflowInitialize@main
+        uses: microsoft/AL-Go/Actions/WorkflowInitialize@6f564fa18b52c98eebc26fb118f1402c0d781dd1
         with:
           shell: powershell
 
       - name: Read settings
-        uses: aholstrup1/AL-Go/Actions/ReadSettings@main
+        uses: microsoft/AL-Go/Actions/ReadSettings@6f564fa18b52c98eebc26fb118f1402c0d781dd1
         with:
           shell: powershell
           get: commitOptions
 
       - name: Read secrets
         id: ReadSecrets
-        uses: aholstrup1/AL-Go/Actions/ReadSecrets@main
+        uses: microsoft/AL-Go/Actions/ReadSecrets@6f564fa18b52c98eebc26fb118f1402c0d781dd1
         with:
           shell: powershell
           gitHubSecrets: ${{ toJson(secrets) }}
@@ -118,8 +138,8 @@ jobs:
           downloadLatest: '${{ github.event.inputs.downloadLatest }}'
         run: |
           $errorActionPreference = "Stop"; $ProgressPreference = "SilentlyContinue"; Set-StrictMode -Version 2.0
-          if('${{ github.event_name }}' -eq 'workflow_dispatch') {
-            Write-Host "Using inputs from workflow_dispatch event"
+          if('${{ github.event_name }}' -in 'workflow_dispatch', 'workflow_call') {
+            Write-Host "Using inputs from ${{ github.event_name }} event"
             $directCommit = $env:directCommit
             $downloadLatest = $env:downloadLatest
           }
@@ -133,7 +153,7 @@ jobs:
           Add-Content -Encoding UTF8 -Path $env:GITHUB_ENV -Value "downloadLatest=$downloadLatest"
 
       - name: Update AL-Go system files
-        uses: aholstrup1/AL-Go/Actions/CheckForUpdates@main
+        uses: microsoft/AL-Go/Actions/CheckForUpdates@6f564fa18b52c98eebc26fb118f1402c0d781dd1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -147,7 +167,7 @@ jobs:
 
       - name: Finalize the workflow
         if: always()
-        uses: aholstrup1/AL-Go/Actions/WorkflowPostProcess@main
+        uses: microsoft/AL-Go/Actions/WorkflowPostProcess@6f564fa18b52c98eebc26fb118f1402c0d781dd1
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
