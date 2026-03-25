@@ -8,6 +8,8 @@ param(
     [Parameter(Mandatory = $false)]
     [int] $MinTotalJobs = 10,
     [Parameter(Mandatory = $false)]
+    [int] $MaxAttempts = 1,
+    [Parameter(Mandatory = $false)]
     [int] $LookbackHours = 2,
     [Parameter(Mandatory = $false)]
     [switch] $WhatIf
@@ -28,7 +30,7 @@ foreach ($workflowFile in $workflowFiles) {
     $runs = ($runsJson | ConvertFrom-Json).workflow_runs
 
     # Filter to failures on first attempt only
-    $failedRuns = $runs | Where-Object { $_.conclusion -eq 'failure' -and $_.run_attempt -eq 1 }
+    $failedRuns = $runs | Where-Object { $_.conclusion -eq 'failure' -and $_.run_attempt -le $MaxAttempts }
     if (-not $failedRuns) {
         Write-Host "No eligible failed runs found."
         continue
@@ -40,7 +42,7 @@ foreach ($workflowFile in $workflowFiles) {
         $prGroups = $runs | Where-Object { $_.pull_requests.Count -gt 0 } | Group-Object { ($_.pull_requests | Select-Object -First 1).number }
         foreach ($group in $prGroups) {
             $latest = $group.Group | Sort-Object created_at -Descending | Select-Object -First 1
-            if ($latest.conclusion -eq 'failure' -and $latest.run_attempt -eq 1) {
+            if ($latest.conclusion -eq 'failure' -and $latest.run_attempt -le $MaxAttempts) {
                 $candidates += $latest
             }
         }

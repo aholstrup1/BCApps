@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       WhatIf:
-        description: 'Log what would be rerun without actually rerunning'
+        description: 'WhatIf'
         type: boolean
-        default: true
+        default: false
   schedule:
     - cron: '0 * * * *'
 
@@ -22,15 +22,25 @@ jobs:
       actions: write
       contents: read
     env:
-      GH_TOKEN: ${{ secrets.YOURPAT }}
       MAX_FAILED_JOBS: 3
       MIN_TOTAL_JOBS: 10
+      MAX_ATTEMPTS: 1
       LOOKBACK_HOURS: 24
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Create GitHub App Token
+        id: app-token
+        if: vars.APP_ID != ''
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+
       - name: Rerun unstable failures
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token || secrets.YOURPAT }}
         run: |
           $whatIf = '${{ inputs.WhatIf }}'
           $params = @{
@@ -38,6 +48,7 @@ jobs:
             Repo = "BCApps"
             MaxFailedJobs = $env:MAX_FAILED_JOBS
             MinTotalJobs = $env:MIN_TOTAL_JOBS
+            MaxAttempts = $env:MAX_ATTEMPTS
             LookbackHours = $env:LOOKBACK_HOURS
           }
           if ($whatIf -ne 'false') { $params.WhatIf = $true }
