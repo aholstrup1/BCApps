@@ -1,6 +1,11 @@
 name: Rerun Unstable Failures
 on:
   workflow_dispatch:
+    inputs:
+      WhatIf:
+        description: 'Log what would be rerun without actually rerunning'
+        type: boolean
+        default: true
   schedule:
     - cron: '0 * * * *'
 
@@ -19,16 +24,19 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.YOURPAT }}
       MAX_FAILED_JOBS: 3
-      LOOKBACK_HOURS: 8
+      LOOKBACK_HOURS: 24
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Rerun unstable failures
         run: |
-          build/scripts/RerunUnstableFailures.ps1 `
-            -Owner "microsoft" `
-            -Repo "BCApps" `
-            -MaxFailedJobs $env:MAX_FAILED_JOBS `
-            -LookbackHours $env:LOOKBACK_HOURS `
-            -WhatIf
+          $whatIf = '${{ inputs.WhatIf }}'
+          $params = @{
+            Owner = "microsoft"
+            Repo = "BCApps"
+            MaxFailedJobs = $env:MAX_FAILED_JOBS
+            LookbackHours = $env:LOOKBACK_HOURS
+          }
+          if ($whatIf -ne 'false') { $params.WhatIf = $true }
+          build/scripts/RerunUnstableFailures.ps1 @params
