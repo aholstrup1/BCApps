@@ -17,13 +17,14 @@ defaults:
 
 jobs:
   RerunUnstableFailures:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     permissions:
       actions: write
       contents: read
     env:
       GH_TOKEN: ${{ secrets.YOURPAT }}
       MAX_FAILED_JOBS: 3
+      MIN_TOTAL_JOBS: 10
       LOOKBACK_HOURS: 24
     steps:
       - name: Checkout
@@ -36,6 +37,7 @@ jobs:
             Owner = "microsoft"
             Repo = "BCApps"
             MaxFailedJobs = $env:MAX_FAILED_JOBS
+            MinTotalJobs = $env:MIN_TOTAL_JOBS
             LookbackHours = $env:LOOKBACK_HOURS
           }
           if ($whatIf -ne 'false') { $params.WhatIf = $true }

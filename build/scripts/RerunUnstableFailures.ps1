@@ -6,6 +6,8 @@ param(
     [Parameter(Mandatory = $false)]
     [int] $MaxFailedJobs = 3,
     [Parameter(Mandatory = $false)]
+    [int] $MinTotalJobs = 10,
+    [Parameter(Mandatory = $false)]
     [int] $LookbackHours = 2,
     [Parameter(Mandatory = $false)]
     [switch] $WhatIf
@@ -60,11 +62,20 @@ foreach ($workflowFile in $workflowFiles) {
             continue
         }
         $jobs = ($jobsJson | ConvertFrom-Json).jobs
-        $failedJobs = $jobs | Where-Object { $_.conclusion -eq 'failure' }
+        # Exclude utility jobs that are not actual build jobs
+        $excludedJobs = @("Pull Request Status Check", "Initialization")
+        $buildJobs = $jobs | Where-Object { $_.name -notin $excludedJobs -and $_.conclusion -ne 'skipped' }
+        $buildJobCount = ($buildJobs | Measure-Object).Count
+        $failedJobs = $buildJobs | Where-Object { $_.conclusion -eq 'failure' }
         $failedCount = ($failedJobs | Measure-Object).Count
 
         if ($failedCount -eq 0) {
-            Write-Host "No failed jobs found (unexpected). Skipping."
+            Write-Host "No failed build jobs found. Skipping."
+            continue
+        }
+
+        if ($buildJobCount -lt $MinTotalJobs) {
+            Write-Host "Too few build jobs ($buildJobCount < $MinTotalJobs). Run likely didn't reach the large matrix. Skipping."
             continue
         }
 
