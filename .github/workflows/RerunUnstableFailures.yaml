@@ -17,7 +17,7 @@ defaults:
 
 jobs:
   RerunUnstableFailures:
-    runs-on: ubuntu-slim
+    runs-on: ubuntu-latest
     permissions:
       actions: write
       contents: read
