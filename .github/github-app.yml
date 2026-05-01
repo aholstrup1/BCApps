@@ -1,5 +1,0 @@
-scripts:
-  - name: Create Environment
-    command: ./tools/New-BcDevContainer.ps1
-  - name: Build Projects
-    command: ./tools/Build-AlWorkspace.ps1
