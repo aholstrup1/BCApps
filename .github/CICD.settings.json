@@ -2,7 +2,8 @@
   "conditionalSettings": [
     {
       "triggers": [
-        "push"
+        "push",
+        "workflow_dispatch"
       ],
       "settings": {
         "projects": [
