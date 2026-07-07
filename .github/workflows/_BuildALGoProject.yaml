@@ -184,7 +184,7 @@ jobs:
 
       - name: Compile Apps
         id: compile
-        uses: microsoft/AL-Go/Actions/CompileApps@39fa5591e01f7569384bba8cad40cabdb5618a01
+        uses: aholstrup1/AL-Go/Actions/CompileApps@aholstrup1-track-al-alerts-workspace-compilation
         if: steps.DetermineBuildProject.outputs.BuildIt == 'True' && fromJson(env.workspaceCompilation).enabled == true
         env:
           Secrets: '${{ steps.ReadSecrets.outputs.Secrets }}'
