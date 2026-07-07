@@ -2,6 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/AL-Go/39fa5591e01f7569384bba8cad40cabdb5618a01/Actions/.Modules/settings.schema.json",
   "type": "PTE",
   "trackALAlertsInGitHub": true,
+  "vsixFile": "https://github.com/aholstrup1/BCApps/releases/download/altool-errorlog-preview/al-18.0.0-marketplace.vsix",
   "templateUrl": "https://github.com/microsoft/AL-Go-PTE@preview",
   "bcContainerHelperVersion": "preview",
   "runs-on": "windows-latest",
