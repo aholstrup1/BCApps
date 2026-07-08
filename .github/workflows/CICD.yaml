@@ -253,7 +253,7 @@ jobs:
       - name: Process AL Code Analysis Logs
         id: ProcessALCodeAnalysisLogs
         if: (success() || failure())
-        uses: microsoft/AL-Go/Actions/ProcessALCodeAnalysisLogs@39fa5591e01f7569384bba8cad40cabdb5618a01
+        uses: aholstrup1/AL-Go/Actions/ProcessALCodeAnalysisLogs@aholstrup1-track-al-alerts-workspace-compilation
         with:
           shell: powershell
 

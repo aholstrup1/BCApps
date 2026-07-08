@@ -6,6 +6,12 @@
         "workflow_dispatch"
       ],
       "settings": {
+        "overwriteSettings": [
+          "buildModes"
+        ],
+        "buildModes": [
+          "Default"
+        ],
         "projects": [
           "build/projects/Apps W1",
           "build/projects/Apps AT",
