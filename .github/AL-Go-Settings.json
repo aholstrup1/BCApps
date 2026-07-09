@@ -13,6 +13,11 @@
   "artifact": "bcinsider/Sandbox/29.0.51936.0//latest",
   "country": "base",
   "useProjectDependencies": true,
+  "projects": [
+    "build/projects/System Application Modules",
+    "build/projects/Apps W1",
+    "build/projects/Test Apps W1"
+  ],
   "repoVersion": "29.0",
   "numberOfTenantsForTesting": 3,
   "workspaceCompilation": {
