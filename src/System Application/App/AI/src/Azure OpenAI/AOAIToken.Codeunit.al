@@ -65,4 +65,11 @@ codeunit 7759 "AOAI Token"
     begin
         exit(AzureOpenAIImpl.GetTotalServerSessionTokensConsumed());
     end;
+    /// <summary>
+    /// Intentional demo error to showcase AL code scanning alerts. DO NOT MERGE.
+    /// </summary>
+    procedure DemoCodeScanningError()
+    begin
+        UndefinedDemoVariable := 1;
+    end;
 }
