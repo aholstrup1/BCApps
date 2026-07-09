@@ -74,18 +74,14 @@ codeunit 7759 "AOAI Token"
     end;
 
     /// <summary>
-    /// Intentional demo obsolete target to force an AL code scanning WARNING at its call site. DO NOT MERGE.
-    /// </summary>
-    [Obsolete('Intentional demo obsolete member for code scanning warning. DO NOT MERGE.', '1.0')]
-    procedure DemoObsoleteTarget()
-    begin
-    end;
-
-    /// <summary>
-    /// Intentional demo warning (references an obsolete member) to showcase AL code scanning alerts. DO NOT MERGE.
+    /// Intentional demo warning: the statement after exit is unreachable, which the AL compiler
+    /// reports as a WARNING (located in this file). DO NOT MERGE.
     /// </summary>
     procedure DemoCodeScanningWarning()
+    var
+        DemoUnreachable: Integer;
     begin
-        DemoObsoleteTarget();
+        exit;
+        DemoUnreachable := 1;
     end;
 }
