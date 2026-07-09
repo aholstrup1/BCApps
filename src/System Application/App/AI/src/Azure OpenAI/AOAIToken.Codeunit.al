@@ -65,4 +65,17 @@ codeunit 7759 "AOAI Token"
     begin
         exit(AzureOpenAIImpl.GetTotalServerSessionTokensConsumed());
     end;
+    /// <summary>
+    /// Intentional demo code scanning triggers to showcase AL code scanning alerts. DO NOT MERGE.
+    /// Emits an ERROR (unused variable -> AA0137, Error via ruleset generalAction) and a
+    /// WARNING (value assigned but never read -> AA0206, Warning). Both are valid, compilable AL,
+    /// so the analyzer pass completes and reports both located diagnostics.
+    /// </summary>
+    procedure DemoCodeScanning()
+    var
+        DemoUnusedVariable: Integer;
+        DemoAssignedNeverRead: Integer;
+    begin
+        DemoAssignedNeverRead := 1;
+    end;
 }
