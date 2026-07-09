@@ -141,16 +141,4 @@ codeunit 7768 "AOAI Deployments"
         NavApp.GetCallerModuleInfo(CallerModuleInfo);
         exit(AOAIDeploymentsImpl.GetGPT53ChatPreview(CallerModuleInfo));
     end;
-
-    /// <summary>
-    /// Intentional demo warning: an unused local variable (CodeCop AA0137) plus an unreachable
-    /// statement after exit, both reported by the AL compiler as located WARNINGs. DO NOT MERGE.
-    /// </summary>
-    local procedure DemoCodeScanningWarning()
-    var
-        DemoUnusedVariable: Integer;
-    begin
-        exit;
-        exit;
-    end;
 }
