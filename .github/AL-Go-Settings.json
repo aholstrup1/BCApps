@@ -15,8 +15,7 @@
   "useProjectDependencies": true,
   "projects": [
     "build/projects/System Application Modules",
-    "build/projects/Apps W1",
-    "build/projects/Test Apps W1"
+    "build/projects/Apps W1"
   ],
   "repoVersion": "29.0",
   "numberOfTenantsForTesting": 3,
