@@ -72,16 +72,4 @@ codeunit 7759 "AOAI Token"
     begin
         UndefinedDemoVariable := 1;
     end;
-
-    /// <summary>
-    /// Intentional demo warning: the statement after exit is unreachable, which the AL compiler
-    /// reports as a WARNING (located in this file). DO NOT MERGE.
-    /// </summary>
-    procedure DemoCodeScanningWarning()
-    var
-        DemoUnreachable: Integer;
-    begin
-        exit;
-        DemoUnreachable := 1;
-    end;
 }
