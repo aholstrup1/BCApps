@@ -20,11 +20,20 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Install BCQuality plugin
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Install Copilot CLI and BCQuality plugin
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euxo pipefail
+          npm install -g @github/copilot
           copilot --version
           copilot plugin marketplace add aholstrup1/BCQuality#9bb4cd53ddce110e3a532ba6c539024449fae29b
           copilot plugin install bcquality@bcquality
           copilot plugin list
+          find "$HOME/.copilot" -maxdepth 4 -type f | sort | sed "s|$HOME|~|"
