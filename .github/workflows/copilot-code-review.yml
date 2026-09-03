@@ -33,7 +33,8 @@ jobs:
           set -euxo pipefail
           npm install -g @github/copilot
           copilot --version
-          copilot plugin marketplace add aholstrup1/BCQuality#9bb4cd53ddce110e3a532ba6c539024449fae29b
+          copilot plugin marketplace add aholstrup1/BCQuality#main
           copilot plugin install bcquality@bcquality
           copilot plugin list
           find "$HOME/.copilot" -maxdepth 4 -type f | sort | sed "s|$HOME|~|"
+
